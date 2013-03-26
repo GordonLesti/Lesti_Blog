@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Lesti_Blog>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Core/>
+                <Mage_Cms/>
+                <Mage_Adminhtml/>
+            </depends>
+        </Lesti_Blog>
+    </modules>
+</config>
