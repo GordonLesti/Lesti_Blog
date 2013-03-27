@@ -34,6 +34,11 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
         $this->_init('blog/post', 'post_id');
     }
 
+    public function getPostUrl()
+    {
+        return Mage::app()->getStore()->getUrl('blog') . $this->getIdentifier();
+    }
+
     /**
      * Check if post identifier exist for specific store
      * return post id if post exists

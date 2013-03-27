@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+ <config>
+    <menu>
+        <blog translate="title" module="blog">
+            <title>Blog</title>
+            <sort_order>100</sort_order>
+            <depends>
+                <module>Lesti_Blog</module>
+            </depends>
+            <children>
+                <posts translate="title" module="blog">
+                    <title>Posts</title>
+                    <action>adminhtml/blog_post/</action>
+                    <sort_order>0</sort_order>
+                </posts>
+            </children>
+        </blog>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <blog translate="title" module="blog">
+                                        <title>Blog</title>
+                                    </blog>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <blog translate="title" module="blog">
+                        <title>Blog</title>
+                        <sort_order>100</sort_order>
+                        <children>
+                            <posts translate="title">
+                                <title>Posts</title>
+                            </posts>
+                        </children>
+                    </blog>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+ </config>

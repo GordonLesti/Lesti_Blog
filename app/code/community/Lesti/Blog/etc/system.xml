@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <blog translate="label" module="blog">
+            <label>Blog</label>
+            <sort_order>500</sort_order>
+        </blog>
+    </tabs>
+    <sections>
+        <blog translate="label" module="blog">
+            <class>separator-top</class>
+            <label>Blog</label>
+            <tab>blog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                    </fields>
+                </general>
+            </groups>
+        </blog>
+    </sections>
+</config>

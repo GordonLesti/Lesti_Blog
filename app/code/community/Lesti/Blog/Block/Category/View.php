@@ -9,6 +9,27 @@
 class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
 {
     protected $_postCollection;
+    protected $_category;
+
+    const XML_PATH_BLOG_TITLE = 'blog/general/title';
+
+    public function getCategory()
+    {
+        if(is_null($this->_category)) {
+            $this->_category = $this->_getCategory();
+        }
+        return $this->_category;
+    }
+
+    protected function _getCategory()
+    {
+        $category = Mage::registry('blog_category');
+        if(is_null($category)) {
+            $category = Mage::getModel('blog/category')
+                ->setTitle(Mage::getStoreConfig(self::XML_PATH_BLOG_TITLE));
+        }
+        return $category;
+    }
 
     protected function _getPostCollection()
     {

@@ -87,4 +87,11 @@
             </controller_front_init_routers>
         </events>
     </global>
+    <default>
+        <blog>
+            <general>
+                <title>Blog</title>
+            </general>
+        </blog>
+    </default>
 </config>
