@@ -15,8 +15,25 @@
                 </args>
             </blog>
         </routers>
+        <layout>
+            <updates>
+                <blog>
+                    <file>blog.xml</file>
+                </blog>
+            </updates>
+        </layout>
     </frontend>
     <global>
+        <blocks>
+            <blog>
+                <class>Lesti_Blog_Block</class>
+            </blog>
+        </blocks>
+        <helpers>
+            <blog>
+                <class>Lesti_Blog_Helper</class>
+            </blog>
+        </helpers>
         <models>
             <blog>
                 <class>Lesti_Blog_Model</class>

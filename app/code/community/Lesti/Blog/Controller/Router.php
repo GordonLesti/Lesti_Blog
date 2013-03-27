@@ -18,7 +18,7 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
         /* @var $front Mage_Core_Controller_Varien_Front */
         $front = $observer->getEvent()->getFront();
 
-        //$front->addRouter('blog', $this);
+        $front->addRouter('blog', $this);
     }
 
     /**
@@ -73,27 +73,27 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                 ->setActionName('view')
                 ->setParam('post_id', $postId);
         } else {
-            $categoryIdentifier = substr($identifier, 14);
-            $category = Mage::getModel('blog/category');
-            $categoryId = $category->checkIdentifier($identifier, Mage::app()->getStore()->getId());
-            if($categoryId) {
-                $request->setModuleName('blog')
-                    ->setControllerName('category')
-                    ->setActionName('view')
-                    ->setParam('category_id', $categoryId);
-            } else {
-                $tagIdentifier = substr($identifier, 9);
-                $tag = Mage::getModel('blog/tag');
-                $tagId = $tag->checkIdentifier($identifier, Mage::app()->getStore()->getId());
-                if($tagId) {
-                    $request->setModuleName('blog')
-                        ->setControllerName('tag')
-                        ->setActionName('view')
-                        ->setParam('tag_id', $tagId);
-                } else {
+//            $categoryIdentifier = substr($identifier, 14);
+//            $category = Mage::getModel('blog/category');
+//            $categoryId = $category->checkIdentifier($identifier, Mage::app()->getStore()->getId());
+//            if($categoryId) {
+//                $request->setModuleName('blog')
+//                    ->setControllerName('category')
+//                    ->setActionName('view')
+//                    ->setParam('category_id', $categoryId);
+//            } else {
+//                $tagIdentifier = substr($identifier, 9);
+//                $tag = Mage::getModel('blog/tag');
+//                $tagId = $tag->checkIdentifier($identifier, Mage::app()->getStore()->getId());
+//                if($tagId) {
+//                    $request->setModuleName('blog')
+//                        ->setControllerName('tag')
+//                        ->setActionName('view')
+//                        ->setParam('tag_id', $tagId);
+//                } else {
                     return false;
-                }
-            }
+//                }
+//            }
         }
 
         $request->setAlias(
