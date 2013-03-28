@@ -16,17 +16,19 @@ $_helper = Mage::helper('blog');
     <h1><?php echo $_category->getTitle() ?></h1>
 </div>
 <?php foreach($_postCollection as $_post): ?>
-    <article id="post-<?php echo $_post->getId() ?>" class="post-excerpt">
-        <header class="entry-header">
-            <h1 class="entry-title">
-                <a rel="bookmark" title="<?php echo $_helper->__('Permanent Link to') . ' ' . $_post->getTitle() ?>" href="<?php echo $_post->getPostUrl() ?>"><?php echo $_post->getTitle() ?></a>
+    <article id="post-<?php echo $_post->getId() ?>" class="blog-post-excerpt">
+        <header class="blog-entry-header">
+            <h1 class="blog-entry-title">
+                <a rel="bookmark" title="<?php echo $_helper->__('Permanentlink to') . ' ' . $_post->getTitle() ?>" href="<?php echo $_post->getPostUrl() ?>"><?php echo $_post->getTitle() ?></a>
             </h1>
         </header>
-        <div class="entry-content">
-            <?php echo $_post->getExcerpt(); ?>
-            <a class="more-link" href="<?php echo $_post->getPostUrl() ?>"><?php echo $_helper->__('Read more') ?> <span class="meta-nav">&rarr;</span></a>
+        <div class="blog-entry-content">
+            <?php echo $_post->excerptHtml(); ?>
+            <?php if($_post->needReadMore()): ?>
+                <a class="blog-more-link" href="<?php echo $_post->getPostUrl() ?>"><?php echo $_helper->__('Read more') ?> <span class="blog-meta-nav">&rarr;</span></a>
+            <?php endif; ?>
         </div>
-        <footer class="entry-meta">
+        <footer class="blog-entry-meta">
         </footer>
     </article>
 <?php endforeach; ?>

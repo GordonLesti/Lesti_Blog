@@ -38,9 +38,6 @@ $table = $installer->getConnection()
     ->addColumn('title', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
         'nullable'  => true
     ), 'Post Title')
-    ->addColumn('excerpt', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
-        'nullable'  => true
-    ), 'Post Excerpt')
     ->addColumn('identifier', Varien_Db_Ddl_Table::TYPE_TEXT, 200, array(
         'nullable'  => true,
         'default'   => null,

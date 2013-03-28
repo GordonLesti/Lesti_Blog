@@ -345,7 +345,7 @@ class Lesti_Blog_Model_Resource_Post extends Mage_Core_Model_Resource_Db_Abstrac
      * @param int $id
      * @return array
      */
-    public function lookupStoreIds($ostId)
+    public function lookupStoreIds($postId)
     {
         $adapter = $this->_getReadAdapter();
 

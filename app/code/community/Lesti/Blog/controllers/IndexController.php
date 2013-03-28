@@ -21,7 +21,8 @@ class Lesti_Blog_IndexController extends Mage_Core_Controller_Front_Action
         if ($root = $this->getLayout()->getBlock('root')) {
             $root->addBodyClass('blog');
         }
-        $this->getLayout()->getBlock('head')->setTitle($this->__('Blog'));
+        $this->getLayout()->getBlock('head')
+            ->setTitle(Mage::getStoreConfig(Lesti_Blog_Block_Category_View::XML_PATH_BLOG_TITLE));
         $this->renderLayout();
     }
 }

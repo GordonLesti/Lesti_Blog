@@ -9,6 +9,8 @@
 class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
 {
 
+    const XML_PATH_BLOG_GENERAL_ROUTER = 'blog/general/router';
+
     /**
      * Post's Statuses
      */
@@ -17,6 +19,7 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
 
     const CACHE_TAG              = 'blog_post';
     protected $_cacheTag         = 'blog_post';
+    protected $_needReadMore     = false;
 
     /**
      * Prefix of model events names
@@ -36,7 +39,7 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
 
     public function getPostUrl()
     {
-        return Mage::app()->getStore()->getUrl('blog') . $this->getIdentifier();
+        return Mage::app()->getStore()->getUrl(Mage::getStoreConfig(self::XML_PATH_BLOG_GENERAL_ROUTER)) . $this->getIdentifier();
     }
 
     /**
@@ -68,6 +71,36 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
         Mage::dispatchEvent('blog_post_get_available_statuses', array('statuses' => $statuses));
 
         return $statuses->getData();
+    }
+
+    public function contentHtml()
+    {
+        $helper = Mage::helper('cms');
+        $processor = $helper->getPageTemplateProcessor();
+        $html = $processor->filter($this->getContent());
+        return $html;
+    }
+
+    public function getExcerpt()
+    {
+        $excerpt = explode('<!--more-->', $this->getContent());
+        if(count($excerpt) > 1) {
+            $this->_needReadMore = true;
+        }
+        return $excerpt[0];
+    }
+
+    public function needReadMore()
+    {
+        return $this->_needReadMore;
+    }
+
+    public function excerptHtml()
+    {
+        $helper = Mage::helper('cms');
+        $processor = $helper->getPageTemplateProcessor();
+        $html = $processor->filter($this->getExcerpt());
+        return $html;
     }
 
 }

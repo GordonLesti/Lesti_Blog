@@ -15,6 +15,6 @@ class Lesti_Blog_Helper_data extends Mage_Core_Helper_Abstract
      */
     public function getBlogUrl()
     {
-        return $this->_getUrl('blog');
+        return $this->_getUrl(Mage::getStoreConfig(Lesti_Blog_Model_Post::XML_PATH_BLOG_GENERAL_ROUTER));
     }
 }

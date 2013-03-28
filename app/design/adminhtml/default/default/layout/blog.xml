@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_blog_post_index>
+        <reference name="content">
+            <block type="blog/adminhtml_post" name="blog_post"></block>
+        </reference>
+    </adminhtml_blog_post_index>
+</layout>

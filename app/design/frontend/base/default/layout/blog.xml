@@ -20,4 +20,14 @@
         </reference>
     </blog_index_index>
 
+    <blog_post_view translate="label">
+        <label>Blog Post</label>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="blog/post_view" name="blog.post.view" template="blog/post/view.phtml"/>
+        </reference>
+    </blog_post_view>
+
 </layout>

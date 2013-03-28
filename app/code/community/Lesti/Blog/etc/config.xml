@@ -87,9 +87,30 @@
             </controller_front_init_routers>
         </events>
     </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <blog>
+                    <file>blog.xml</file>
+                </blog>
+            </updates>
+        </layout>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <blog before="Mage_Adminhtml">Lesti_Blog_Adminhtml</blog>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
     <default>
         <blog>
             <general>
+                <router>blog</router>
                 <title>Blog</title>
             </general>
         </blog>
