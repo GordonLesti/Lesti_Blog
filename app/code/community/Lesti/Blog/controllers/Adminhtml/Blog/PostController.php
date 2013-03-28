@@ -35,4 +35,59 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
         $this->renderLayout();
     }
 
+    /**
+     * Create new post
+     */
+    public function newAction()
+    {
+        // the same form is used to create and edit
+        $this->_forward('edit');
+    }
+
+    /**
+     * Edit post
+     */
+    public function editAction()
+    {
+        $this->_title($this->__('Blog'))
+            ->_title($this->__('Post'))
+            ->_title($this->__('Manage Posts'));
+
+        // 1. Get ID and create model
+        $id = $this->getRequest()->getParam('post_id');
+        $model = Mage::getModel('blog/post');
+
+        // 2. Initial checking
+        if ($id) {
+            $model->load($id);
+            if (! $model->getId()) {
+                Mage::getSingleton('adminhtml/session')->addError(
+                    Mage::helper('blog')->__('This post no longer exists.'));
+                $this->_redirect('*/*/');
+                return;
+            }
+        }
+
+        $this->_title($model->getId() ? $model->getTitle() : $this->__('New Post'));
+
+        // 3. Set entered data if was error when we do save
+        $data = Mage::getSingleton('adminhtml/session')->getFormData(true);
+        if (! empty($data)) {
+            $model->setData($data);
+        }
+
+        // 4. Register model to use later in blocks
+        Mage::register('blog_post', $model);
+
+        // 5. Build edit form
+        $this->_initAction()
+            ->_addBreadcrumb(
+            $id ? Mage::helper('blog')->__('Edit Post')
+                : Mage::helper('blog')->__('New Post'),
+            $id ? Mage::helper('blog')->__('Edit Post')
+                : Mage::helper('blog')->__('New Post'));
+
+        $this->renderLayout();
+    }
+
 }
