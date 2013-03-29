@@ -90,4 +90,119 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
         $this->renderLayout();
     }
 
+    /**
+     * Save action
+     */
+    public function saveAction()
+    {
+        // check if data sent
+        if ($data = $this->getRequest()->getPost()) {
+            //init model and set data
+            $model = Mage::getModel('blog/post');
+
+            if ($id = $this->getRequest()->getParam('post_id')) {
+                $model->load($id);
+            }
+
+            if(!isset($data['author_id'])) {
+                $data['author_id'] = (int) Mage::getSingleton('admin/session')->getUser()->getUserId();
+            }
+
+            $model->setData($data);
+
+            Mage::dispatchEvent('blog_post_prepare_save', array('post' => $model, 'request' => $this->getRequest()));
+
+
+            // try to save it
+            try {
+                // save the data
+                $model->save();
+
+                // display success message
+                Mage::getSingleton('adminhtml/session')->addSuccess(
+                    Mage::helper('blog')->__('The post has been saved.'));
+                // clear previously saved data from session
+                Mage::getSingleton('adminhtml/session')->setFormData(false);
+                // check if 'Save and Continue'
+                if ($this->getRequest()->getParam('back')) {
+                    $this->_redirect('*/*/edit', array('post_id' => $model->getId(), '_current'=>true));
+                    return;
+                }
+                // go to grid
+                $this->_redirect('*/*/');
+                return;
+
+            } catch (Mage_Core_Exception $e) {
+                $this->_getSession()->addError($e->getMessage());
+            }
+            catch (Exception $e) {
+                $this->_getSession()->addException($e,
+                    Mage::helper('blog')->__('An error occurred while saving the post.'));
+            }
+
+            $this->_getSession()->setFormData($data);
+            $this->_redirect('*/*/edit', array('post_id' => $this->getRequest()->getParam('post_id')));
+            return;
+        }
+        $this->_redirect('*/*/');
+    }
+
+    /**
+     * Delete action
+     */
+    public function deleteAction()
+    {
+        // check if we know what should be deleted
+        if ($id = $this->getRequest()->getParam('post_id')) {
+            $title = "";
+            try {
+                // init model and delete
+                $model = Mage::getModel('blog/post');
+                $model->load($id);
+                $title = $model->getTitle();
+                $model->delete();
+                // display success message
+                Mage::getSingleton('adminhtml/session')->addSuccess(
+                    Mage::helper('cms')->__('The post has been deleted.'));
+                // go to grid
+                Mage::dispatchEvent('adminhtml_blog_post_on_delete', array('title' => $title, 'status' => 'success'));
+                $this->_redirect('*/*/');
+                return;
+
+            } catch (Exception $e) {
+                Mage::dispatchEvent('adminhtml_blog_post_on_delete', array('title' => $title, 'status' => 'fail'));
+                // display error message
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                // go back to edit form
+                $this->_redirect('*/*/edit', array('post_id' => $id));
+                return;
+            }
+        }
+        // display error message
+        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('blog')->__('Unable to find a post to delete.'));
+        // go to grid
+        $this->_redirect('*/*/');
+    }
+
+    /**
+     * Check the permission to run it
+     *
+     * @return boolean
+     */
+    protected function _isAllowed()
+    {
+        switch ($this->getRequest()->getActionName()) {
+            case 'new':
+            case 'save':
+                return Mage::getSingleton('admin/session')->isAllowed('blog/post/save');
+                break;
+            case 'delete':
+                return Mage::getSingleton('admin/session')->isAllowed('blog/post/delete');
+                break;
+            default:
+                return Mage::getSingleton('admin/session')->isAllowed('blog/post');
+                break;
+        }
+    }
+
 }

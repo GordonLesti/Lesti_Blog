@@ -7,7 +7,7 @@
     </adminhtml_blog_post_index>
 
     <adminhtml_blog_post_new>
-        <update handle="adminhtml_cms_page_edit" />
+        <update handle="adminhtml_blog_post_edit" />
     </adminhtml_blog_post_new>
 
     <adminhtml_blog_post_edit>

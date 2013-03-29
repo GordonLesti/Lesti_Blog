@@ -22,6 +22,8 @@ class Lesti_Blog_Block_Adminhtml_Post_edit extends Mage_Adminhtml_Block_Widget_F
 
         parent::__construct();
 
+        $this->setData('form_action_url', $this->getUrl('*/blog_post/save'));
+
         if ($this->_isAllowedAction('save')) {
             $this->_updateButton('save', 'label', Mage::helper('blog')->__('Save Post'));
             $this->_addButton('saveandcontinue', array(

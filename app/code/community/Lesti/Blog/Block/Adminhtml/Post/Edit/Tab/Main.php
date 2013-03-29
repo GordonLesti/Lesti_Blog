@@ -31,9 +31,15 @@ class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Main
 
         $fieldset = $form->addFieldset('base_fieldset', array('legend'=>Mage::helper('blog')->__('Post Information')));
 
-        if ($model->getPageId()) {
+        if ($model->getPostId()) {
             $fieldset->addField('post_id', 'hidden', array(
                 'name' => 'post_id',
+            ));
+        }
+
+        if ($model->getAuthorId()) {
+            $fieldset->addField('author_id', 'hidden', array(
+                'name' => 'author_id',
             ));
         }
 
