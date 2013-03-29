@@ -37,9 +37,18 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
         $this->_init('blog/post', 'post_id');
     }
 
-    public function getPostUrl()
+    public function getPostUrl($params = array())
     {
-        return Mage::app()->getStore()->getUrl(Mage::getStoreConfig(self::XML_PATH_BLOG_GENERAL_ROUTER)) . $this->getIdentifier();
+        $url = Mage::app()->getStore()->getUrl(Mage::getStoreConfig(self::XML_PATH_BLOG_GENERAL_ROUTER)) .
+            $this->getIdentifier();
+        foreach($params as $param) {
+            switch($param) {
+                case 'more':
+                    $url .= '/#more-' . $this->getId();
+                    break;
+            }
+        }
+        return $url;
     }
 
     /**
@@ -78,6 +87,8 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
         $helper = Mage::helper('cms');
         $processor = $helper->getPageTemplateProcessor();
         $html = $processor->filter($this->getContent());
+        $count = 1;
+        $html = str_replace('<!--more-->', '<span id="more-' . $this->getId() . '"></span>', $html, $count);
         return $html;
     }
 

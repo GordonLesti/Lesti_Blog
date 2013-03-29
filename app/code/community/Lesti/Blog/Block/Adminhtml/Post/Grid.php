@@ -19,7 +19,8 @@ class Lesti_Blog_Block_Adminhtml_Post_Grid extends Mage_Adminhtml_Block_Widget_G
 
     protected function _prepareCollection()
     {
-        $collection = Mage::getModel('blog/post')->getCollection();
+        $collection = Mage::getModel('blog/post')->getCollection()
+            ->addAuthorToResult();
         $collection->setFirstStoreFlag(true);
         $this->setCollection($collection);
 
@@ -40,6 +41,12 @@ class Lesti_Blog_Block_Adminhtml_Post_Grid extends Mage_Adminhtml_Block_Widget_G
             'header'    => Mage::helper('blog')->__('URL Key'),
             'align'     => 'left',
             'index'     => 'identifier'
+        ));
+
+        $this->addColumn('author', array(
+            'header'    => Mage::helper('blog')->__('Author'),
+            'align'     => 'left',
+            'index'     => 'username'
         ));
 
         /**

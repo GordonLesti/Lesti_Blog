@@ -131,6 +131,24 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
         return $this;
     }
 
+    public function addAuthorToResult()
+    {
+        $this->joinAuthor();
+        return $this;
+    }
+
+    protected function joinAuthor()
+    {
+        $this->getSelect()->join(
+            array('admin_user' => $this->getTable('admin/user')),
+            'main_table.author_id = admin_user.user_id',
+            array('admin_user.firstname',
+                'admin_user.lastname',
+                'admin_user.username')
+        )->group('main_table.post_id');
+        return $this;
+    }
+
     /**
      * Join store relation table if there is store filter
      */
