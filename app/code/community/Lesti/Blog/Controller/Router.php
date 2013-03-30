@@ -91,15 +91,15 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                     ->setActionName('view')
                     ->setParam('post_id', $postId);
             } else {
-//                $categoryIdentifier = substr($identifier, 14);
-//                $category = Mage::getModel('blog/category');
-//                $categoryId = $category->checkIdentifier($identifier, Mage::app()->getStore()->getId());
-//                if($categoryId) {
-//                    $request->setModuleName('blog')
-//                        ->setControllerName('category')
-//                        ->setActionName('view')
-//                        ->setParam('category_id', $categoryId);
-//                } else {
+                $categoryIdentifier = substr($identifier, strlen($router . '/category/'));
+                $category = Mage::getModel('blog/category');
+                $categoryId = $category->checkIdentifier($categoryIdentifier, Mage::app()->getStore()->getId());
+                if($categoryId) {
+                    $request->setModuleName('blog')
+                        ->setControllerName('category')
+                        ->setActionName('view')
+                        ->setParam('category_id', $categoryId);
+                } else {
 //                    $tagIdentifier = substr($identifier, 9);
 //                    $tag = Mage::getModel('blog/tag');
 //                    $tagId = $tag->checkIdentifier($identifier, Mage::app()->getStore()->getId());
@@ -111,7 +111,7 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
 //                    } else {
                         return false;
 //                    }
-//                }
+                }
             }
         }
 

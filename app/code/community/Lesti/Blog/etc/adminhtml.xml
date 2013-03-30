@@ -9,10 +9,15 @@
             </depends>
             <children>
                 <posts translate="title" module="blog">
-                    <title>Posts</title>
+                    <title>Manage Posts</title>
                     <action>adminhtml/blog_post/</action>
                     <sort_order>0</sort_order>
                 </posts>
+                <categories translate="title" module="blog">
+                    <title>Manage Categories</title>
+                    <action>adminhtml/blog_category/</action>
+                    <sort_order>1</sort_order>
+                </categories>
             </children>
         </blog>
     </menu>
@@ -36,8 +41,11 @@
                         <sort_order>100</sort_order>
                         <children>
                             <posts translate="title">
-                                <title>Posts</title>
+                                <title>Manage Posts</title>
                             </posts>
+                            <categories translate="title">
+                                <title>Manage Categories</title>
+                            </categories>
                         </children>
                     </blog>
                 </children>

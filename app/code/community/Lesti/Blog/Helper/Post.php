@@ -46,11 +46,4 @@ class Lesti_Blog_Helper_Post extends Mage_Core_Helper_Abstract
         return $post;
     }
 
-    public function getLastPosts($count = 5)
-    {
-        return Mage::getModel('blog/post')->getCollection()
-            ->addStoreFilter(Mage::app()->getStore()->getId())
-            ->limit($count);
-    }
-
 }

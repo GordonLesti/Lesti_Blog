@@ -2,25 +2,24 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: gordon
- * Date: 28.03.13
- * Time: 14:42
+ * Date: 30.03.13
+ * Time: 21:57
  * To change this template use File | Settings | File Templates.
  */
-class Lesti_Blog_Block_Adminhtml_Post_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Lesti_Blog_Block_Adminhtml_Category_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
 
     public function __construct()
     {
         parent::__construct();
-        $this->setId('blogPostGrid');
+        $this->setId('blogCategoryGrid');
         $this->setDefaultSort('identifier');
         $this->setDefaultDir('ASC');
     }
 
     protected function _prepareCollection()
     {
-        $collection = Mage::getModel('blog/post')->getCollection()
-            ->addAuthorToResult();
+        $collection = Mage::getModel('blog/category')->getCollection();
         $collection->setFirstStoreFlag(true);
         $this->setCollection($collection);
 
@@ -43,12 +42,6 @@ class Lesti_Blog_Block_Adminhtml_Post_Grid extends Mage_Adminhtml_Block_Widget_G
             'index'     => 'identifier'
         ));
 
-        $this->addColumn('author', array(
-            'header'    => Mage::helper('blog')->__('Author'),
-            'align'     => 'left',
-            'index'     => 'username'
-        ));
-
         /**
          * Check is single store mode
          */
@@ -64,25 +57,6 @@ class Lesti_Blog_Block_Adminhtml_Post_Grid extends Mage_Adminhtml_Block_Widget_G
                 => array($this, '_filterStoreCondition'),
             ));
         }
-
-        $this->addColumn('is_active', array(
-            'header'    => Mage::helper('blog')->__('Status'),
-            'index'     => 'is_active',
-            'type'      => 'options',
-            'options'   => Mage::getSingleton('blog/post')->getAvailableStatuses()
-        ));
-
-        $this->addColumn('creation_time', array(
-            'header'    => Mage::helper('blog')->__('Date Created'),
-            'index'     => 'creation_time',
-            'type'      => 'datetime',
-        ));
-
-        $this->addColumn('update_time', array(
-            'header'    => Mage::helper('blog')->__('Last Modified'),
-            'index'     => 'update_time',
-            'type'      => 'datetime',
-        ));
 
         return parent::_prepareColumns();
     }
@@ -109,7 +83,7 @@ class Lesti_Blog_Block_Adminhtml_Post_Grid extends Mage_Adminhtml_Block_Widget_G
      */
     public function getRowUrl($row)
     {
-        return $this->getUrl('*/*/edit', array('post_id' => $row->getId()));
+        return $this->getUrl('*/*/edit', array('category_id' => $row->getId()));
     }
 
 }

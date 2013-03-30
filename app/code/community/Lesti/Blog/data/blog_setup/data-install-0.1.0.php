@@ -6,6 +6,15 @@
  * Time: 14:10
  * To change this template use File | Settings | File Templates.
  */
+$categoryData = array(
+    'title'         => 'Lesti::Blog',
+    'identifier'    => 'lesti-blog',
+    'parent_id'     => 0,
+    'stores'        => array(0)
+);
+
+$category = Mage::getModel('blog/category')->setData($categoryData)->save();
+
 $defaultAuthor = Mage::getModel('admin/user')->getCollection()->getFirstItem();
 
 $data = array(
@@ -16,7 +25,8 @@ $data = array(
     'content'           => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<!--more--> At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
     'title'             => 'Example Post',
     'identifier'        => 'example-post',
-    'stores'            => array(Mage::app()->getStore()->getId()),
+    'stores'            => array(0),
+    'categories'        => array($category->getId())
 );
 
 Mage::getModel('blog/post')->setData($data)->save();
