@@ -112,6 +112,7 @@
             <general>
                 <router>blog</router>
                 <title>Blog</title>
+                <last_posts_count>5</last_posts_count>
             </general>
         </blog>
     </default>

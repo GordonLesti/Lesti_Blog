@@ -8,6 +8,9 @@
         <reference name="head">
             <action method="addCss"><stylesheet>css/blog.css</stylesheet></action>
         </reference>
+        <reference name="right">
+            <block type="blog/sidebar" name="blog.sidebar" template="blog/sidebar.phtml" before="-"/>
+        </reference>
     </default>
 
     <blog_index_index translate="label">

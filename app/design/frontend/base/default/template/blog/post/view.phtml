@@ -1,0 +1,22 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: gordon
+ * Date: 28.03.13
+ * Time: 13:50
+ * To change this template use File | Settings | File Templates.
+ */
+?>
+<?php
+$_post = $this->getPost();
+?>
+<article id="post-<?php echo $_post->getId() ?>" class="blog-post-view">
+    <header class="blog-entry-header page-title blog-post-title">
+        <h1><?php echo $_post->getTitle() ?></h1>
+    </header>
+    <div class="blog-entry-content">
+        <?php echo $_post->contentHtml() ?>
+    </div>
+    <footer class="blog-entry-meta">
+    </footer>
+</article>

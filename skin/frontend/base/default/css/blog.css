@@ -1,0 +1,9 @@
+.block-blog .block-title strong { background-image: url("../images/blog/i_block-blog.gif");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    padding-left: 21px;}
+.blog-post-excerpt { border-bottom: 1px solid #CCCCCC;
+    margin: 0 0 25px;
+    padding: 15px 0; }
+.block-blog li { padding: 3px 9px; }
+.blog-post-view img { max-width:100%; }

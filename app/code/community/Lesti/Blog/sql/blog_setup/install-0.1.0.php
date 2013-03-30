@@ -97,8 +97,6 @@ $table = $installer->getConnection()
         'nullable'  => true,
         'default'   => null,
     ), 'Category String Identifier')
-    ->addColumn('description', Varien_Db_Ddl_Table::TYPE_TEXT, '2M', array(
-    ), 'Category Description')
     ->addIndex($installer->getIdxName('blog/category', array('identifier')),
     array('identifier'))
     ->setComment('Blog Category Table');
