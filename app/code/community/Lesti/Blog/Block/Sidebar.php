@@ -18,4 +18,11 @@ class Lesti_Blog_Block_Sidebar extends Mage_Core_Block_Template
             ->setOrder('creation_time')
             ->setPageSize($count);
     }
+
+    public function getCategories()
+    {
+        return Mage::getModel('blog/category')->getCollection()
+            ->addStoreFilter(Mage::app()->getStore()->getId())
+            ->setOrder('identifier');
+    }
 }

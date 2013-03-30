@@ -9,6 +9,7 @@
 ?>
 <?php
 $_lastPosts = $this->getLastPosts();
+$_categories = $this->getCategories();
 $_helper = Mage::helper('blog/post');
 ?>
 <div class="block block-blog" title="<?php echo $_helper->__('Blog') ?>">
@@ -23,5 +24,12 @@ $_helper = Mage::helper('blog/post');
         <?php endforeach; ?>
         </ul>
         <script type="text/javascript">decorateList('post-list');</script>
+        <p class="block-subtitle"><?php echo $_helper->__('Categories') ?></p>
+        <ul id="category-list">
+            <?php foreach($_categories as $_category): ?>
+            <li><a title="<?php echo $_category->getTitle() ?>" href="<?php echo $_category->getCategoryUrl() ?>"><?php echo $_category->getTitle() ?></a></li>
+            <?php endforeach; ?>
+        </ul>
+        <script type="text/javascript">decorateList('category-list');</script>
     </div>
 </div>

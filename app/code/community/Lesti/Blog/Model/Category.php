@@ -28,6 +28,14 @@ class Lesti_Blog_Model_Category extends Mage_Core_Model_Abstract
         $this->_init('blog/category');
     }
 
+    public function getCategoryUrl()
+    {
+        $url = Mage::app()->getStore()->getUrl(
+            Mage::getStoreConfig(Lesti_Blog_Model_Post::XML_PATH_BLOG_GENERAL_ROUTER)) .
+            'category/' . $this->getIdentifier();
+        return $url;
+    }
+
     /**
      * Check if category identifier exist for specific store
      * return category id if category exists
