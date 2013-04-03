@@ -165,4 +165,9 @@ class Lesti_Blog_Model_Resource_Category_Collection extends Mage_Core_Model_Reso
 
         return $countSelect;
     }
+
+    protected function _toOptionArray($valueField='category_id', $labelField='title', $additional=array())
+    {
+        return parent::_toOptionArray($valueField, $labelField, $additional);
+    }
 }

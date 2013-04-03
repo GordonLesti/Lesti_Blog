@@ -19,8 +19,10 @@
             <block type="blog/adminhtml_post_edit_tabs" name="blog_post_edit_tabs">
                 <block type="blog/adminhtml_post_edit_tab_main" name="blog_post_edit_tab_main" />
                 <block type="blog/adminhtml_post_edit_tab_content" name="blog_post_edit_tab_content" />
+                <block type="blog/adminhtml_post_edit_tab_category" name="blog_post_edit_tab_category"/>
                 <action method="addTab"><name>main_section</name><block>blog_post_edit_tab_main</block></action>
                 <action method="addTab"><name>content_section</name><block>blog_post_edit_tab_content</block></action>
+                <action method="addTab"><name>category_section</name><block>blog_post_edit_tab_category</block></action>
             </block>
         </reference>
     </adminhtml_blog_post_edit>
@@ -30,4 +32,20 @@
             <block type="blog/adminhtml_category" name="blog_category"/>
         </reference>
     </adminhtml_blog_category_index>
+
+    <adminhtml_blog_category_new>
+        <update handle="adminhtml_blog_category_edit" />
+    </adminhtml_blog_category_new>
+
+    <adminhtml_blog_category_edit>
+        <reference name="content">
+            <block type="blog/adminhtml_category_edit" name="blog_category_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="blog/adminhtml_category_edit_tabs" name="blog_category_edit_tabs">
+                <block type="blog/adminhtml_category_edit_tab_main" name="blog_category_edit_tab_main" />
+                <action method="addTab"><name>main_section</name><block>blog_category_edit_tab_main</block></action>
+            </block>
+        </reference>
+    </adminhtml_blog_category_edit>
 </layout>

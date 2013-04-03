@@ -189,6 +189,8 @@ class Lesti_Blog_Model_Resource_Post extends Mage_Core_Model_Resource_Db_Abstrac
 
             $object->setData('store_id', $stores);
 
+            $categories = $this->lookupCategoryIds($object->getId());
+            $object->setData('category_id', $categories);
         }
 
         return parent::_afterLoad($object);

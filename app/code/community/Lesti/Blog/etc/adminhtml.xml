@@ -3,7 +3,7 @@
     <menu>
         <blog translate="title" module="blog">
             <title>Blog</title>
-            <sort_order>100</sort_order>
+            <sort_order>85</sort_order>
             <depends>
                 <module>Lesti_Blog</module>
             </depends>
