@@ -9,6 +9,8 @@
 class Lesti_Blog_Model_Post_Comment extends Mage_Core_Model_Abstract
 {
 
+    protected $_post;
+
     /**
      * Comment's Statuses
      */
@@ -50,6 +52,26 @@ class Lesti_Blog_Model_Post_Comment extends Mage_Core_Model_Abstract
         Mage::dispatchEvent('blog_post_comment_get_available_statuses', array('statuses' => $statuses));
 
         return $statuses->getData();
+    }
+
+    public function getPost()
+    {
+        if(is_null($this->_post)) {
+            $this->_post = Mage::getModel('blog/post')->load($this->getPostId());
+        }
+        return $this->_post;
+    }
+
+    public function setPost($post)
+    {
+        $this->_post = $post;
+    }
+
+    public function getCommentUrl()
+    {
+        return Mage::app()->getStore()->getUrl(
+            Mage::getStoreConfig(Lesti_Blog_Model_Post::XML_PATH_BLOG_GENERAL_ROUTER)) .
+            $this->getPost()->getIdentifier() . '/comment-' . $this->getId();
     }
 
 }

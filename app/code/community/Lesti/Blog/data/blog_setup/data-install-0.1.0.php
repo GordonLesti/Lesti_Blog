@@ -38,7 +38,7 @@ $commentData = array(
     'author_name'   => 'Gordon Lesti',
     'author_email'  => 'gordon@lesti-webentwicklung.de',
     'author_url'    => 'http://www.lesti-webentwicklung.de',
-    'conetent'      => 'First Comment',
+    'content'      => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<!--more--> At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
     'status'        => Lesti_Blog_Model_Post_Comment::STATUS_ENABLED
 );
 $comment = Mage::getModel('blog/post_comment')->setData($commentData)->save();
