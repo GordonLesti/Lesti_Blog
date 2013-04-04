@@ -166,9 +166,7 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
         $this->getSelect()->join(
             array('admin_user' => $this->getTable('admin/user')),
             'main_table.author_id = admin_user.user_id',
-            array('admin_user.firstname',
-                'admin_user.lastname',
-                'admin_user.username')
+            array('admin_user.username')
         )->group('main_table.post_id');
         return $this;
     }

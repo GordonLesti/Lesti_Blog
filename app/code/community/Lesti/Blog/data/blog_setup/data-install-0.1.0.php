@@ -6,19 +6,21 @@
  * Time: 14:10
  * To change this template use File | Settings | File Templates.
  */
+
+// create example category
 $categoryData = array(
     'title'         => 'Lesti::Blog',
     'identifier'    => 'lesti-blog',
     'parent_id'     => 0,
     'stores'        => array(0)
 );
-
 $category = Mage::getModel('blog/category')->setData($categoryData)->save();
 
-$defaultAuthor = Mage::getModel('admin/user')->getCollection()->getFirstItem();
+// create example post
+$author = Mage::getModel('admin/user')->getCollection()->getFirstItem();
 
-$data = array(
-    'author_id'         => $defaultAuthor->getId(),
+$postData = array(
+    'author_id'         => $author->getId(),
     'creation_time'     => Mage::getSingleton('core/date')->gmtDate(),
     'update_time'       => Mage::getSingleton('core/date')->gmtDate(),
     'is_active'         => Lesti_Blog_Model_Post::STATUS_ENABLED,
@@ -28,5 +30,15 @@ $data = array(
     'stores'            => array(0),
     'categories'        => array($category->getId())
 );
+$post = Mage::getModel('blog/post')->setData($postData)->save();
 
-Mage::getModel('blog/post')->setData($data)->save();
+// create comment
+$commentData = array(
+    'post_id'       => $post->getId(),
+    'author_name'   => 'Gordon Lesti',
+    'author_email'  => 'gordon@lesti-webentwicklung.de',
+    'author_url'    => 'http://www.lesti-webentwicklung.de',
+    'conetent'      => 'First Comment',
+    'status'        => Lesti_Blog_Model_Post_Comment::STATUS_ENABLED
+);
+$comment = Mage::getModel('blog/post_comment')->setData($commentData)->save();

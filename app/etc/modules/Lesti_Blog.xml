@@ -5,9 +5,10 @@
             <active>true</active>
             <codePool>community</codePool>
             <depends>
-                <Mage_Core/>
-                <Mage_Cms/>
                 <Mage_Adminhtml/>
+                <Mage_Cms/>
+                <Mage_Core/>
+                <Mage_Customer/>
             </depends>
         </Lesti_Blog>
     </modules>

@@ -29,7 +29,9 @@
             <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
         </reference>
         <reference name="content">
-            <block type="blog/post_view" name="blog.post.view" template="blog/post/view.phtml"/>
+            <block type="blog/post_view" name="blog.post.view" template="blog/post/view.phtml">
+                <block type="blog/post_view_comment" name="blog.post.view.comment" as="comment" template="blog/post/view/comment.phtml"/>
+            </block>
         </reference>
     </blog_post_view>
 

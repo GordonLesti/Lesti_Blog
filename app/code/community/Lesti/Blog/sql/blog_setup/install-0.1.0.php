@@ -33,6 +33,10 @@ $table = $installer->getConnection()
         'nullable'  => false,
         'default'   => '1',
     ), 'Is Post Active')
+    ->addColumn('allow_comments', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
+        'nullable'  => false,
+        'default'   => '0',
+    ), 'Allow Comments')
     ->addColumn('content', Varien_Db_Ddl_Table::TYPE_TEXT, '2M', array(
     ), 'Post Content')
     ->addColumn('title', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
@@ -228,6 +232,59 @@ $table = $installer->getConnection()
         'post_id', $installer->getTable('blog/post'), 'post_id',
         Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
     ->setComment('Blog Tag To Post Linkage Table');
+$installer->getConnection()->createTable($table);
+
+/**
+ * Create table 'blog/post_comment'
+ */
+$table = $installer->getConnection()
+    ->newTable($installer->getTable('blog/post_comment'))
+    ->addColumn('comment_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+        'identity'  => true,
+        'nullable'  => false,
+        'primary'   => true,
+    ), 'Comment ID')
+    ->addColumn('parent_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+        'unsigned'  => true,
+        'nullable'  => false,
+        'default'   => '0',
+    ), 'Parent Comment ID')
+    ->addColumn('post_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+        'unsigned'  => true,
+        'nullable'  => false,
+        'primary'   => true,
+    ), 'Post ID')
+    ->addColumn('creation_time', Varien_Db_Ddl_Table::TYPE_TIMESTAMP, null, array(
+    ), 'Post Creation Time')
+    ->addColumn('admin_author_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+        'unsigned'  => true,
+        'nullable'  => true,
+    ), 'Comment Admin Author ID')
+    ->addColumn('customer_author_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+        'unsigned'  => true,
+        'nullable'  => true,
+    ), 'Comment Customer Author ID')
+    ->addColumn('author_name', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
+        'nullable'  => true
+    ), 'Comment Author Name')
+    ->addColumn('author_email', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
+        'nullable'  => true
+    ), 'Comment Author Email')
+    ->addColumn('author_url', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
+        'nullable'  => true
+    ), 'Comment Author Url')
+    ->addColumn('content', Varien_Db_Ddl_Table::TYPE_TEXT, '2M', array(
+    ), 'Comment Content')
+    ->addColumn('status', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
+        'nullable'  => false,
+        'default'   => '0',
+    ), 'Comment Status')
+    ->addIndex($installer->getIdxName('blog/post_comment', array('post_id')),
+        array('post_id'))
+    ->addForeignKey($installer->getFkName('blog/post_comment', 'post_id', 'blog/post', 'post_id'),
+        'post_id', $installer->getTable('blog/post'), 'post_id',
+        Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
+    ->setComment('Blog Post Comment Table');
 $installer->getConnection()->createTable($table);
 
 $installer->endSetup();

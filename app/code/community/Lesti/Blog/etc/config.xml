@@ -66,6 +66,9 @@
                     <tag_post>
                         <table>blog_tag_post</table>
                     </tag_post>
+                    <post_comment>
+                        <table>blog_post_comment</table>
+                    </post_comment>
                 </entities>
             </blog_resource>
         </models>
