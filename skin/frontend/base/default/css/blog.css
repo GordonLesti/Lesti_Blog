@@ -11,8 +11,9 @@
 .blog-post-view img { max-width:100%; }
 .blog-commentlist li { margin: 10px 0; }
 .blog-comment article { border-bottom: 1px solid #CCCCCC; }
-.blog-comment section { padding: 10px 0 10px 10px; }
+.blog-comment section { padding: 10px 0; }
 .blog-comment-area { margin: 30px 0; }
 .blog-comment-meta cite { font-size: 120%; }
 .blog-comment-meta time { margin-left: 5px; }
+.blog-comment-children { padding-left: 20px; }
 .blog-avatar { margin-right: 15px; }

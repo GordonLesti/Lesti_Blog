@@ -1,0 +1,29 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: gordon
+ * Date: 09.04.13
+ * Time: 23:54
+ * To change this template use File | Settings | File Templates.
+ */
+?>
+<?php
+$_comment = $this->getComment();
+$_gravatarHelper = Mage::helper('blog/gravatar');
+$_gravatarSize = 44;
+?>
+<li id="li-comment-<?php echo $_comment->getId()?>" class="blog-comment">
+    <article id="comment-<?php echo $_comment->getId()?>" class="blog-comment">
+        <header class="blog-comment-meta">
+            <img class="blog-avatar" width="<?php echo $_gravatarSize ?>" height="<?php echo $_gravatarSize ?>" src="<?php echo $_gravatarHelper->getGravatarSrc($_comment->getAuthorEmail(), $_gravatarSize) ?>"/>
+            <cite class="fn"><?php echo $_comment->getAuthorName() ?></cite>
+            <a href="<?php echo $_comment->getCommentUrl() ?>">
+                <time datetime="<?php echo $_comment->getCreationTime() ?>"><?php echo date("D, j M, Y", strtotime($_comment->getCreationTime())) ?></time>
+            </a>
+        </header>
+        <section class="blog-comment-content"><?php echo $_comment->getContent() ?></section>
+    </article>
+    <ol class="blog-comment-children">
+        <?php echo $this->getChildHtml() ?>
+    </ol>
+</li>

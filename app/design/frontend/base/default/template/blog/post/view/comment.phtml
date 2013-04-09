@@ -1,0 +1,60 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: gordon
+ * Date: 04.04.13
+ * Time: 12:47
+ * To change this template use File | Settings | File Templates.
+ */
+?>
+<?php
+$_post = $this->getPost();
+$_commentCollection = $this->getCommentCollection();
+$_count = $_commentCollection->count();
+$_helper = Mage::helper('blog');
+?>
+<?php if($_count): ?>
+    <div id="post-comments" class="blog-comment-area">
+        <?php if($_count == 1): ?>
+            <h2 class="blog-comments-title"><?php echo sprintf($_helper->__('%d thought on "%s"'), $_count, $_post->getTitle()) ?></h2>
+        <?php else: ?>
+            <h2 class="blog-comments-title"><?php echo sprintf($_helper->__('%d thoughts on "%s"'), $_count, $_post->getTitle()) ?></h2>
+        <?php endif; ?>
+        <ol class="blog-commentlist">
+            <?php echo $this->getChildHtml(); ?>
+        </ol>
+        <div id="post-response">
+            <h3 id="reply-title"><?php echo $_helper->__('Leave a reply')?></h3>
+            <form class="form-list" id="comment-form" method="post" action="<?php echo $this->getFormActionUrl() ?>">
+                <p class="blog-comment-form-notes">
+                    <?php echo $_helper->__('Your email address will not be published.')?>
+                </p>
+                <p class="blog-comment-form-author">
+                    <label class="required" for="author"><em>*</em><?php echo $_helper->__('Name') ?></label>
+                    <div class="input-box">
+                        <input id="author" type="text" name="author" class="input-text required-entry" maxlength="255"/>
+                    </div>
+                </p>
+                <p class="blog-comment-form-email">
+                    <label class="required" for="email"><em>*</em><?php echo $_helper->__('Email') ?></label>
+                    <div class="input-box">
+                        <input id="email" type="text" name="email" class="input-text required-entry" maxlength="255"/>
+                    </div>
+                </p>
+                <p class="blog-comment-form-url">
+                    <label for="url"><?php echo $_helper->__('Website') ?></label>
+                    <div class="input-box">
+                        <input id="url" type="text" name="url" class="input-text" maxlength="255"/>
+                    </div>
+                </p>
+                <p class="blog-comment-form-comment">
+                    <label class="required" for="comment"><em>*</em><?php echo $_helper->__('Comment') ?></label>
+                    <div class="input-box">
+                        <textarea id="comment" name="comment" class="input-text required-entry"></textarea>
+                    </div>
+                </p>
+                <p class="required"><?php echo $_helper->__('* Required Fields') ?></p>
+            </form>
+        </div>
+    </div>
+<?php endif; ?>
