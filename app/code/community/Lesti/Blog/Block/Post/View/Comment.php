@@ -56,4 +56,9 @@ class Lesti_Blog_Block_Post_View_Comment extends Mage_Core_Block_Template
         return Mage::registry('blog_post');
     }
 
+    public function getFormActionUrl()
+    {
+        return Mage::app()->getStore()->getUrl('blog/post_comment/post', array('post_id' => $this->getPost()->getId()));
+    }
+
 }
