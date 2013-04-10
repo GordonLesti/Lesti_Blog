@@ -23,7 +23,7 @@ $_helper = Mage::helper('blog');
         <ol class="blog-commentlist">
             <?php echo $this->getChildHtml(); ?>
         </ol>
-        <div id="post-response">
+        <div id="post-response" class="blog-reply-form">
             <h3 id="reply-title"><?php echo $_helper->__('Leave a reply')?></h3>
             <form class="form-list" id="comment-form" method="post" action="<?php echo $this->getFormActionUrl() ?>">
                 <p class="blog-comment-form-notes">
@@ -53,7 +53,15 @@ $_helper = Mage::helper('blog');
                         <textarea id="comment" name="comment" class="input-text required-entry"></textarea>
                     </div>
                 </p>
-                <p class="required"><?php echo $_helper->__('* Required Fields') ?></p>
+                <input id="parent_id" type="hidden" name="parent_id"/>
+                <div class="buttons-set">
+                    <p class="required"><?php echo $_helper->__('* Required Fields') ?></p>
+                    <button class="button" title="Save" type="submit">
+                        <span>
+                            <span>Post comment</span>
+                        </span>
+                    </button>
+                </div>
             </form>
         </div>
     </div>

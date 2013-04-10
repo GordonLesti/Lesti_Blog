@@ -22,6 +22,10 @@ $_gravatarSize = 44;
             </a>
         </header>
         <section class="blog-comment-content"><?php echo $_comment->getContent() ?></section>
+        <div class="blog-reply">
+            <a class="comment-reply-link" onclick="moveReplyForm(<?php echo $_comment->getId()?>)">Reply</a>
+            <span>&darr;</span>
+        </div>
     </article>
     <ol class="blog-comment-children">
         <?php echo $this->getChildHtml() ?>
