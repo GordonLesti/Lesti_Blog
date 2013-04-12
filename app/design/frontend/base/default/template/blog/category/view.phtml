@@ -11,6 +11,7 @@
 $_postCollection = $this->getLoadedPostCollection();
 $_category = $this->getCategory();
 $_helper = Mage::helper('blog');
+$_authorHelper = Mage::helper('blog/author');
 ?>
 <div class="page-title blog-category-title">
     <h1><?php echo $_category->getTitle() ?></h1>
@@ -49,7 +50,7 @@ $_helper = Mage::helper('blog');
             <span class="by-author">
                 <?php echo $_helper->__('by') ?>
                 <span class="author">
-                    <a rel="author" title="<?php echo $_helper->__('View all posts by') . ' ' . $_post->getUsername() ?>" href="<?php // TODO: author href ?>"><?php echo $_post->getUsername() ?></a>
+                    <a rel="author" title="<?php echo $_helper->__('View all posts by') . ' ' . $_post->getUsername() ?>" href="<?php echo $_authorHelper->getAuthorUrl($_post->getAuthorId()) ?>"><?php echo $_post->getUsername() ?></a>
                 </span>
             </span>
         </footer>

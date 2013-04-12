@@ -9,6 +9,8 @@
 ?>
 <?php
 $_post = $this->getPost();
+$_helper = Mage::helper('blog');
+$_authorHelper = Mage::helper('blog/author');
 ?>
 <article id="post-<?php echo $_post->getId() ?>" class="blog-post-view">
     <header class="blog-entry-header page-title blog-post-title">
@@ -18,6 +20,22 @@ $_post = $this->getPost();
         <?php echo $_post->contentHtml() ?>
     </div>
     <footer class="blog-entry-meta">
+        <?php echo $_helper->__('This entry was posted') ?>
+        <?php $_categoryCollection = $_post->getCategoryCollection() ?>
+        <?php if($_categoryCollection->count()): ?>
+        <?php echo $_helper->__(' in ') ?>
+        <?php foreach($_categoryCollection as $_postCategory): ?>
+            <a rel="category" title="<?php echo $_helper->__('View all posts in') . ' ' . $_postCategory->getTitle() ?>" href="<?php echo $_postCategory->getCategoryUrl() ?>"><?php echo $_postCategory->getTitle() ?></a>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <?php echo $_helper->__('on') ?>
+        <a rel="bookmark" href="<?php echo $_post->getPostUrl() ?>"><?php echo date("D, j M, Y", strtotime($_post->getCreationTime())) ?></a>
+            <span class="by-author">
+                <?php echo $_helper->__('by') ?>
+                <span class="author">
+                    <a rel="author" title="<?php echo $_helper->__('View all posts by') . ' ' . $_post->getUsername() ?>" href="<?php echo $_authorHelper->getAuthorUrl($_post->getAuthorId()) ?>"><?php echo $_post->getUsername() ?></a>
+                </span>
+            </span>
     </footer>
 </article>
 <?php echo $this->getChildHtml('comment') ?>
