@@ -34,12 +34,14 @@ class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
     protected function _getPostCollection()
     {
         if(is_null($this->_postCollection)) {
-            $this->_postCollection = Mage::getModel('blog/post')->getCollection()
-                ->addStoreFilter(Mage::app()->getStore()->getId());
             $category = $this->getCategory();
             if($category->getId()) {
-                $this->_postCollection->addCategoryFilter($category->getId());
+                $this->_postCollection = $category->getPostCollection();
+            } else {
+                $this->_postCollection = Mage::getModel('blog/post')->getCollection();
             }
+            $this->_postCollection->addStoreFilter(Mage::app()->getStore()->getId())
+                ->addAuthorToResult();
         }
         return $this->_postCollection;
     }

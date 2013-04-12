@@ -22,8 +22,9 @@ class Lesti_Blog_Model_Resource_Category_Collection extends Mage_Core_Model_Reso
     protected function _construct()
     {
         $this->_init('blog/category');
-        $this->_map['fields']['category_id'] = 'main_table.category_id';
-        $this->_map['fields']['store']   = 'store_table.store_id';
+        $this->_map['fields']['category_id']    = 'main_table.category_id';
+        $this->_map['fields']['store']          = 'store_table.store_id';
+        $this->_map['fields']['post']           = 'post_table.post_id';
     }
 
     /**
@@ -132,6 +133,28 @@ class Lesti_Blog_Model_Resource_Category_Collection extends Mage_Core_Model_Reso
     }
 
     /**
+     * Add filter by post
+     *
+     * @param int|Lesti_Blog_Model_Post $post
+     * @return Lesti_Blog_Model_Resource_Category_Collection
+     */
+    public function addPostFilter($post)
+    {
+        if (!$this->getFlag('post_filter_added')) {
+            if ($post instanceof Lesti_Blog_Model_Post) {
+                $post = array($post->getId());
+            }
+
+            if (!is_array($post)) {
+                $post = array($post);
+            }
+
+            $this->addFilter('post', array('in' => $post), 'public');
+        }
+        return $this;
+    }
+
+    /**
      * Join store relation table if there is store filter
      */
     protected function _renderFiltersBefore()
@@ -140,6 +163,17 @@ class Lesti_Blog_Model_Resource_Category_Collection extends Mage_Core_Model_Reso
             $this->getSelect()->join(
                 array('store_table' => $this->getTable('blog/category_store')),
                 'main_table.category_id = store_table.category_id',
+                array()
+            )->group('main_table.category_id');
+
+            /*
+             * Allow analytic functions usage because of one field grouping
+             */
+            $this->_useAnalyticFunction = true;
+        } else if($this->getFilter('post')) {
+            $this->getSelect()->join(
+                array('post_table' => $this->getTable('blog/category_post')),
+                'main_table.category_id = post_table.category_id',
                 array()
             )->group('main_table.category_id');
 

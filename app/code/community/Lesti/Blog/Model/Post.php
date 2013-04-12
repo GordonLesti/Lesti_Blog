@@ -21,6 +21,7 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
     protected $_cacheTag         = 'blog_post';
     protected $_needReadMore     = false;
     protected $_commentCollection = null;
+    protected $_categoryCollection = null;
 
     /**
      * Prefix of model events names
@@ -47,6 +48,11 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
                 case 'more':
                     $url .= '/#more-' . $this->getId();
                     break;
+                case 'comment':
+                    $url .= '/#comments';
+                    break;
+                default:
+                    break;
             }
         }
         return $url;
@@ -59,6 +65,18 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
                 ->addFieldToFilter('post_id', $this->getId());
         }
         return $this->_commentCollection;
+    }
+
+    public function getCategoryCollection($storeId = null)
+    {
+        if(is_null($this->_categoryCollection)) {
+            $this->_categoryCollection = Mage::getModel('blog/category')->getCollection()
+                ->addPostFilter($this->getId());
+            if(!is_null($storeId)) {
+                $this->_categoryCollection->addStoreFilter($storeId);
+            }
+        }
+        return $this->_categoryCollection;
     }
 
     /**

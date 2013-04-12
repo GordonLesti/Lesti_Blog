@@ -46,6 +46,10 @@ $table = $installer->getConnection()
         'nullable'  => true,
         'default'   => null,
     ), 'Post String Identifier')
+    ->addColumn('comment_count', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+        'nullable'  => false,
+        'default'   => '0'
+    ), 'Post Comment Count')
     ->addIndex($installer->getIdxName('blog/post', array('identifier')),
         array('identifier'))
     ->addForeignKey($installer->getFkName('blog/post', 'author_id', 'admin/user', 'user_id'),
