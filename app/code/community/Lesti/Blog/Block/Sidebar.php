@@ -8,21 +8,46 @@
  */
 class Lesti_Blog_Block_Sidebar extends Mage_Core_Block_Template
 {
-    const XML_PATH_LAST_POSTS_COUNT = 'blog/general/last_posts_count';
+    const XML_PATH_RECENT_POSTS_COUNT = 'blog/sidebar/recent_posts_count';
+    const XML_PATH_RECENT_COMMENTS_COUNT = 'blog/sidebar/recent_comments_count';
 
-    public function getLastPosts()
+    protected $_recentPosts;
+    protected $_recentComments;
+    protected $_categories;
+
+    public function getRecentPosts()
     {
-        $count = (int) Mage::getStoreConfig(self::XML_PATH_LAST_POSTS_COUNT);
-        return Mage::getModel('blog/post')->getCollection()
-            ->addStoreFilter(Mage::app()->getStore()->getId())
-            ->setOrder('creation_time')
-            ->setPageSize($count);
+        if(is_null($this->_recentPosts)) {
+            $count = (int) Mage::getStoreConfig(self::XML_PATH_RECENT_POSTS_COUNT);
+            $this->_recentPosts = Mage::getModel('blog/post')->getCollection()
+                ->addFieldToFilter('is_active', Lesti_Blog_Model_Post::STATUS_ENABLED)
+                ->addStoreFilter(Mage::app()->getStore()->getId())
+                ->setOrder('creation_time')
+                ->setPageSize($count);
+        }
+        return $this->_recentPosts;
+    }
+
+    public function getRecentComments()
+    {
+        if(is_null($this->_recentComments)) {
+            $count = (int) Mage::getStoreConfig(self::XML_PATH_RECENT_COMMENTS_COUNT);
+            $this->_recentComments = Mage::getModel('blog/post_comment')->getCollection()
+                ->addFieldToFilter('status', Lesti_Blog_Model_Post_Comment::STATUS_ENABLED)
+                ->addStoreFilter(Mage::app()->getStore()->getId())
+                ->setOrder('creation_time')
+                ->setPageSize($count);
+        }
+        return $this->_recentComments;
     }
 
     public function getCategories()
     {
-        return Mage::getModel('blog/category')->getCollection()
-            ->addStoreFilter(Mage::app()->getStore()->getId())
-            ->setOrder('identifier');
+        if(is_null($this->_categories)) {
+            $this->_categories = Mage::getModel('blog/category')->getCollection()
+                ->addStoreFilter(Mage::app()->getStore()->getId())
+                ->setOrder('identifier');
+        }
+        return $this->_categories;
     }
 }

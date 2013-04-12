@@ -155,7 +155,7 @@ class Lesti_Blog_Model_Resource_Category_Collection extends Mage_Core_Model_Reso
     }
 
     /**
-     * Join store relation table if there is store filter
+     * Join store and post relation table if there is store or post filter
      */
     protected function _renderFiltersBefore()
     {
@@ -170,7 +170,8 @@ class Lesti_Blog_Model_Resource_Category_Collection extends Mage_Core_Model_Reso
              * Allow analytic functions usage because of one field grouping
              */
             $this->_useAnalyticFunction = true;
-        } else if($this->getFilter('post')) {
+        }
+        if($this->getFilter('post')) {
             $this->getSelect()->join(
                 array('post_table' => $this->getTable('blog/category_post')),
                 'main_table.category_id = post_table.category_id',

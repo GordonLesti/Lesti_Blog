@@ -115,8 +115,11 @@
             <general>
                 <router>blog</router>
                 <title>Blog</title>
-                <last_posts_count>5</last_posts_count>
             </general>
+            <sidebar>
+                <recent_posts_count>5</recent_posts_count>
+                <recent_comments_count>5</recent_comments_count>
+            </sidebar>
         </blog>
     </default>
 </config>

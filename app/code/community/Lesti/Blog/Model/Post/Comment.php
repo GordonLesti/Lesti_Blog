@@ -62,6 +62,11 @@ class Lesti_Blog_Model_Post_Comment extends Mage_Core_Model_Abstract
         return $this->_post;
     }
 
+    public function getPostTitle()
+    {
+        return $this->getPost()->getTitle();
+    }
+
     public function setPost($post)
     {
         $this->_post = $post;
@@ -71,7 +76,7 @@ class Lesti_Blog_Model_Post_Comment extends Mage_Core_Model_Abstract
     {
         return Mage::app()->getStore()->getUrl(
             Mage::getStoreConfig(Lesti_Blog_Model_Post::XML_PATH_BLOG_GENERAL_ROUTER)) .
-            $this->getPost()->getIdentifier() . '/comment-' . $this->getId();
+            $this->getPost()->getIdentifier() . '/#comment-' . $this->getId();
     }
 
 }
