@@ -15,6 +15,19 @@ $_authorHelper = Mage::helper('blog/author');
 <article id="post-<?php echo $_post->getId() ?>" class="blog-post-view">
     <header class="blog-entry-header page-title blog-post-title">
         <h1><?php echo $_post->getTitle() ?></h1>
+        <?php if($_post->getCommentCount()): ?>
+            <div class="blog-comments-link">
+                <a title="<?php echo $_helper->__('Comment on')?> <?php echo $_post->getTitle() ?>" href="<?php echo $_post->getPostUrl(array('comment')) ?>">
+                    <?php echo $_post->getCommentCount() ?> <?php echo $_post->getCommentCount() == 1 ? $_helper->__('Reply') : $_helper->__('Replies') ?>
+                </a>
+            </div>
+        <?php else: ?>
+            <div class="blog-comments-link">
+                <a title="<?php echo $_helper->__('Comment on')?> <?php echo $_post->getTitle() ?>" href="<?php echo $_post->getPostUrl(array('response')) ?>">
+                    <?php echo $_helper->__('Leave a reply') ?>
+                </a>
+            </div>
+        <?php endif; ?>
     </header>
     <div class="blog-entry-content">
         <?php echo $_post->contentHtml() ?>

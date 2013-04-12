@@ -52,7 +52,8 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
                 case 'comment':
                     $url .= '/#comments';
                     break;
-                default:
+                case 'response':
+                    $url .= '/#post-response';
                     break;
             }
         }
