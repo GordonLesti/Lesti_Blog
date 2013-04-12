@@ -39,7 +39,7 @@ $_authorHelper = Mage::helper('blog/author');
         <div class="blog-entry-content">
             <?php echo $_post->excerptHtml(); ?>
             <?php if($_post->needReadMore()): ?>
-                <a class="blog-more-link" href="<?php echo $_post->getPostUrl(array('more')) ?>"><?php echo $_helper->__('Read more') ?> <span class="blog-meta-nav">&rarr;</span></a>
+                <a class="blog-more-link" href="<?php echo $_post->getPostUrl(array('more')) ?>"><?php echo $_helper->__('Continue reading') ?> <span class="blog-meta-nav">&rarr;</span></a>
             <?php endif; ?>
         </div>
         <footer class="blog-entry-meta">
