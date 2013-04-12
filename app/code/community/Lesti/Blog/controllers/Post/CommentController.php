@@ -30,6 +30,50 @@ class Lesti_Blog_Post_CommentController extends Mage_Core_Controller_Front_Actio
         }
     }
 
+    protected function _initPost()
+    {
+        Mage::dispatchEvent('comment_controller_post_init_before', array('controller_action'=>$this));
+        $data = $this->getRequest()->getPost();
+        $postId = (int) $data['post_id'];
+
+        $post = $this->_loadPost($postId);
+
+        if(!$post) {
+            return false;
+        }
+
+        try {
+            Mage::dispatchEvent('comment_controller_post_init', array('post'=>$post));
+            Mage::dispatchEvent('comment_controller_post_init_after', array(
+                'post'           => $post,
+                'controller_action' => $this
+            ));
+        } catch (Mage_Core_Exception $e) {
+            Mage::logException($e);
+            return false;
+        }
+
+        return $post;
+    }
+
+    protected function _loadPost($postId)
+    {
+        if(!$postId) {
+            return false;
+        }
+
+        $post = Mage::getModel('blog/post')
+            ->setStoreId(Mage::app()->getStore()->getId())
+            ->load($postId);
+
+        if (!$post->getId() || $post->getIsActive() != Lesti_Blog_Model_Post::STATUS_ENABLED) {
+            return false;
+        }
+
+        Mage::register('blog_post', $post);
+        return $post;
+    }
+
     public function postAction()
     {
         if ($data = Mage::getSingleton('blog/session')->getFormData(true)) {
