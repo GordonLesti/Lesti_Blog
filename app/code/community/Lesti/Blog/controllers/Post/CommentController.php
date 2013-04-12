@@ -17,6 +17,6 @@ class Lesti_Blog_Post_CommentController extends Mage_Core_Controller_Front_Actio
 
     public function postAction()
     {
-        // save comment jo
+        // save comment
     }
 }
