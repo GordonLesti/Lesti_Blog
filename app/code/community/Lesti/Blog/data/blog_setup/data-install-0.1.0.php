@@ -37,19 +37,8 @@ $commentData1 = array(
     'post_id'       => $post->getId(),
     'author_name'   => 'Gordon Lesti',
     'author_email'  => 'info@gordonlesti.com',
-    'author_url'    => 'http://www.lesti-webentwicklung.de',
-    'content'       => 'Comment 1',
+    'author_url'    => 'http://gordonlesti.com/',
+    'content'       => "Hello,\nI'm Gordon Lesti and I have developed Lesti::Blog. Thank you for using and have fun.",
     'status'        => Lesti_Blog_Model_Post_Comment::STATUS_ENABLED
 );
 $comment1 = Mage::getModel('blog/post_comment')->setData($commentData1)->save();
-
-$commentData1_1 = array(
-    'post_id'       => $post->getId(),
-    'author_name'   => 'Gordon Lesti',
-    'author_email'  => 'info@gordonlesti.com',
-    'author_url'    => 'http://www.lesti-webentwicklung.de',
-    'content'       => 'Comment 1.1',
-    'status'        => Lesti_Blog_Model_Post_Comment::STATUS_ENABLED,
-    'parent_id'     => $comment1->getId()
-);
-$comment1_1 = Mage::getModel('blog/post_comment')->setData($commentData1_1)->save();

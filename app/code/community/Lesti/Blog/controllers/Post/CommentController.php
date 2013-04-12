@@ -8,15 +8,37 @@
  */
 class Lesti_Blog_Post_CommentController extends Mage_Core_Controller_Front_Action
 {
+
     public function preDispatch()
     {
         parent::preDispatch();
 
-        // check if is allowed for user to comment;
+        $allowGuest = Mage::helper('blog/post_comment')->getIsGuestAllowToWrite();
+        if (!$this->getRequest()->isDispatched()) {
+            return;
+        }
+
+        $action = $this->getRequest()->getActionName();
+        if (!$allowGuest && $action == 'post' && $this->getRequest()->isPost()) {
+            if (!Mage::getSingleton('customer/session')->isLoggedIn()) {
+                $this->setFlag('', self::FLAG_NO_DISPATCH, true);
+                Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('*/*/*', array('_current' => true)));
+                Mage::getSingleton('blog/session')->setFormData($this->getRequest()->getPost())
+                    ->setRedirectUrl($this->_getRefererUrl());
+                $this->_redirectUrl(Mage::helper('customer')->getLoginUrl());
+            }
+        }
     }
 
     public function postAction()
     {
-        // save comment
+        if ($data = Mage::getSingleton('blog/session')->getFormData(true)) {
+            $rating = array();
+            if (isset($data['ratings']) && is_array($data['ratings'])) {
+                $rating = $data['ratings'];
+            }
+        } else {
+            $data   = $this->getRequest()->getPost();
+        }
     }
 }

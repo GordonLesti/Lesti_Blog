@@ -9,8 +9,10 @@
 ?>
 <?php
 $_comment = $this->getComment();
+$_post = $_comment->getPost();
 $_gravatarHelper = Mage::helper('blog/gravatar');
 $_gravatarSize = 44;
+$_commentHelper = Mage::helper('blog/post_comment');
 ?>
 <li id="li-comment-<?php echo $_comment->getId()?>" class="blog-comment">
     <article id="comment-<?php echo $_comment->getId()?>" class="blog-comment">
@@ -22,10 +24,12 @@ $_gravatarSize = 44;
             </a>
         </header>
         <section class="blog-comment-content"><?php echo $_comment->getContent() ?></section>
-        <div class="blog-reply">
-            <a class="comment-reply-link" onclick="moveReplyForm(<?php echo $_comment->getId()?>)">Reply</a>
-            <span>&darr;</span>
-        </div>
+        <?php if($_commentHelper->getIsCustomerAllowedToWrite($_post)): ?>
+            <div class="blog-reply">
+                <a class="comment-reply-link" onclick="moveReplyForm(<?php echo $_comment->getId()?>)">Reply</a>
+                <span>&darr;</span>
+            </div>
+        <?php endif; ?>
     </article>
     <ol class="blog-comment-children">
         <?php echo $this->getChildHtml() ?>

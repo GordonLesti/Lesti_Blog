@@ -26,7 +26,7 @@ $_helper = Mage::helper('blog/post');
         </ul>
         <script type="text/javascript">decorateList('post-list');</script>
         <p class="block-subtitle"><?php echo $_helper->__('Recent Comments') ?></p>
-        <ul id="post-list">
+        <ul id="comment-list">
             <?php foreach($_recentComments as $_comment): ?>
             <li>
                 <a rel="external nofollow" href="<?php echo $_comment->getAuthorUrl() ?>"><?php echo $_comment->getAuthorName() ?></a>
@@ -35,7 +35,7 @@ $_helper = Mage::helper('blog/post');
             </li>
             <?php endforeach; ?>
         </ul>
-        <script type="text/javascript">decorateList('post-list');</script>
+        <script type="text/javascript">decorateList('comment-list');</script>
         <p class="block-subtitle"><?php echo $_helper->__('Categories') ?></p>
         <ul id="category-list">
             <?php foreach($_categories as $_category): ?>

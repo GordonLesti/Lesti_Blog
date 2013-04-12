@@ -260,10 +260,6 @@ $table = $installer->getConnection()
     ), 'Post ID')
     ->addColumn('creation_time', Varien_Db_Ddl_Table::TYPE_TIMESTAMP, null, array(
     ), 'Post Creation Time')
-    ->addColumn('admin_author_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-        'unsigned'  => true,
-        'nullable'  => true,
-    ), 'Comment Admin Author ID')
     ->addColumn('customer_author_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         'unsigned'  => true,
         'nullable'  => true,
