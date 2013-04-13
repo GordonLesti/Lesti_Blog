@@ -29,8 +29,6 @@ class Lesti_Blog_Block_Adminhtml_Post_Grid extends Mage_Adminhtml_Block_Widget_G
 
     protected function _prepareColumns()
     {
-        $baseUrl = $this->getUrl();
-
         $this->addColumn('title', array(
             'header'    => Mage::helper('blog')->__('Title'),
             'align'     => 'left',
