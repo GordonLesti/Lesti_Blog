@@ -10,6 +10,7 @@
 <?php
 $_recentPosts = $this->getRecentPosts();
 $_recentComments = $this->getRecentComments();
+$_archives = $this->getArchives();
 $_categories = $this->getCategories();
 $_helper = Mage::helper('blog/post');
 ?>
@@ -18,30 +19,45 @@ $_helper = Mage::helper('blog/post');
         <strong><span><?php echo $_helper->__('Blog') ?></span></strong>
     </div>
     <div class="block-content">
-        <p class="block-subtitle"><?php echo $_helper->__('Recent Posts') ?></p>
-        <ul id="post-list">
-        <?php foreach($_recentPosts as $_post): ?>
-            <li><a title="<?php echo $_post->getTitle() ?>" href="<?php echo $_post->getPostUrl() ?>"><?php echo $_post->getTitle() ?></a></li>
-        <?php endforeach; ?>
-        </ul>
-        <script type="text/javascript">decorateList('post-list');</script>
-        <p class="block-subtitle"><?php echo $_helper->__('Recent Comments') ?></p>
-        <ul id="comment-list">
-            <?php foreach($_recentComments as $_comment): ?>
+        <?php if($_recentPosts->count()): ?>
+            <p class="block-subtitle"><?php echo $_helper->__('Recent Posts') ?></p>
+            <ul id="post-list">
+            <?php foreach($_recentPosts as $_post): ?>
+                <li><a title="<?php echo $_post->getTitle() ?>" href="<?php echo $_post->getPostUrl() ?>"><?php echo $_post->getTitle() ?></a></li>
+            <?php endforeach; ?>
+            </ul>
+            <script type="text/javascript">decorateList('post-list');</script>
+        <?php endif; ?>
+        <?php if($_recentComments->count()): ?>
+            <p class="block-subtitle"><?php echo $_helper->__('Recent Comments') ?></p>
+            <ul id="comment-list">
+                <?php foreach($_recentComments as $_comment): ?>
+                <li>
+                    <a rel="external nofollow" href="<?php echo $_comment->getAuthorUrl() ?>"><?php echo $_comment->getAuthorName() ?></a>
+                    <?php echo $_helper->__('on') ?>
+                    <a href="<?php echo $_comment->getCommentUrl() ?>"><?php echo $_comment->getPostTitle() ?></a>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+            <script type="text/javascript">decorateList('comment-list');</script>
+        <?php endif; ?>
+        <p class="block-subtitle"><?php echo $_helper->__('Archives') ?></p>
+        <ul id="archive-list">
+            <?php foreach($_archives as $_archiv): ?>
             <li>
-                <a rel="external nofollow" href="<?php echo $_comment->getAuthorUrl() ?>"><?php echo $_comment->getAuthorName() ?></a>
-                <?php echo $_helper->__('on') ?>
-                <a href="<?php echo $_comment->getCommentUrl() ?>"><?php echo $_comment->getPostTitle() ?></a>
+                <a title="<?php echo $_archiv['title'] ?>" href="<?php echo $_archiv['url'] ?>"><?php echo $_archiv['title'] ?></a>
             </li>
             <?php endforeach; ?>
         </ul>
         <script type="text/javascript">decorateList('comment-list');</script>
-        <p class="block-subtitle"><?php echo $_helper->__('Categories') ?></p>
-        <ul id="category-list">
-            <?php foreach($_categories as $_category): ?>
-            <li><a title="<?php echo $_category->getTitle() ?>" href="<?php echo $_category->getCategoryUrl() ?>"><?php echo $_category->getTitle() ?></a></li>
-            <?php endforeach; ?>
-        </ul>
-        <script type="text/javascript">decorateList('category-list');</script>
+        <?php if($_categories->count()): ?>
+            <p class="block-subtitle"><?php echo $_helper->__('Categories') ?></p>
+            <ul id="category-list">
+                <?php foreach($_categories as $_category): ?>
+                <li><a title="<?php echo $_category->getTitle() ?>" href="<?php echo $_category->getCategoryUrl() ?>"><?php echo $_category->getTitle() ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+            <script type="text/javascript">decorateList('category-list');</script>
+        <?php endif; ?>
     </div>
 </div>

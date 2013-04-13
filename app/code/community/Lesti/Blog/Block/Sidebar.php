@@ -41,6 +41,22 @@ class Lesti_Blog_Block_Sidebar extends Mage_Core_Block_Template
         return $this->_recentComments;
     }
 
+    public function getArchives()
+    {
+        $postCollection = Mage::getModel('blog/post')->getCollection()
+            ->addStoreFilter(Mage::app()->getStore()->getId());
+        $postCollection->getSelect()
+            ->group('YEAR(creation_time), MONTH(creation_time)');
+        $archives = array();
+        foreach($postCollection as $post) {
+            $archiv = array();
+            $archiv['title'] = $post->getCreationTime();
+            $archiv['url'] = Mage::app()->getStore()->getUrl();
+            $archives[] = $archiv;
+        }
+        return $archives;
+    }
+
     public function getCategories()
     {
         if(is_null($this->_categories)) {
