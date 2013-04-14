@@ -13,6 +13,7 @@ $_commentCollection = $this->getCommentCollection();
 $_count = $_commentCollection->count();
 $_helper = Mage::helper('blog');
 $_commentHelper = Mage::helper('blog/post_comment');
+$_customerHelper = Mage::helper('customer');
 ?>
 <?php if($_count): ?>
     <div id="post-comments" class="blog-comment-area">
@@ -28,21 +29,26 @@ $_commentHelper = Mage::helper('blog/post_comment');
             <div id="post-response" class="blog-reply-form">
                 <h3 id="reply-title"><?php echo $_helper->__('Leave a reply')?></h3>
                 <form class="form-list" id="comment-form" method="post" action="<?php echo $this->getFormActionUrl() ?>">
-                    <p class="blog-comment-form-notes">
-                        <?php echo $_helper->__('Your email address will not be published.')?>
-                    </p>
-                    <p class="blog-comment-form-author">
-                        <label class="required" for="author_name"><em>*</em><?php echo $_helper->__('Name') ?></label>
-                        <div class="input-box">
-                            <input id="author" type="text" name="author_name" class="input-text required-entry" maxlength="255"/>
-                        </div>
-                    </p>
-                    <p class="blog-comment-form-email">
-                        <label class="required" for="author_email"><em>*</em><?php echo $_helper->__('Email') ?></label>
-                        <div class="input-box">
-                            <input id="email" type="text" name="author_email" class="input-text required-entry validate-email" maxlength="255"/>
-                        </div>
-                    </p>
+                    <?php if(!$_customerHelper->isLoggedIn()): ?>
+                        <p class="blog-comment-form-notes">
+                            <?php echo $_helper->__('Your email address will not be published.')?>
+                        </p>
+                        <p class="blog-comment-form-author">
+                            <label class="required" for="author_name"><em>*</em><?php echo $_helper->__('Name') ?></label>
+                            <div class="input-box">
+                                <input id="author" type="text" name="author_name" class="input-text required-entry" maxlength="255"/>
+                            </div>
+                        </p>
+                        <p class="blog-comment-form-email">
+                            <label class="required" for="author_email"><em>*</em><?php echo $_helper->__('Email') ?></label>
+                            <div class="input-box">
+                                <input id="email" type="text" name="author_email" class="input-text required-entry validate-email" maxlength="255"/>
+                            </div>
+                        </p>
+                    <?php else: ?>
+                        <input id="author" type="hidden" name="author_name" class="input-text required-entry" maxlength="255" value="<?php echo $_customerHelper->getCustomerName() ?>"/>
+                        <input id="email" type="hidden" name="author_email" class="input-text required-entry validate-email" maxlength="255" value="<?php echo $_customerHelper->getCustomer()->getEmail() ?>"/>
+                    <?php endif; ?>
                     <p class="blog-comment-form-url">
                         <label for="author_url"><?php echo $_helper->__('Website') ?></label>
                         <div class="input-box">
