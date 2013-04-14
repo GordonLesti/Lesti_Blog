@@ -60,7 +60,7 @@ $_commentHelper = Mage::helper('blog/post_comment');
                 <?php endforeach; ?>
             <?php endif; ?>
             <?php echo $_helper->__('on') ?>
-            <a rel="bookmark" href="<?php echo $_post->getPostUrl() ?>"><?php echo date("D, j M, Y", strtotime($_post->getCreationTime())) ?></a>
+            <a rel="bookmark" href="<?php echo $_post->getPostUrl() ?>"><?php echo $_helper->formatDate($_post->getCreationTime(), Zend_Date::DATE_LONG) ?></a>
             <span class="by-author">
                 <?php echo $_helper->__('by') ?>
                 <span class="author">

@@ -12,6 +12,7 @@ $_comment = $this->getComment();
 $_post = $_comment->getPost();
 $_gravatarHelper = Mage::helper('blog/gravatar');
 $_gravatarSize = 44;
+$_helper = Mage::helper('blog');
 $_commentHelper = Mage::helper('blog/post_comment');
 ?>
 <li id="li-comment-<?php echo $_comment->getId()?>" class="blog-comment">
@@ -22,7 +23,7 @@ $_commentHelper = Mage::helper('blog/post_comment');
                 <a rel="external nofollow" href="<?php echo $_comment->getAuthorUrl() ?>"><?php echo $_comment->getAuthorName() ?></a>
             </cite>
             <a href="<?php echo $_comment->getCommentUrl() ?>">
-                <time datetime="<?php echo $_comment->getCreationTime() ?>"><?php echo date("D, j M, Y", strtotime($_comment->getCreationTime())) ?></time>
+                <time datetime="<?php echo $_comment->getCreationTime() ?>"><?php echo $_helper->formatDate($_comment->getCreationTime(), Zend_Date::DATE_LONG . ' ' . Zend_Date::TIME_SHORT) ?></time>
             </a>
         </header>
         <section class="blog-comment-content"><?php echo $_comment->getContent() ?></section>
