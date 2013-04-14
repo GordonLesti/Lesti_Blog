@@ -9,34 +9,20 @@
 class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
 {
     protected $_postCollection;
-    protected $_category;
 
     const XML_PATH_BLOG_TITLE = 'blog/general/title';
-
-    public function getCategory()
-    {
-        if(is_null($this->_category)) {
-            $this->_category = $this->_getCategory();
-        }
-        return $this->_category;
-    }
-
-    protected function _getCategory()
-    {
-        $category = Mage::registry('blog_category');
-        if(is_null($category)) {
-            $category = Mage::getModel('blog/category')
-                ->setTitle(Mage::getStoreConfig(self::XML_PATH_BLOG_TITLE));
-        }
-        return $category;
-    }
+    const OBJECT_TYPE_CATEGORY = 'category';
+    const OBJECT_TYPE_DEFAULT = 'default';
+    const OBJECT_TYPE_AUTHOR = 'author';
+    const OBJECT_TYPE_ARCHIV = 'archiv';
+    const OBJECT_TYPE_TAG = 'tag';
 
     protected function _getPostCollection()
     {
         if(is_null($this->_postCollection)) {
-            $category = $this->getCategory();
-            if($category->getId()) {
-                $this->_postCollection = $category->getPostCollection();
+            $object = $this->getObject();
+            if($object->getId()) {
+                $this->_postCollection = $object->getPostCollection();
             } else {
                 $this->_postCollection = Mage::getModel('blog/post')->getCollection();
             }

@@ -26,6 +26,7 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
         $this->_map['fields']['post_id']    = 'main_table.post_id';
         $this->_map['fields']['store']      = 'store_table.store_id';
         $this->_map['fields']['category']   = 'category_table.category_id';
+        $this->_map['fields']['tag']        = 'tag_table.tag_id';
     }
 
     /**
@@ -162,6 +163,29 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
         return $this;
     }
 
+    /**
+     * Add filter by tag
+     *
+     * @param int|Lesti_Blog_Model_Tag $tag
+     * @param bool $withAdmin
+     * @return Lesti_Blog_Model_Resource_Post_Collection
+     */
+    public function addTagFilter($tag)
+    {
+        if (!$this->getFlag('tag_filter_added')) {
+            if ($tag instanceof Lesti_Blog_Model_Tag) {
+                $tag = array($tag->getId());
+            }
+
+            if (!is_array($tag)) {
+                $tag = array($tag);
+            }
+
+            $this->addFilter('tag', array('in' => $tag), 'public');
+        }
+        return $this;
+    }
+
     public function addAuthorToResult()
     {
         $this->joinAuthor();
@@ -205,6 +229,21 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
             $this->getSelect()->join(
                 array('category_table' => $this->getTable('blog/category_post')),
                 'main_table.post_id = category_table.post_id',
+                array()
+            );
+            if(!$this->_groupByMonth) {
+                $this->getSelect()->group('main_table.post_id');
+            }
+
+            /*
+             * Allow analytic functions usage because of one field grouping
+             */
+            $this->_useAnalyticFunction = true;
+        }
+        if($this->getFilter('tag')) {
+            $this->getSelect()->join(
+                array('tag_table' => $this->getTable('blog/tag_post')),
+                'main_table.post_id = tag_table.post_id',
                 array()
             );
             if(!$this->_groupByMonth) {

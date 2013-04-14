@@ -18,7 +18,9 @@ $_commentHelper = Mage::helper('blog/post_comment');
     <article id="comment-<?php echo $_comment->getId()?>" class="blog-comment">
         <header class="blog-comment-meta">
             <img class="blog-avatar" width="<?php echo $_gravatarSize ?>" height="<?php echo $_gravatarSize ?>" src="<?php echo $_gravatarHelper->getGravatarSrc($_comment->getAuthorEmail(), $_gravatarSize) ?>"/>
-            <cite class="fn"><?php echo $_comment->getAuthorName() ?></cite>
+            <cite class="fn">
+                <a rel="external nofollow" href="<?php echo $_comment->getAuthorUrl() ?>"><?php echo $_comment->getAuthorName() ?></a>
+            </cite>
             <a href="<?php echo $_comment->getCommentUrl() ?>">
                 <time datetime="<?php echo $_comment->getCreationTime() ?>"><?php echo date("D, j M, Y", strtotime($_comment->getCreationTime())) ?></time>
             </a>

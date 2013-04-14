@@ -16,6 +16,14 @@ $categoryData = array(
 );
 $category = Mage::getModel('blog/category')->setData($categoryData)->save();
 
+// create example tag
+$tagData = array(
+    'title'         => 'Magento',
+    'identifier'    => 'magento',
+    'stores'        => array(0)
+);
+$tag = Mage::getModel('blog/tag')->setData($tagData)->save();
+
 // create example post
 $author = Mage::getModel('admin/user')->getCollection()->getFirstItem();
 
@@ -28,7 +36,8 @@ $postData = array(
     'title'             => 'Example Post',
     'identifier'        => 'example-post',
     'stores'            => array(0),
-    'categories'        => array($category->getId())
+    'categories'        => array($category->getId()),
+    'tags'              => array($tag->getId())
 );
 $post = Mage::getModel('blog/post')->setData($postData)->save();
 

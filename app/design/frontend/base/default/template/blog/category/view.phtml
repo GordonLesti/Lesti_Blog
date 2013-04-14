@@ -9,13 +9,20 @@
 ?>
 <?php
 $_postCollection = $this->getLoadedPostCollection();
-$_category = $this->getCategory();
+$_object = $this->getObject();
 $_helper = Mage::helper('blog');
 $_authorHelper = Mage::helper('blog/author');
 $_commentHelper = Mage::helper('blog/post_comment');
 ?>
 <div class="page-title blog-category-title">
-    <h1><?php echo $_category->getTitle() ?></h1>
+    <h1>
+        <?php if($this->getType() == Lesti_Blog_Block_Category_View::OBJECT_TYPE_CATEGORY): ?>
+            <?php echo $_helper->__('Category Archives:'); ?>
+        <?php elseif($this->getType() == Lesti_Blog_Block_Category_View::OBJECT_TYPE_TAG): ?>
+            <?php echo $_helper->__('Tag Archives:'); ?>
+        <?php endif; ?>
+        <?php echo $_object->getTitle() ?>
+    </h1>
 </div>
 <?php foreach($_postCollection as $_post): ?>
     <article id="post-<?php echo $_post->getId() ?>" class="blog-post-excerpt">

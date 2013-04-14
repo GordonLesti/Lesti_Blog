@@ -14,8 +14,8 @@ class Lesti_Blog_Model_Resource_Post extends Mage_Core_Model_Resource_Db_Abstrac
      * @var null|Mage_Core_Model_Store
      */
     protected $_store  = null;
-
     protected $_category = null;
+    protected $_tag = null;
 
     /**
      * Initialize resource model
@@ -86,6 +86,7 @@ class Lesti_Blog_Model_Resource_Post extends Mage_Core_Model_Resource_Db_Abstrac
     {
         $this->_afterSaveStore($object);
         $this->_afterSaveCategory($object);
+        $this->_afterSaveTag($object);
         return parent::_afterSave($object);
     }
 
@@ -159,6 +160,41 @@ class Lesti_Blog_Model_Resource_Post extends Mage_Core_Model_Resource_Db_Abstrac
         return $this;
     }
 
+    protected function _afterSaveTag(Mage_Core_Model_Abstract $object)
+    {
+        $oldCategories = $this->lookupTagIds($object->getId());
+        $newCategories = (array)$object->getCategories();
+        if (empty($newCategories)) {
+            $newCategories = (array)$object->getTagId();
+        }
+        $table  = $this->getTable('blog/tag_post');
+        $insert = array_diff($newCategories, $oldCategories);
+        $delete = array_diff($oldCategories, $newCategories);
+
+        if ($delete) {
+            $where = array(
+                'post_id = ?'       => (int) $object->getId(),
+                'tag_id IN (?)'     => $delete
+            );
+
+            $this->_getWriteAdapter()->delete($table, $where);
+        }
+
+        if ($insert) {
+            $data = array();
+
+            foreach ($insert as $tagId) {
+                $data[] = array(
+                    'post_id'   => (int) $object->getId(),
+                    'tag_id'    => (int) $tagId
+                );
+            }
+
+            $this->_getWriteAdapter()->insertMultiple($table, $data);
+        }
+        return $this;
+    }
+
     /**
      * Load an object using 'identifier' field if there's no field specified and value is not numeric
      *
@@ -191,6 +227,9 @@ class Lesti_Blog_Model_Resource_Post extends Mage_Core_Model_Resource_Db_Abstrac
 
             $categories = $this->lookupCategoryIds($object->getId());
             $object->setData('category_id', $categories);
+
+            $tags = $this->lookupTagIds($object->getId());
+            $object->setData('tag_id', $categories);
         }
 
         return parent::_afterLoad($object);
@@ -413,6 +452,23 @@ class Lesti_Blog_Model_Resource_Post extends Mage_Core_Model_Resource_Db_Abstrac
 
         $select  = $adapter->select()
             ->from($this->getTable('blog/category_post'), 'category_id')
+            ->where('post_id = ?',(int)$postId);
+
+        return $adapter->fetchCol($select);
+    }
+
+    /**
+     * Get tag ids to which specified item is assigned
+     *
+     * @param int $id
+     * @return array
+     */
+    public function lookupTagIds($postId)
+    {
+        $adapter = $this->_getReadAdapter();
+
+        $select  = $adapter->select()
+            ->from($this->getTable('blog/tag_post'), 'tag_id')
             ->where('post_id = ?',(int)$postId);
 
         return $adapter->fetchCol($select);

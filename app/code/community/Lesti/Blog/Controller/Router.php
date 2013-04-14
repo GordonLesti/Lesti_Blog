@@ -100,17 +100,17 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                         ->setActionName('view')
                         ->setParam('category_id', $categoryId);
                 } else {
-//                    $tagIdentifier = substr($identifier, 9);
-//                    $tag = Mage::getModel('blog/tag');
-//                    $tagId = $tag->checkIdentifier($identifier, Mage::app()->getStore()->getId());
-//                    if($tagId) {
-//                        $request->setModuleName('blog')
-//                            ->setControllerName('tag')
-//                            ->setActionName('view')
-//                            ->setParam('tag_id', $tagId);
-//                    } else {
+                    $tagIdentifier = substr($identifier, strlen($router . '/tag/'));
+                    $tag = Mage::getModel('blog/tag');
+                    $tagId = $tag->checkIdentifier($tagIdentifier, Mage::app()->getStore()->getId());
+                    if($tagId) {
+                        $request->setModuleName('blog')
+                            ->setControllerName('tag')
+                            ->setActionName('view')
+                            ->setParam('tag_id', $tagId);
+                    } else {
                         return false;
-//                    }
+                    }
                 }
             }
         }

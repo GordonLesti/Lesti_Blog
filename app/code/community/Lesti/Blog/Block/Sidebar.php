@@ -15,6 +15,14 @@ class Lesti_Blog_Block_Sidebar extends Mage_Core_Block_Template
     protected $_recentComments;
     protected $_categories;
 
+    public function _construct()
+    {
+        $this->addData(array(
+            'cache_lifetime'    => 3600
+        ));
+        return parent::_construct();
+    }
+
     public function getRecentPosts()
     {
         if(is_null($this->_recentPosts)) {
