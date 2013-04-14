@@ -70,6 +70,12 @@ class Lesti_Blog_Block_Adminhtml_Post_Grid extends Mage_Adminhtml_Block_Widget_G
             'options'   => Mage::getSingleton('blog/post')->getAvailableStatuses()
         ));
 
+        $this->addColumn('comment_count', array(
+            'header'    => Mage::helper('blog')->__('Comments'),
+            'index'     => 'comment_count',
+            'type'      => 'number'
+        ));
+
         $this->addColumn('creation_time', array(
             'header'    => Mage::helper('blog')->__('Date Created'),
             'index'     => 'creation_time',

@@ -56,4 +56,16 @@
             <block type="blog/adminhtml_post_comment" name="blog_post_comment"/>
         </reference>
     </adminhtml_blog_post_comment_index>
+
+    <adminhtml_blog_post_comment_edit>
+        <reference name="content">
+            <block type="blog/adminhtml_post_comment_edit" name="blog_post_comment_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="blog/adminhtml_post_comment_edit_tabs" name="blog_post_comment_edit_tabs">
+                <block type="blog/adminhtml_post_comment_edit_tab_main" name="blog_post_comment_edit_tab_main" />
+                <action method="addTab"><name>main_section</name><block>blog_post_comment_edit_tab_main</block></action>
+            </block>
+        </reference>
+    </adminhtml_blog_post_comment_edit>
 </layout>

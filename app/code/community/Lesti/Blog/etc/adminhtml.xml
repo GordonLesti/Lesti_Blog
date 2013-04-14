@@ -8,21 +8,21 @@
                 <module>Lesti_Blog</module>
             </depends>
             <children>
-                <posts translate="title" module="blog">
+                <post translate="title" module="blog">
                     <title>Manage Posts</title>
                     <action>adminhtml/blog_post/</action>
                     <sort_order>0</sort_order>
-                </posts>
-                <categories translate="title" module="blog">
+                </post>
+                <category translate="title" module="blog">
                     <title>Manage Categories</title>
                     <action>adminhtml/blog_category/</action>
                     <sort_order>1</sort_order>
-                </categories>
-                <comments translate="title" module="blog">
+                </category>
+                <post_comment translate="title" module="blog">
                     <title>Manage Comments</title>
                     <action>adminhtml/blog_post_comment/</action>
                     <sort_order>2</sort_order>
-                </comments>
+                </post_comment>
             </children>
         </blog>
     </menu>
@@ -45,15 +45,15 @@
                         <title>Blog</title>
                         <sort_order>100</sort_order>
                         <children>
-                            <posts translate="title">
+                            <post translate="title">
                                 <title>Manage Posts</title>
-                            </posts>
-                            <categories translate="title">
+                            </post>
+                            <category translate="title">
                                 <title>Manage Categories</title>
-                            </categories>
-                            <comments translate="title">
+                            </category>
+                            <post_comment translate="title">
                                 <title>Manage Comments</title>
-                            </comments>
+                            </post_comment>
                         </children>
                     </blog>
                 </children>
