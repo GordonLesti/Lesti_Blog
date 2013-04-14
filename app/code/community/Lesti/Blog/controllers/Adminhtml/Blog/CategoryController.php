@@ -18,7 +18,7 @@ class Lesti_Blog_Adminhtml_Blog_CategoryController extends Mage_Adminhtml_Contro
         // load layout, set active menu and breadcrumbs
         $this->loadLayout()
             ->_setActiveMenu('blog/category')
-            ->_addBreadcrumb(Mage::helper('blog')->__('Blog'), Mage::helper('blog')->__('Category'))
+            ->_addBreadcrumb(Mage::helper('blog')->__('Category'), Mage::helper('blog')->__('Category'))
             ->_addBreadcrumb(Mage::helper('blog')->__('Manage Categories'), Mage::helper('blog')->__('Manage Categories'))
         ;
         return $this;

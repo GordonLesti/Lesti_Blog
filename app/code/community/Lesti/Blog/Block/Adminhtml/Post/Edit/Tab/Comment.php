@@ -15,7 +15,7 @@ class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Comment
      */
     public function __construct()
     {
-        $this->_controller = 'adminhtml_post_edit_tab_comment';
+        $this->_controller = 'adminhtml_post_comment';
         $this->_blockGroup = 'blog';
         $this->_headerText = Mage::helper('blog')->__('Manage Comments');
 

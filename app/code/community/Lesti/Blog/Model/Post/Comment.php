@@ -85,4 +85,34 @@ class Lesti_Blog_Model_Post_Comment extends Mage_Core_Model_Abstract
         return nl2br($content);
     }
 
+    public function validate()
+    {
+        $errors = array();
+
+        if (!Zend_Validate::is($this->getAuthorName(), 'NotEmpty')) {
+            $errors[] = Mage::helper('blog')->__('Name can\'t be empty');
+        }
+
+        if (!Zend_Validate::is($this->getAuthorEmail(), 'EmailAddress')) {
+            $errors[] = Mage::helper('blog')->__('No valid Email Address');
+        }
+
+        if (!Zend_Validate::is($this->getContent(), 'NotEmpty')) {
+            $errors[] = Mage::helper('blog')->__('Content can\'t be empty');
+        }
+
+        if (!Zend_Validate::is($this->getParentId(), 'Int')) {
+            $errors[] = Mage::helper('blog')->__('Parent doesn\'t exist.');
+        }
+
+        if (!Zend_Validate::is($this->getPostId(), 'Int')) {
+            $errors[] = Mage::helper('blog')->__('Post doesn\'t exist.');
+        }
+
+        if (empty($errors)) {
+            return true;
+        }
+        return $errors;
+    }
+
 }

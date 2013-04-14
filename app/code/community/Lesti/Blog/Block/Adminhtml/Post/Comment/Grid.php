@@ -6,19 +6,23 @@
  * Time: 11:20
  * To change this template use File | Settings | File Templates.
  */
-class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Comment_Grid extends Mage_Adminhtml_Block_Widget_Grid
+class Lesti_Blog_Block_Adminhtml_Post_Comment_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
     public function __construct()
     {
         parent::__construct();
-        $this->setId('blogPostEditTabCommentGrid');
+        $this->setId('blogPostCommentGrid');
         $this->setDefaultSort('comment_id');
         $this->setDefaultDir('ASC');
     }
 
     protected function _prepareCollection()
     {
+        $model = Mage::registry('blog_post');
         $collection = Mage::getModel('blog/post_comment')->getCollection();
+        if(isset($model) && $model->getId()) {
+            $collection->addFieldToFilter('post_id', $model->getId());
+        }
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
@@ -27,10 +31,10 @@ class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Comment_Grid extends Mage_Adminht
     protected function _prepareColumns()
     {
 
-        $this->addColumn('comment_id', array(
-            'header'    => Mage::helper('blog')->__('Comment ID'),
+        $this->addColumn('content', array(
+            'header'    => Mage::helper('blog')->__('Comment'),
             'align'     => 'left',
-            'index'     => 'comment_id'
+            'index'     => 'content'
         ));
 
         $this->addColumn('status', array(
@@ -53,5 +57,15 @@ class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Comment_Grid extends Mage_Adminht
     {
         $this->getCollection()->walk('afterLoad');
         parent::_afterLoadCollection();
+    }
+
+    /**
+     * Row click url
+     *
+     * @return string
+     */
+    public function getRowUrl($row)
+    {
+        return $this->getUrl('*/blog_post_comment/edit', array('comment_id' => $row->getId()));
     }
 }

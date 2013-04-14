@@ -17,6 +17,9 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
     const STATUS_ENABLED = 1;
     const STATUS_DISABLED = 0;
 
+    const ALLOW_COMMENT = 1;
+    const DISALLOW_COMMENT = 0;
+
     const CACHE_TAG              = 'blog_post';
     protected $_cacheTag         = 'blog_post';
     protected $_needReadMore     = false;
@@ -125,6 +128,15 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
 
         Mage::dispatchEvent('blog_post_get_available_statuses', array('statuses' => $statuses));
 
+        return $statuses->getData();
+    }
+
+    public function getAllowCommentStatuses()
+    {
+        $statuses = new Varien_Object(array(
+            self::ALLOW_COMMENT => Mage::helper('blog')->__('Yes'),
+            self::DISALLOW_COMMENT => Mage::helper('blog')->__('No'),
+        ));
         return $statuses->getData();
     }
 

@@ -35,7 +35,7 @@ $table = $installer->getConnection()
     ), 'Is Post Active')
     ->addColumn('allow_comments', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
         'nullable'  => false,
-        'default'   => '0',
+        'default'   => '1',
     ), 'Allow Comments')
     ->addColumn('content', Varien_Db_Ddl_Table::TYPE_TEXT, '2M', array(
     ), 'Post Content')
@@ -260,7 +260,7 @@ $table = $installer->getConnection()
     ), 'Post ID')
     ->addColumn('creation_time', Varien_Db_Ddl_Table::TYPE_TIMESTAMP, null, array(
     ), 'Post Creation Time')
-    ->addColumn('customer_author_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+    ->addColumn('author_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         'unsigned'  => true,
         'nullable'  => true,
     ), 'Comment Customer Author ID')

@@ -96,6 +96,18 @@ class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Main
             $model->setData('is_active', $isElementDisabled ? '0' : '1');
         }
 
+        $fieldset->addField('allow_comments', 'select', array(
+            'label'     => Mage::helper('blog')->__('Allow Comments'),
+            'title'     => Mage::helper('blog')->__('Allow Comments'),
+            'name'      => 'allow_comments',
+            'required'  => true,
+            'options'   => $model->getAllowCommentStatuses(),
+            'disabled'  => $isElementDisabled,
+        ));
+        if (!$model->getId()) {
+            $model->setData('allow_comments', $isElementDisabled ? '0' : '1');
+        }
+
         Mage::dispatchEvent('adminhtml_blog_post_edit_tab_main_prepare_form', array('form' => $form));
 
         $form->setValues($model->getData());

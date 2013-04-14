@@ -107,7 +107,11 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
             if(!isset($data['author_id'])) {
                 $data['author_id'] = (int) Mage::getSingleton('admin/session')->getUser()->getUserId();
             }
-
+            unset($data['page']);
+            unset($data['limit']);
+            unset($data['comment_id']);
+            unset($data['status']);
+            unset($data['creation_time']);
             $model->setData($data);
 
             Mage::dispatchEvent('blog_post_prepare_save', array('post' => $model, 'request' => $this->getRequest()));

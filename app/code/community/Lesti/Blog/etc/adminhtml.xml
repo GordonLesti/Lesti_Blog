@@ -18,6 +18,11 @@
                     <action>adminhtml/blog_category/</action>
                     <sort_order>1</sort_order>
                 </categories>
+                <comments translate="title" module="blog">
+                    <title>Manage Comments</title>
+                    <action>adminhtml/blog_post_comment/</action>
+                    <sort_order>2</sort_order>
+                </comments>
             </children>
         </blog>
     </menu>
@@ -46,6 +51,9 @@
                             <categories translate="title">
                                 <title>Manage Categories</title>
                             </categories>
+                            <comments translate="title">
+                                <title>Manage Comments</title>
+                            </comments>
                         </children>
                     </blog>
                 </children>

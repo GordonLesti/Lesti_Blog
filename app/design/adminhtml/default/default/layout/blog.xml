@@ -24,7 +24,7 @@
                 <action method="addTab"><name>main_section</name><block>blog_post_edit_tab_main</block></action>
                 <action method="addTab"><name>content_section</name><block>blog_post_edit_tab_content</block></action>
                 <action method="addTab"><name>category_section</name><block>blog_post_edit_tab_category</block></action>
-                <!--action method="addTab"><name>comment_section</name><block>blog_post_edit_tab_comment</block></action-->
+                <action method="addTab"><name>comment_section</name><block>blog_post_edit_tab_comment</block></action>
             </block>
         </reference>
     </adminhtml_blog_post_edit>
@@ -50,4 +50,10 @@
             </block>
         </reference>
     </adminhtml_blog_category_edit>
+
+    <adminhtml_blog_post_comment_index>
+        <reference name="content">
+            <block type="blog/adminhtml_post_comment" name="blog_post_comment"/>
+        </reference>
+    </adminhtml_blog_post_comment_index>
 </layout>

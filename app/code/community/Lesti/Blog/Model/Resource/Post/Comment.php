@@ -58,6 +58,11 @@ class Lesti_Blog_Model_Resource_Post_Comment extends Mage_Core_Model_Resource_Db
 
     protected function _afterDelete(Mage_Core_Model_Abstract $object)
     {
+        $condition = array(
+            'parent_id = ?'     => (int) $object->getId(),
+        );
+        $this->_getWriteAdapter()->delete($this->getTable('blog/post_comment'), $condition);
+
         $this->_refreshPostCommentCount($object);
         return parent::_afterDelete($object);
     }

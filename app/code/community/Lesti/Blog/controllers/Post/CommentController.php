@@ -76,13 +76,49 @@ class Lesti_Blog_Post_CommentController extends Mage_Core_Controller_Front_Actio
 
     public function postAction()
     {
-        if ($data = Mage::getSingleton('blog/session')->getFormData(true)) {
-            $rating = array();
-            if (isset($data['ratings']) && is_array($data['ratings'])) {
-                $rating = $data['ratings'];
-            }
-        } else {
+        $data = Mage::getSingleton('blog/session')->getFormData(true);
+        if(!$data) {
             $data   = $this->getRequest()->getPost();
         }
+
+        if (($post = $this->_initPost()) && !empty($data)) {
+            $session    = Mage::getSingleton('core/session');
+            /* @var $session Mage_Core_Model_Session */
+            if(!$post->getAllowComments()) {
+                $session->addError($this->__('Comments aren\'t allowed on this post.'));
+            } else {
+                $comment = Mage::getModel('blog/post_comment')->setData($data);
+                /* @var $comment Lesti_Blog_Model_Post_Comment */
+
+                $validate = $comment->validate();
+                if ($validate === true) {
+                    try {
+                        $comment->setAuthorId(Mage::getSingleton('customer/session')->getCustomerId())
+                            ->save();
+                        $session->addSuccess($this->__('Your comment has been accepted for moderation.'));
+                    }
+                    catch (Exception $e) {
+                        $session->setFormData($data);
+                        $session->addError($this->__('Unable to post the comment.'));
+                    }
+                }
+                else {
+                    $session->setFormData($data);
+                    if (is_array($validate)) {
+                        foreach ($validate as $errorMessage) {
+                            $session->addError($errorMessage);
+                        }
+                    }
+                    else {
+                        $session->addError($this->__('Unable to post the comment.'));
+                    }
+                }
+            }
+        }
+        if ($redirectUrl = Mage::getSingleton('blog/session')->getRedirectUrl(true)) {
+            $this->_redirectUrl($redirectUrl);
+            return;
+        }
+        $this->_redirectReferer();
     }
 }

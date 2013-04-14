@@ -32,31 +32,31 @@ $_commentHelper = Mage::helper('blog/post_comment');
                         <?php echo $_helper->__('Your email address will not be published.')?>
                     </p>
                     <p class="blog-comment-form-author">
-                        <label class="required" for="author"><em>*</em><?php echo $_helper->__('Name') ?></label>
+                        <label class="required" for="author_name"><em>*</em><?php echo $_helper->__('Name') ?></label>
                         <div class="input-box">
-                            <input id="author" type="text" name="author" class="input-text required-entry" maxlength="255"/>
+                            <input id="author" type="text" name="author_name" class="input-text required-entry" maxlength="255"/>
                         </div>
                     </p>
                     <p class="blog-comment-form-email">
-                        <label class="required" for="email"><em>*</em><?php echo $_helper->__('Email') ?></label>
+                        <label class="required" for="author_email"><em>*</em><?php echo $_helper->__('Email') ?></label>
                         <div class="input-box">
-                            <input id="email" type="text" name="email" class="input-text required-entry validate-email" maxlength="255"/>
+                            <input id="email" type="text" name="author_email" class="input-text required-entry validate-email" maxlength="255"/>
                         </div>
                     </p>
                     <p class="blog-comment-form-url">
-                        <label for="url"><?php echo $_helper->__('Website') ?></label>
+                        <label for="author_url"><?php echo $_helper->__('Website') ?></label>
                         <div class="input-box">
-                            <input id="url" type="text" name="url" class="input-text validate-clean-url" maxlength="255"/>
+                            <input id="url" type="text" name="author_url" class="input-text validate-clean-url" maxlength="255"/>
                         </div>
                     </p>
                     <p class="blog-comment-form-comment">
-                        <label class="required" for="comment"><em>*</em><?php echo $_helper->__('Comment') ?></label>
+                        <label class="required" for="content"><em>*</em><?php echo $_helper->__('Comment') ?></label>
                         <div class="input-box">
-                            <textarea id="comment" name="comment" class="input-text required-entry"></textarea>
+                            <textarea id="comment" name="content" class="input-text required-entry"></textarea>
                         </div>
                         <?php echo $_helper->__('You may use these HTML tags and attributes: &lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt;') ?>
                     </p>
-                    <input id="parent_id" type="hidden" name="parent_id"/>
+                    <input id="parent_id" type="hidden" name="parent_id" value="0"/>
                     <input type="hidden" name="post_id" value="<?php echo $_post->getId() ?>"/>
                     <div class="buttons-set">
                         <p class="required"><?php echo $_helper->__('* Required Fields') ?></p>
