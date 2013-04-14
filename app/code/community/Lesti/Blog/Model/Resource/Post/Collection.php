@@ -14,6 +14,7 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
      * @var bool
      */
     protected $_previewFlag;
+    protected $_groupByMonth;
 
     /**
      * Define resource model
@@ -132,6 +133,12 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
         return $this;
     }
 
+    public function addGroupByMonth()
+    {
+        $this->_groupByMonth = true;
+        return $this;
+    }
+
     /**
      * Add filter by category
      *
@@ -176,12 +183,18 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
      */
     protected function _renderFiltersBefore()
     {
+        if($this->_groupByMonth) {
+            $this->getSelect()->group('YEAR(creation_time), MONTH(creation_time)');
+        }
         if ($this->getFilter('store')) {
             $this->getSelect()->join(
                 array('store_table' => $this->getTable('blog/post_store')),
                 'main_table.post_id = store_table.post_id',
                 array()
-            )->group('main_table.post_id');
+            );
+            if(!$this->_groupByMonth) {
+                $this->getSelect()->group('main_table.post_id');
+            }
 
             /*
              * Allow analytic functions usage because of one field grouping
@@ -193,7 +206,10 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
                 array('category_table' => $this->getTable('blog/category_post')),
                 'main_table.post_id = category_table.post_id',
                 array()
-            )->group('main_table.post_id');
+            );
+            if(!$this->_groupByMonth) {
+                $this->getSelect()->group('main_table.post_id');
+            }
 
             /*
              * Allow analytic functions usage because of one field grouping

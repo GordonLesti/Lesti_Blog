@@ -79,4 +79,10 @@ class Lesti_Blog_Model_Post_Comment extends Mage_Core_Model_Abstract
             $this->getPost()->getIdentifier() . '/#comment-' . $this->getId();
     }
 
+    public function getContent()
+    {
+        $content = Mage::helper('blog/post_comment')->purifyHtml($this->getData('content'));
+        return nl2br($content);
+    }
+
 }

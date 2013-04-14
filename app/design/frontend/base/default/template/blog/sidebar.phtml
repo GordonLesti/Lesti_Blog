@@ -45,7 +45,7 @@ $_helper = Mage::helper('blog/post');
         <ul id="archive-list">
             <?php foreach($_archives as $_archiv): ?>
             <li>
-                <a title="<?php echo $_archiv['title'] ?>" href="<?php echo $_archiv['url'] ?>"><?php echo $_archiv['title'] ?></a>
+                <a title="<?php echo date("M, Y", strtotime($_archiv['creation_time'])) ?>" href="<?php echo $_archiv['url'] ?>"><?php echo date("M, Y", strtotime($_archiv['creation_time'])) ?></a>
             </li>
             <?php endforeach; ?>
         </ul>

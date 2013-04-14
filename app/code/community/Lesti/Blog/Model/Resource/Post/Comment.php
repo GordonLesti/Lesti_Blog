@@ -34,7 +34,7 @@ class Lesti_Blog_Model_Resource_Post_Comment extends Mage_Core_Model_Resource_Db
 
         $content = $object->getContent();
         $content = Mage::helper('blog/post_comment')->purifyHtml($content);
-        $object->setContent();
+        $object->setContent($content);
 
         return parent::_beforeSave($object);
     }

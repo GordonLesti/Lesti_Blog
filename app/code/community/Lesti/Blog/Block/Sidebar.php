@@ -44,14 +44,16 @@ class Lesti_Blog_Block_Sidebar extends Mage_Core_Block_Template
     public function getArchives()
     {
         $postCollection = Mage::getModel('blog/post')->getCollection()
-            ->addStoreFilter(Mage::app()->getStore()->getId());
-        $postCollection->getSelect()
-            ->group('YEAR(creation_time), MONTH(creation_time)');
-        $archives = array();
+            ->addStoreFilter(Mage::app()->getStore()->getId())
+            ->addGroupByMonth();
         foreach($postCollection as $post) {
             $archiv = array();
-            $archiv['title'] = $post->getCreationTime();
-            $archiv['url'] = Mage::app()->getStore()->getUrl();
+            $archiv['creation_time'] = $post->getCreationTime();
+            $url = Mage::app()->getStore()->getUrl(Mage::getStoreConfig(
+                Lesti_Blog_Model_Post::XML_PATH_BLOG_GENERAL_ROUTER)) .
+                date("Y", strtotime($post->getCreationTime())) . '/' .
+                date("m", strtotime($post->getCreationTime()));
+            $archiv['url'] = $url;
             $archives[] = $archiv;
         }
         return $archives;
