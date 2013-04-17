@@ -186,6 +186,38 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
         return $this;
     }
 
+    public function addCategoryIdToResult()
+    {
+        $this->joinCategoryId();
+        return $this;
+    }
+
+    protected function joinCategoryId()
+    {
+        $this->getSelect()->join(
+            array('blog_category_post' => $this->getTable('blog/category_post')),
+            'main_table.post_id = blog_category_post.post_id',
+            array('category_ids' => 'GROUP_CONCAT(blog_category_post.category_id)')
+        )->group('main_table.post_id');
+        return $this;
+    }
+
+    public function addTagIdToResult()
+    {
+        $this->joinTagId();
+        return $this;
+    }
+
+    protected function joinTagId()
+    {
+        $this->getSelect()->join(
+            array('blog_tag_post' => $this->getTable('blog/tag_post')),
+            'main_table.post_id = blog_tag_post.post_id',
+            array('tag_ids' => 'GROUP_CONCAT(blog_tag_post.tag_id)')
+        )->group('main_table.post_id');
+        return $this;
+    }
+
     public function addAuthorToResult()
     {
         $this->joinAuthor();

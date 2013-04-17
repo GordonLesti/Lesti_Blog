@@ -52,10 +52,11 @@ $_commentHelper = Mage::helper('blog/post_comment');
         </div>
         <footer class="blog-entry-meta">
             <?php echo $_helper->__('This entry was posted') ?>
-            <?php $_categoryCollection = $_post->getCategoryCollection() ?>
-            <?php if($_categoryCollection->count()): ?>
+            <?php $_categoryIds = $_post->getCategoryIds() ?>
+            <?php if(count($_categoryIds)): ?>
                 <?php echo $_helper->__(' in ') ?>
-                <?php foreach($_categoryCollection as $_postCategory): ?>
+                <?php foreach($_categoryIds as $_postCategoryId): ?>
+                    <?php $_postCategory = $this->getCategory($_postCategoryId) ?>
                     <a rel="category" title="<?php echo $_helper->__('View all posts in') . ' ' . $_postCategory->getTitle() ?>" href="<?php echo $_postCategory->getCategoryUrl() ?>"><?php echo $_postCategory->getTitle() ?></a>
                 <?php endforeach; ?>
             <?php endif; ?>

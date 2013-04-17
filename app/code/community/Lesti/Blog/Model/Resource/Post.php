@@ -162,14 +162,14 @@ class Lesti_Blog_Model_Resource_Post extends Mage_Core_Model_Resource_Db_Abstrac
 
     protected function _afterSaveTag(Mage_Core_Model_Abstract $object)
     {
-        $oldCategories = $this->lookupTagIds($object->getId());
-        $newCategories = (array)$object->getCategories();
-        if (empty($newCategories)) {
-            $newCategories = (array)$object->getTagId();
+        $oldTags = $this->lookupTagIds($object->getId());
+        $newTags = (array)$object->getTags();
+        if (empty($newTags)) {
+            $newTags = (array)$object->getTagId();
         }
         $table  = $this->getTable('blog/tag_post');
-        $insert = array_diff($newCategories, $oldCategories);
-        $delete = array_diff($oldCategories, $newCategories);
+        $insert = array_diff($newTags, $oldTags);
+        $delete = array_diff($oldTags, $newTags);
 
         if ($delete) {
             $where = array(
@@ -229,7 +229,7 @@ class Lesti_Blog_Model_Resource_Post extends Mage_Core_Model_Resource_Db_Abstrac
             $object->setData('category_id', $categories);
 
             $tags = $this->lookupTagIds($object->getId());
-            $object->setData('tag_id', $categories);
+            $object->setData('tag_id', $tags);
         }
 
         return parent::_afterLoad($object);

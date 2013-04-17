@@ -2,11 +2,11 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: gordon
- * Date: 03.04.13
- * Time: 15:42
+ * Date: 17.04.13
+ * Time: 12:46
  * To change this template use File | Settings | File Templates.
  */
-class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Category
+class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Tag
     extends Mage_Adminhtml_Block_Widget_Form
     implements Mage_Adminhtml_Block_Widget_Tab_Interface
 {
@@ -16,7 +16,7 @@ class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Category
         $model = Mage::registry('blog_post');
 
         /*
-         * Checking if user have permissions to save categories
+         * Checking if user have permissions to save tags
          */
         if ($this->_isAllowedAction('save')) {
             $isElementDisabled = false;
@@ -29,17 +29,17 @@ class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Category
 
         $form->setHtmlIdPrefix('post_');
 
-        $fieldset = $form->addFieldset('base_fieldset', array('legend'=>Mage::helper('blog')->__('Categories')));
+        $fieldset = $form->addFieldset('base_fieldset', array('legend'=>Mage::helper('blog')->__('Tags')));
 
-        $field = $fieldset->addField('category_id', 'multiselect', array(
-            'name'      => 'categories[]',
-            'label'     => Mage::helper('blog')->__('Categories'),
-            'title'     => Mage::helper('blog')->__('Categories'),
-            'values'    => Mage::getModel('blog/category')->getCollection()->toOptionArray(),
+        $field = $fieldset->addField('tag_id', 'multiselect', array(
+            'name'      => 'tags[]',
+            'label'     => Mage::helper('blog')->__('Tags'),
+            'title'     => Mage::helper('blog')->__('Tags'),
+            'values'    => Mage::getModel('blog/tag')->getCollection()->toOptionArray(),
             'disabled'  => $isElementDisabled,
         ));
 
-        Mage::dispatchEvent('adminhtml_blog_post_edit_tab_category_prepare_form', array('form' => $form));
+        Mage::dispatchEvent('adminhtml_blog_post_edit_tab_tag_prepare_form', array('form' => $form));
 
         $form->setValues($model->getData());
         $this->setForm($form);
@@ -54,7 +54,7 @@ class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Category
      */
     public function getTabLabel()
     {
-        return Mage::helper('blog')->__('Categories');
+        return Mage::helper('blog')->__('Tags');
     }
 
     /**
@@ -64,7 +64,7 @@ class Lesti_Blog_Block_Adminhtml_Post_Edit_Tab_Category
      */
     public function getTabTitle()
     {
-        return Mage::helper('blog')->__('Categories');
+        return Mage::helper('blog')->__('Tags');
     }
 
     /**

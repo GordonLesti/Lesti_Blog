@@ -9,6 +9,8 @@
 class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
 {
     protected $_postCollection;
+    protected $_categoryCollection;
+    protected $_tagCollection;
 
     const XML_PATH_BLOG_TITLE = 'blog/general/title';
     const OBJECT_TYPE_CATEGORY = 'category';
@@ -27,9 +29,39 @@ class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
                 $this->_postCollection = Mage::getModel('blog/post')->getCollection();
             }
             $this->_postCollection->addStoreFilter(Mage::app()->getStore()->getId())
-                ->addAuthorToResult();
+                ->addAuthorToResult()
+                ->addCategoryIdToResult()
+                ->addTagIdToResult();
+            $categoryIds = array();
+            $tagIds = array();
+            foreach($this->_postCollection as $post) {
+                $categoryIds = array_merge($categoryIds, $post->getCategoryIds());
+                $tagIds = array_merge($tagIds, $post->getTagIds());
+            }
+            // prepaire CategoryCollection
+            $this->_categoryCollection = Mage::getModel('blog/category')->getCollection()
+                ->addStoreFilter(Mage::app()->getStore()->getId())
+                ->addFieldToFilter('category_id', array('in' => $categoryIds));
+            // prepaire TagCollection
+            $this->_tagCollection = Mage::getModel('blog/tag')->getCollection()
+                ->addStoreFilter(Mage::app()->getStore()->getId())
+                ->addFieldToFilter('tag_id', array('in' => $tagIds));
         }
         return $this->_postCollection;
+    }
+
+    public function getCategory($categoryId)
+    {
+        if(!is_null($this->_categoryCollection)) {
+            return $this->_categoryCollection->getItemById($categoryId);
+        }
+    }
+
+    public function getTag($tagId)
+    {
+        if(!is_null($this->_tagCollection)) {
+            return $this->_tagCollection->getItemById($tagId);
+        }
     }
 
     public function getLoadedPostCollection()
