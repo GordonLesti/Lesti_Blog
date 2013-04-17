@@ -29,8 +29,9 @@ class Lesti_Blog_Model_Tag extends Mage_Core_Model_Abstract
 
     public function getTagUrl($params = array())
     {
-        $url = Mage::app()->getStore()->getUrl(Mage::getStoreConfig(self::XML_PATH_BLOG_GENERAL_ROUTER)) .
-            $this->getIdentifier();
+        $url = Mage::app()->getStore()->getUrl(
+            Mage::getStoreConfig(Lesti_Blog_Model_Post::XML_PATH_BLOG_GENERAL_ROUTER)) .
+            'tag/' . $this->getIdentifier();
         return $url;
     }
 

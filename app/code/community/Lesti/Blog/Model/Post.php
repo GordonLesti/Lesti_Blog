@@ -90,12 +90,12 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
 
     public function getCategoryIds()
     {
-        return explode(',', $this->getData('category_ids'));
+        return array_unique(explode(',', $this->getData('category_ids')));
     }
 
     public function getTagIds()
     {
-        return explode(',', $this->getData('tag_ids'));
+        return array_unique(explode(',', $this->getData('tag_ids')));
     }
 
     public function getCategoryCollection($storeId = null)
