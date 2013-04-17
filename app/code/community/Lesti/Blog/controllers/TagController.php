@@ -17,8 +17,6 @@ class Lesti_Blog_TagController extends Mage_Core_Controller_Front_Action
     {
         $tagId  = (int) $this->getRequest()->getParam('tag_id');
 
-        $params = new Varien_Object();
-
         return Mage::helper('blog/tag')->initTag($tagId, $this);
     }
 

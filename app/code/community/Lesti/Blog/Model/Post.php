@@ -25,6 +25,7 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
     protected $_needReadMore     = false;
     protected $_commentCollection;
     protected $_categoryCollection;
+    protected $_tagCollection;
     protected $_author;
 
     /**
@@ -108,6 +109,18 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
             }
         }
         return $this->_categoryCollection;
+    }
+
+    public function getTagCollection($storeId = null)
+    {
+        if(is_null($this->_tagCollection)) {
+            $this->_tagCollection = Mage::getModel('blog/tag')->getCollection()
+                ->addPostFilter($this->getId());
+            if(!is_null($storeId)) {
+                $this->_tagCollection->addStoreFilter($storeId);
+            }
+        }
+        return $this->_tagCollection;
     }
 
     /**

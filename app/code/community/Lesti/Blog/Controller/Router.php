@@ -75,41 +75,59 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
 
             return true;
         }
-        $identifierExplode = explode('/', $identifier);
+        $identifierExplode = array_map('mysql_real_escape_string', explode('/', $identifier));
 
         if(!isset($identifierExplode[0]) || $identifierExplode[0] != $router) {
             return false;
         }
 
         if(isset($identifierExplode[1])) {
-            $postIdentifier = $identifierExplode[1];
             $post = Mage::getModel('blog/post');
-            $postId = $post->checkIdentifier($postIdentifier, Mage::app()->getStore()->getId());
+            $postId = $post->checkIdentifier($identifierExplode[1], Mage::app()->getStore()->getId());
             if ($postId) {
                 $request->setModuleName('blog')
                     ->setControllerName('post')
                     ->setActionName('view')
                     ->setParam('post_id', $postId);
-            } else {
-                $categoryIdentifier = substr($identifier, strlen($router . '/category/'));
-                $category = Mage::getModel('blog/category');
-                $categoryId = $category->checkIdentifier($categoryIdentifier, Mage::app()->getStore()->getId());
-                if($categoryId) {
-                    $request->setModuleName('blog')
-                        ->setControllerName('category')
-                        ->setActionName('view')
-                        ->setParam('category_id', $categoryId);
-                } else {
-                    $tagIdentifier = substr($identifier, strlen($router . '/tag/'));
-                    $tag = Mage::getModel('blog/tag');
-                    $tagId = $tag->checkIdentifier($tagIdentifier, Mage::app()->getStore()->getId());
-                    if($tagId) {
+            } else if(isset($identifierExplode[2])){
+                // check if category is called
+                if($identifierExplode[1] == 'category') {
+                    $category = Mage::getModel('blog/category');
+                    $categoryId = $category->checkIdentifier($identifierExplode[2], Mage::app()->getStore()->getId());
+                    if($categoryId) {
                         $request->setModuleName('blog')
-                            ->setControllerName('tag')
+                            ->setControllerName('category')
                             ->setActionName('view')
-                            ->setParam('tag_id', $tagId);
+                            ->setParam('category_id', $categoryId);
                     } else {
                         return false;
+                    }
+                } else {
+                    if($identifierExplode[1] == 'tag') {
+                        $tag = Mage::getModel('blog/tag');
+                        $tagId = $tag->checkIdentifier($identifierExplode[2], Mage::app()->getStore()->getId());
+                        if($tagId) {
+                            $request->setModuleName('blog')
+                                ->setControllerName('tag')
+                                ->setActionName('view')
+                                ->setParam('tag_id', $tagId);
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        if($identifierExplode[1] == 'author') {
+                            $author = Mage::getModel('blog/author');
+                            if($author->exists($identifierExplode[2], Mage::app()->getStore()->getId())) {
+                                $request->setModuleName('blog')
+                                    ->setControllerName('author')
+                                    ->setActionName('view')
+                                    ->setParam('author', $identifierExplode[2]);
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            // archive-shit
+                        }
                     }
                 }
             }
