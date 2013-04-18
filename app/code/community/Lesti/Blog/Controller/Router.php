@@ -89,6 +89,11 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                     ->setControllerName('post')
                     ->setActionName('view')
                     ->setParam('post_id', $postId);
+                $request->setAlias(
+                    Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS,
+                    $identifier
+                );
+                return true;
             } else if(isset($identifierExplode[2])){
                 // check if category is called
                 if($identifierExplode[1] == 'category') {
@@ -99,8 +104,11 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                             ->setControllerName('category')
                             ->setActionName('view')
                             ->setParam('category_id', $categoryId);
-                    } else {
-                        return false;
+                        $request->setAlias(
+                            Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS,
+                            $identifier
+                        );
+                        return true;
                     }
                 } else {
                     if($identifierExplode[1] == 'tag') {
@@ -111,6 +119,11 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                                 ->setControllerName('tag')
                                 ->setActionName('view')
                                 ->setParam('tag_id', $tagId);
+                            $request->setAlias(
+                                Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS,
+                                $identifier
+                            );
+                            return true;
                         } else {
                             return false;
                         }
@@ -122,22 +135,18 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                                     ->setControllerName('author')
                                     ->setActionName('view')
                                     ->setParam('author', $identifierExplode[2]);
-                            } else {
-                                return false;
+                                $request->setAlias(
+                                    Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS,
+                                    $identifier
+                                );
+                                return true;
                             }
-                        } else {
-                            // archive-shit
                         }
                     }
                 }
             }
         }
 
-        $request->setAlias(
-            Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS,
-            $identifier
-        );
-
-        return true;
+        return false;
     }
 }
