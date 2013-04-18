@@ -19,6 +19,14 @@ class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
     const OBJECT_TYPE_ARCHIV = 'archiv';
     const OBJECT_TYPE_TAG = 'tag';
 
+    protected function _construct()
+    {
+        $this->addData(array(
+            'cache_lifetime'    => 3600
+        ));
+        return parent::_construct();
+    }
+
     protected function _getPostCollection()
     {
         if(is_null($this->_postCollection)) {
@@ -48,6 +56,21 @@ class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
                 ->addFieldToFilter('tag_id', array('in' => $tagIds));
         }
         return $this->_postCollection;
+    }
+
+    /**
+     * Get cache key informative items
+     *
+     * @return array
+     */
+    public function getCacheKeyInfo()
+    {
+        $cacheKeyInfo = parent::getCacheKeyInfo();
+        $cacheKeyInfo[] = 'blog_category_view';
+        $cacheKeyInfo[] = $this->getType();
+        $cacheKeyInfo[] = $this->getObject()->getId();
+        $cacheKeyInfo[] = Mage::getSingleton('customer/session')->isLoggedIn();
+        return $cacheKeyInfo;
     }
 
     public function getCategory($categoryId)
