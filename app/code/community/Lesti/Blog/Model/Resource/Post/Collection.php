@@ -188,11 +188,11 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
 
     public function addCategoryIdToResult()
     {
-        $this->joinCategoryId();
+        $this->_joinCategoryId();
         return $this;
     }
 
-    protected function joinCategoryId()
+    protected function _joinCategoryId()
     {
         $this->getSelect()->join(
             array('blog_category_post' => $this->getTable('blog/category_post')),
@@ -204,11 +204,11 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
 
     public function addTagIdToResult()
     {
-        $this->joinTagId();
+        $this->_joinTagId();
         return $this;
     }
 
-    protected function joinTagId()
+    protected function _joinTagId()
     {
         $this->getSelect()->join(
             array('blog_tag_post' => $this->getTable('blog/tag_post')),
@@ -220,16 +220,16 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
 
     public function addAuthorToResult()
     {
-        $this->joinAuthor();
+        $this->_joinAuthor();
         return $this;
     }
 
-    protected function joinAuthor()
+    protected function _joinAuthor()
     {
         $this->getSelect()->join(
             array('admin_user' => $this->getTable('admin/user')),
             'main_table.author_id = admin_user.user_id',
-            array('admin_user.username')
+            array('admin_user.firstname')
         )->group('main_table.post_id');
         return $this;
     }

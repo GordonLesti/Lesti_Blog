@@ -132,6 +132,22 @@ class Lesti_Blog_Model_Resource_Tag_Collection extends Mage_Core_Model_Resource_
         return $this;
     }
 
+    public function addCountToResult()
+    {
+        $this->_joinCount();
+        return $this;
+    }
+
+    public function _joinCount()
+    {
+        $this->getSelect()->join(
+            array('tag_post' => $this->getTable('blog/tag_post')),
+            'main_table.tag_id = tag_post.tag_id',
+            array('count' => 'COUNT(*)')
+        )->group('main_table.tag_id');
+        return $this;
+    }
+
     /**
      * Add filter by post
      *

@@ -14,6 +14,8 @@ class Lesti_Blog_Block_Sidebar extends Mage_Core_Block_Template
     protected $_recentPosts;
     protected $_recentComments;
     protected $_categories;
+    protected $_tags;
+    protected $_max_tag_post;
 
     public function _construct()
     {
@@ -75,5 +77,27 @@ class Lesti_Blog_Block_Sidebar extends Mage_Core_Block_Template
                 ->setOrder('identifier');
         }
         return $this->_categories;
+    }
+
+    public function getTags()
+    {
+        if(is_null($this->_tags)) {
+            $this->_tags = Mage::getModel('blog/tag')->getCollection()
+                ->addStoreFilter(Mage::app()->getStore()->getId())
+                ->addCountToResult();
+            $this->_max_tag_post = 1;
+            foreach($this->_tags as $_tag) {
+                $this->_max_tag_post = max($this->_max_tag_post, $_tag->getCount());
+            }
+        }
+        return $this->_tags;
+    }
+
+    public function getMaxTagPost() {
+        return $this->_max_tag_post;
+    }
+
+    public function canShow($name) {
+        return Mage::getStoreConfig('blog/sidebar/show_' . $name);
     }
 }

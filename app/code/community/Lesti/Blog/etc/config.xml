@@ -117,8 +117,13 @@
                 <title>Blog</title>
             </general>
             <sidebar>
+                <show_post>1</show_post>
                 <recent_posts_count>5</recent_posts_count>
+                <show_comment>1</show_comment>
                 <recent_comments_count>5</recent_comments_count>
+                <show_archive>1</show_archive>
+                <show_category>1</show_category>
+                <show_tag>1</show_tag>
             </sidebar>
         </blog>
     </default>

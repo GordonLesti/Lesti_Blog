@@ -17,7 +17,7 @@ class Lesti_Blog_Helper_Author extends Mage_Core_Helper_Abstract
         if($author->getId()) {
             $url = Mage::app()->getStore()->getUrl(Mage::getStoreConfig(
                 Lesti_Blog_Model_Post::XML_PATH_BLOG_GENERAL_ROUTER)) .
-                $author->getUsername();
+                strtolower($author->getFirstname());
         }
         return $url;
     }

@@ -12,6 +12,7 @@ $_recentPosts = $this->getRecentPosts();
 $_recentComments = $this->getRecentComments();
 $_archives = $this->getArchives();
 $_categories = $this->getCategories();
+$_tags = $this->getTags();
 $_helper = Mage::helper('blog');
 ?>
 <div class="block block-blog" title="<?php echo $_helper->__('Blog') ?>">
@@ -19,7 +20,7 @@ $_helper = Mage::helper('blog');
         <strong><span><?php echo $_helper->__('Blog') ?></span></strong>
     </div>
     <div class="block-content">
-        <?php if($_recentPosts->count()): ?>
+        <?php if($this->canShow('post') && $_recentPosts->count()): ?>
             <p class="block-subtitle"><?php echo $_helper->__('Recent Posts') ?></p>
             <ul id="post-list">
             <?php foreach($_recentPosts as $_post): ?>
@@ -28,7 +29,7 @@ $_helper = Mage::helper('blog');
             </ul>
             <script type="text/javascript">decorateList('post-list');</script>
         <?php endif; ?>
-        <?php if($_recentComments->count()): ?>
+        <?php if($this->canShow('comment') && $_recentComments->count()): ?>
             <p class="block-subtitle"><?php echo $_helper->__('Recent Comments') ?></p>
             <ul id="comment-list">
                 <?php foreach($_recentComments as $_comment): ?>
@@ -41,16 +42,18 @@ $_helper = Mage::helper('blog');
             </ul>
             <script type="text/javascript">decorateList('comment-list');</script>
         <?php endif; ?>
-        <p class="block-subtitle"><?php echo $_helper->__('Archives') ?></p>
-        <ul id="archive-list">
-            <?php foreach($_archives as $_archiv): ?>
-            <li>
-                <a title="<?php echo $_helper->formatDate($_archiv['creation_time'],'MMMM yyyy') ?>" href="<?php echo $_archiv['url'] ?>"><?php echo $_helper->formatDate($_archiv['creation_time'],'MMMM yyyy') ?></a>
-            </li>
-            <?php endforeach; ?>
-        </ul>
+        <?php if($this->canShow('archive') && count($_archives)): ?>
+            <p class="block-subtitle"><?php echo $_helper->__('Archives') ?></p>
+            <ul id="archive-list">
+                <?php foreach($_archives as $_archiv): ?>
+                <li>
+                    <a title="<?php echo $_helper->formatDate($_archiv['creation_time'],'MMMM yyyy') ?>" href="<?php echo $_archiv['url'] ?>"><?php echo $_helper->formatDate($_archiv['creation_time'],'MMMM yyyy') ?></a>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
         <script type="text/javascript">decorateList('comment-list');</script>
-        <?php if($_categories->count()): ?>
+        <?php if($this->canShow('category') && $_categories->count()): ?>
             <p class="block-subtitle"><?php echo $_helper->__('Categories') ?></p>
             <ul id="category-list">
                 <?php foreach($_categories as $_category): ?>
@@ -58,6 +61,14 @@ $_helper = Mage::helper('blog');
                 <?php endforeach; ?>
             </ul>
             <script type="text/javascript">decorateList('category-list');</script>
+        <?php endif; ?>
+        <?php if($this->canShow('tag') && $_tags->count()): ?>
+            <p class="block-subtitle"><?php echo $_helper->__('Tags') ?></p>
+            <div class="blog-tag-cloud">
+                <?php foreach($_tags as $_tag): ?>
+                    <a class="blog-tag-<?php echo round(($_tag->getCount() * 10 ) / $this->getMaxTagPost()) ?>" href="<?php echo $_tag->getTagUrl() ?>"><?php echo $_tag->getTitle() ?></a>
+                <?php endforeach; ?>
+            </div>
         <?php endif; ?>
     </div>
 </div>

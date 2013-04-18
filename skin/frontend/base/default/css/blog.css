@@ -20,3 +20,15 @@
 .blog-avatar { margin-right: 15px; }
 .blog-reply-form { margin:10px 0; }
 .blog-entry-meta { font-size: 90%; margin-top: 10px; }
+.blog-tag-cloud { padding: 5px 9px; }
+.blog-tag-cloud .blog-tag-0 { font-size: 70% }
+.blog-tag-cloud .blog-tag-1 { font-size: 75% }
+.blog-tag-cloud .blog-tag-2 { font-size: 80% }
+.blog-tag-cloud .blog-tag-3 { font-size: 85% }
+.blog-tag-cloud .blog-tag-4 { font-size: 90% }
+.blog-tag-cloud .blog-tag-5 { font-size: 95% }
+.blog-tag-cloud .blog-tag-6 { font-size: 100% }
+.blog-tag-cloud .blog-tag-7 { font-size: 105% }
+.blog-tag-cloud .blog-tag-8 { font-size: 110% }
+.blog-tag-cloud .blog-tag-9 { font-size: 115% }
+.blog-tag-cloud .blog-tag-10 { font-size: 120% }

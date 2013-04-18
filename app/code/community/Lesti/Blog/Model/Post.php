@@ -64,11 +64,11 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
         return $url;
     }
 
-    public function getUsername()
+    public function getFirstname()
     {
         $author = $this->getAuthor();
         if($author->getId()) {
-            return $author->getUsername();
+            return $author->getFirstname();
         }
     }
 
