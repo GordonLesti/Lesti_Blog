@@ -75,8 +75,7 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
 
             return true;
         }
-        $identifierExplode = array_map('mysql_real_escape_string', explode('/', $identifier));
-
+        $identifierExplode = explode('/', $identifier);
         if(!isset($identifierExplode[0]) || $identifierExplode[0] != $router) {
             return false;
         }
