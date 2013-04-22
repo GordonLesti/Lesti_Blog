@@ -229,7 +229,7 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
         $this->getSelect()->join(
             array('blog_author' => $this->getTable('blog/author')),
             'main_table.author_id = blog_author.author_id',
-            array('blog_author.author_name')
+            array('author_name' => 'blog_author.author_name')
         )->group('main_table.post_id');
         return $this;
     }

@@ -20,6 +20,8 @@ $_commentHelper = Mage::helper('blog/post_comment');
             <?php echo $_helper->__('Category Archives:'); ?>
         <?php elseif($this->getType() == Lesti_Blog_Block_Category_View::OBJECT_TYPE_TAG): ?>
             <?php echo $_helper->__('Tag Archives:'); ?>
+        <?php elseif($this->getType() == Lesti_Blog_Block_Category_View::OBJECT_TYPE_AUTHOR): ?>
+            <?php echo $_helper->__('Author Archives:'); ?>
         <?php endif; ?>
         <?php echo $_object->getTitle() ?>
     </h1>

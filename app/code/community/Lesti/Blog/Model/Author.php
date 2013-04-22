@@ -11,6 +11,7 @@ class Lesti_Blog_Model_Author extends Mage_Core_Model_Abstract
 
     const CACHE_TAG              = 'blog_author';
     protected $_cacheTag         = 'blog_author';
+    protected $_postCollection;
 
     /**
      * Prefix of model events names
@@ -26,6 +27,15 @@ class Lesti_Blog_Model_Author extends Mage_Core_Model_Abstract
     protected function _construct()
     {
         $this->_init('blog/author');
+    }
+
+    public function getPostCollection()
+    {
+        if(is_null($this->_postCollection)) {
+            $this->_postCollection = Mage::getModel('blog/post')->getCollection()
+                ->addFieldToFilter('main_table.author_id', $this->getId());
+        }
+        return $this->_postCollection;
     }
 
     /**

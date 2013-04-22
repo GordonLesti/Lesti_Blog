@@ -108,7 +108,7 @@ class Lesti_Blog_Model_Resource_Author extends Mage_Core_Model_Resource_Db_Abstr
         $stores = array(Mage_Core_Model_App::ADMIN_STORE_ID, $storeId);
         $select = $this->_getLoadByAuthorNameSelect($authorname, $stores);
         $select->reset(Zend_Db_Select::COLUMNS)
-            ->columns('ba.author_name')
+            ->columns('ba.author_id')
             ->order('bps.store_id DESC')
             ->limit(1);
 

@@ -15,9 +15,10 @@ $_helper = Mage::helper('blog');
 $_commentHelper = Mage::helper('blog/post_comment');
 $_customerHelper = Mage::helper('customer');
 ?>
-<?php if($_count): ?>
-    <div id="post-comments" class="blog-comment-area">
-        <?php if($_count == 1): ?>
+
+<div id="post-comments" class="blog-comment-area">
+    <?php if ($_count): ?>
+        <?php if ($_count == 1): ?>
             <h2 class="blog-comments-title"><?php echo sprintf($_helper->__('%d thought on "%s"'), $_count, $_post->getTitle()) ?></h2>
         <?php else: ?>
             <h2 class="blog-comments-title"><?php echo sprintf($_helper->__('%d thoughts on "%s"'), $_count, $_post->getTitle()) ?></h2>
@@ -25,60 +26,69 @@ $_customerHelper = Mage::helper('customer');
         <ol class="blog-commentlist">
             <?php echo $this->getChildHtml(); ?>
         </ol>
-        <?php if($_commentHelper->getIsCustomerAllowedToWrite($_post)): ?>
-            <div id="post-response" class="blog-reply-form">
-                <h3 id="reply-title"><?php echo $_helper->__('Leave a reply')?></h3>
-                <form class="form-list" id="comment-form" method="post" action="<?php echo $this->getFormActionUrl() ?>">
-                    <?php if(!$_customerHelper->isLoggedIn()): ?>
-                        <p class="blog-comment-form-notes">
-                            <?php echo $_helper->__('Your email address will not be published.')?>
-                        </p>
-                        <p class="blog-comment-form-author">
-                            <label class="required" for="author_name"><em>*</em><?php echo $_helper->__('Name') ?></label>
-                            <div class="input-box">
-                                <input id="author" type="text" name="author_name" class="input-text required-entry" maxlength="255"/>
-                            </div>
-                        </p>
-                        <p class="blog-comment-form-email">
-                            <label class="required" for="author_email"><em>*</em><?php echo $_helper->__('Email') ?></label>
-                            <div class="input-box">
-                                <input id="email" type="text" name="author_email" class="input-text required-entry validate-email" maxlength="255"/>
-                            </div>
-                        </p>
-                    <?php else: ?>
-                        <input id="author" type="hidden" name="author_name" class="input-text required-entry" maxlength="255" value="<?php echo $_customerHelper->getCustomerName() ?>"/>
-                        <input id="email" type="hidden" name="author_email" class="input-text required-entry validate-email" maxlength="255" value="<?php echo $_customerHelper->getCustomer()->getEmail() ?>"/>
-                    <?php endif; ?>
-                    <p class="blog-comment-form-url">
-                        <label for="author_url"><?php echo $_helper->__('Website') ?></label>
-                        <div class="input-box">
-                            <input id="url" type="text" name="author_url" class="input-text validate-clean-url" maxlength="255"/>
-                        </div>
+    <?php endif; ?>
+    <?php if ($_commentHelper->getIsCustomerAllowedToWrite($_post)): ?>
+        <div id="post-response" class="blog-reply-form">
+            <h3 id="reply-title"><?php echo $_helper->__('Leave a reply') ?></h3>
+
+            <form class="form-list" id="comment-form" method="post" action="<?php echo $this->getFormActionUrl() ?>">
+                <?php if (!$_customerHelper->isLoggedIn()): ?>
+                    <p class="blog-comment-form-notes">
+                        <?php echo $_helper->__('Your email address will not be published.') ?>
                     </p>
-                    <p class="blog-comment-form-comment">
-                        <label class="required" for="content"><em>*</em><?php echo $_helper->__('Comment') ?></label>
-                        <div class="input-box">
-                            <textarea id="comment" name="content" class="input-text required-entry"></textarea>
-                        </div>
-                        <?php echo $_helper->__('You may use these HTML tags and attributes: &lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt;') ?>
+                    <p class="blog-comment-form-author">
+                        <label class="required" for="author_name"><em>*</em><?php echo $_helper->__('Name') ?></label>
+                    <div class="input-box">
+                        <input id="author" type="text" name="author_name" class="input-text required-entry"
+                               maxlength="255"/>
+                    </div>
                     </p>
-                    <input id="parent_id" type="hidden" name="parent_id" value="0"/>
-                    <input type="hidden" name="post_id" value="<?php echo $_post->getId() ?>"/>
-                    <div class="buttons-set">
-                        <p class="required"><?php echo $_helper->__('* Required Fields') ?></p>
-                        <button class="button" title="Save" type="submit">
+                    <p class="blog-comment-form-email">
+                        <label class="required" for="author_email"><em>*</em><?php echo $_helper->__('Email') ?></label>
+                    <div class="input-box">
+                        <input id="email" type="text" name="author_email"
+                               class="input-text required-entry validate-email" maxlength="255"/>
+                    </div>
+                    </p>
+                <?php else: ?>
+                    <input id="author" type="hidden" name="author_name" class="input-text required-entry"
+                           maxlength="255" value="<?php echo $_customerHelper->getCustomerName() ?>"/>
+                    <input id="email" type="hidden" name="author_email" class="input-text required-entry validate-email"
+                           maxlength="255" value="<?php echo $_customerHelper->getCustomer()->getEmail() ?>"/>
+                <?php endif; ?>
+                <p class="blog-comment-form-url">
+                    <label for="author_url"><?php echo $_helper->__('Website') ?></label>
+
+                <div class="input-box">
+                    <input id="url" type="text" name="author_url" class="input-text validate-clean-url"
+                           maxlength="255"/>
+                </div>
+                </p>
+                <p class="blog-comment-form-comment">
+                    <label class="required" for="content"><em>*</em><?php echo $_helper->__('Comment') ?></label>
+
+                <div class="input-box">
+                    <textarea id="comment" name="content" class="input-text required-entry"></textarea>
+                </div>
+                <?php echo $_helper->__('You may use these HTML tags and attributes: &lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt;') ?>
+                </p>
+                <input id="parent_id" type="hidden" name="parent_id" value="0"/>
+                <input type="hidden" name="post_id" value="<?php echo $_post->getId() ?>"/>
+
+                <div class="buttons-set">
+                    <p class="required"><?php echo $_helper->__('* Required Fields') ?></p>
+                    <button class="button" title="Save" type="submit">
                             <span>
                                 <span>Post comment</span>
                             </span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <script type="text/javascript">
-                //&lt;![CDATA[
-                var dataForm = new VarienForm('comment-form', true);
-                //]]&gt;
-            </script>
-        <?php endif; ?>
-    </div>
-<?php endif; ?>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript">
+            //&lt;![CDATA[
+            var dataForm = new VarienForm('comment-form', true);
+            //]]&gt;
+        </script>
+    <?php endif; ?>
+</div>

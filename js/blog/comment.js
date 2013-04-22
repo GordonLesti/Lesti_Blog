@@ -11,7 +11,7 @@ function moveReplyForm(comment)
     // move reply-form
     $('comment-' + comment).insert({'bottom': $('post-response')});
     // add "cancel reply"
-    if($('parent_id').getValue() == "") {
+    if($('parent_id').getValue() == "0") {
         $('comment-form').insert({'top': '<a id="cancel-reply" onclick="cancelReply();">' + Translator.translate('Cancel Reply') + '</a>' });
     }
     // set parent_id
@@ -25,5 +25,5 @@ function cancelReply()
     // remove "cancel reply"
     $('cancel-reply').remove();
     // set parent_id
-    $('parent_id').setValue("");
+    $('parent_id').setValue("0");
 }

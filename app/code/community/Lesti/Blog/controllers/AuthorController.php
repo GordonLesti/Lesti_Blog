@@ -15,9 +15,9 @@ class Lesti_Blog_AuthorController extends Mage_Core_Controller_Front_Action
      */
     protected function _initAuthor()
     {
-        $authorName  = mysql_real_escape_string($this->getRequest()->getParam('author'));
+        $author_id  = mysql_real_escape_string($this->getRequest()->getParam('author_id'));
 
-        return Mage::helper('blog/author')->initAuthor($authorName, $this);
+        return Mage::helper('blog/author')->initAuthor($author_id, $this);
     }
 
     public function viewAction()

@@ -130,11 +130,12 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                     } else {
                         if($identifierExplode[1] == 'author') {
                             $author = Mage::getModel('blog/author');
-                            if($author->checkAuthorName($identifierExplode[2], Mage::app()->getStore()->getId())) {
+                            $author_id = $author->checkAuthorName($identifierExplode[2], Mage::app()->getStore()->getId());
+                            if($author_id) {
                                 $request->setModuleName('blog')
                                     ->setControllerName('author')
                                     ->setActionName('view')
-                                    ->setParam('author', $identifierExplode[2]);
+                                    ->setParam('author_id', $author_id);
                                 $request->setAlias(
                                     Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS,
                                     $identifier

@@ -10,27 +10,27 @@ class Lesti_Blog_Helper_Author extends Mage_Core_Helper_Abstract
 {
     protected $_author = array();
 
-    public function initAuthor($authorName, $controller)
+    public function initAuthor($authorId, $controller)
     {
         // Init and load author
         Mage::dispatchEvent('blog_controller_author_init_before', array(
             'controller_action' => $controller
         ));
 
-        if (!$authorName) {
+        if (!$authorId) {
             return false;
         }
 
-        $user = Mage::getModel('admin/user')
-            ->load($categoryId);
+        $author = Mage::getModel('blog/author')
+            ->load($authorId);
 
         // Register current data and dispatch final events
-        Mage::register('blog_category', $category);
+        Mage::register('blog_author', $author);
 
         try {
-            Mage::dispatchEvent('blog_controller_category_init', array('category' => $category));
-            Mage::dispatchEvent('blog_controller_category_init_after',
-                array('category' => $category,
+            Mage::dispatchEvent('blog_controller_author_init', array('author' => $author));
+            Mage::dispatchEvent('blog_controller_author_init_after',
+                array('author' => $author,
                     'controller_action' => $controller
                 )
             );
@@ -38,8 +38,8 @@ class Lesti_Blog_Helper_Author extends Mage_Core_Helper_Abstract
             Mage::logException($e);
             return false;
         }
-
-        return $category;
+        $author->setTitle(ucfirst($author->getAuthorName()));
+        return $author;
     }
 
     public function getAuthorUrl($authorName)
