@@ -67,6 +67,60 @@ class Lesti_Blog_Adminhtml_Blog_AuthorController extends Mage_Adminhtml_Controll
     }
 
     /**
+     * Save action
+     */
+    public function saveAction()
+    {
+        // check if data sent
+        if ($data = $this->getRequest()->getPost()) {
+            //init model and set data
+            $model = Mage::getModel('blog/author');
+
+            $adminUserId = (int) Mage::getSingleton('admin/session')->getUser()->getUserId();
+
+            $model->load($adminUserId, 'admin_user_id');
+            $data['admin_user_id'] = $adminUserId;
+            $data['author_id'] = $model->getId();
+            $model->setData($data);
+
+            Mage::dispatchEvent('blog_author_prepare_save', array('author' => $model, 'request' => $this->getRequest()));
+
+
+            // try to save it
+            try {
+                // save the data
+                $model->save();
+
+                // display success message
+                Mage::getSingleton('adminhtml/session')->addSuccess(
+                    Mage::helper('blog')->__('The author has been saved.'));
+                // clear previously saved data from session
+                Mage::getSingleton('adminhtml/session')->setFormData(false);
+                // check if 'Save and Continue'
+                if ($this->getRequest()->getParam('back')) {
+                    $this->_redirect('*/*/index', array('_current'=>true));
+                    return;
+                }
+                // go to grid
+                $this->_redirect('*/*/');
+                return;
+
+            } catch (Mage_Core_Exception $e) {
+                $this->_getSession()->addError($e->getMessage());
+            }
+            catch (Exception $e) {
+                $this->_getSession()->addException($e,
+                    Mage::helper('blog')->__('An error occurred while saving the author.'));
+            }
+
+            $this->_getSession()->setFormData($data);
+            $this->_redirect('*/*/index');
+            return;
+        }
+        $this->_redirect('*/*/');
+    }
+
+    /**
      * Check the permission to run it
      *
      * @return boolean

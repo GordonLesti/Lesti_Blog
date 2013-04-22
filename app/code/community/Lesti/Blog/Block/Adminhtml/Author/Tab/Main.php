@@ -33,7 +33,7 @@ class Lesti_Blog_Block_Adminhtml_Author_Tab_Main
 
 
         $fieldset->addField('author_name', 'text', array(
-            'name'      => 'title',
+            'name'      => 'author_name',
             'label'     => Mage::helper('blog')->__('Author Name'),
             'title'     => Mage::helper('blog')->__('Author Name'),
             'required'  => true,
