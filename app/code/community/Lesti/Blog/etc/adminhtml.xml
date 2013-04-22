@@ -8,20 +8,25 @@
                 <module>Lesti_Blog</module>
             </depends>
             <children>
+                <author translate="title" module="blog">
+                    <title>Author</title>
+                    <action>adminhtml/blog_author/</action>
+                    <sort_order>0</sort_order>
+                </author>
                 <post translate="title" module="blog">
                     <title>Manage Posts</title>
                     <action>adminhtml/blog_post/</action>
-                    <sort_order>0</sort_order>
+                    <sort_order>1</sort_order>
                 </post>
                 <category translate="title" module="blog">
                     <title>Manage Categories</title>
                     <action>adminhtml/blog_category/</action>
-                    <sort_order>1</sort_order>
+                    <sort_order>2</sort_order>
                 </category>
                 <post_comment translate="title" module="blog">
                     <title>Manage Comments</title>
                     <action>adminhtml/blog_post_comment/</action>
-                    <sort_order>2</sort_order>
+                    <sort_order>3</sort_order>
                 </post_comment>
             </children>
         </blog>
@@ -45,6 +50,9 @@
                         <title>Blog</title>
                         <sort_order>100</sort_order>
                         <children>
+                            <author translate="title">
+                                <title>Author</title>
+                            </author>
                             <post translate="title">
                                 <title>Manage Posts</title>
                             </post>

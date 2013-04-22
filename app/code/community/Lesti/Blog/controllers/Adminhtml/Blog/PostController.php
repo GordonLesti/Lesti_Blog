@@ -106,7 +106,8 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
 
             if(!isset($data['author_id'])) {
                 $author = Mage::getModel('blog/author')->load(
-                    (int) Mage::getSingleton('admin/session')->getUser()->getUserId(), 'admin_user_id');
+                    (int) Mage::getSingleton('admin/session')->getUser()->getUserId(),
+                    'admin_user_id');
                 $data['author_id'] = $author->getId();
             }
             unset($data['page']);
