@@ -69,6 +69,9 @@
                     <post_comment>
                         <table>blog_post_comment</table>
                     </post_comment>
+                    <author>
+                        <table>blog_author</table>
+                    </author>
                 </entities>
             </blog_resource>
         </models>

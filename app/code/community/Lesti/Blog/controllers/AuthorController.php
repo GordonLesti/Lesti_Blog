@@ -13,7 +13,7 @@ class Lesti_Blog_AuthorController extends Mage_Core_Controller_Front_Action
      *
      * @return Lesti_Blog_Model_Tag
      */
-    protected function _initTag()
+    protected function _initAuthor()
     {
         $authorName  = mysql_real_escape_string($this->getRequest()->getParam('author'));
 

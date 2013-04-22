@@ -54,7 +54,7 @@ $_commentHelper = Mage::helper('blog/post_comment');
             <span class="by-author">
                 <?php echo $_helper->__('by') ?>
                 <span class="author">
-                    <a rel="author" title="<?php echo $_helper->__('View all posts by') . ' ' . $_post->getFirstname() ?>" href="<?php echo $_authorHelper->getAuthorUrl($_post->getAuthorId()) ?>"><?php echo $_post->getFirstname() ?></a>
+                    <a rel="author" title="<?php echo $_helper->__('View all posts by') . ' ' . $_post->getAuthorName() ?>" href="<?php echo $_authorHelper->getAuthorUrl($_post->getAuthorName()) ?>"><?php echo $_post->getAuthorName() ?></a>
                 </span>
             </span>
     </footer>

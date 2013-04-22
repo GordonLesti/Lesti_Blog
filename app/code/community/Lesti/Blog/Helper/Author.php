@@ -10,23 +10,44 @@ class Lesti_Blog_Helper_Author extends Mage_Core_Helper_Abstract
 {
     protected $_author = array();
 
-    public function getAuthorUrl($userId)
+    public function initAuthor($authorName, $controller)
     {
-        $url = Mage::app()->getStore()->getUrl();
-        $author = $this->getAuthor($userId);
-        if($author->getId()) {
-            $url = Mage::app()->getStore()->getUrl(Mage::getStoreConfig(
-                Lesti_Blog_Model_Post::XML_PATH_BLOG_GENERAL_ROUTER)) .
-                'author/' . strtolower($author->getFirstname());
+        // Init and load author
+        Mage::dispatchEvent('blog_controller_author_init_before', array(
+            'controller_action' => $controller
+        ));
+
+        if (!$authorName) {
+            return false;
         }
+
+        $user = Mage::getModel('admin/user')
+            ->load($categoryId);
+
+        // Register current data and dispatch final events
+        Mage::register('blog_category', $category);
+
+        try {
+            Mage::dispatchEvent('blog_controller_category_init', array('category' => $category));
+            Mage::dispatchEvent('blog_controller_category_init_after',
+                array('category' => $category,
+                    'controller_action' => $controller
+                )
+            );
+        } catch (Mage_Core_Exception $e) {
+            Mage::logException($e);
+            return false;
+        }
+
+        return $category;
+    }
+
+    public function getAuthorUrl($authorName)
+    {
+        $url = Mage::app()->getStore()->getUrl(Mage::getStoreConfig(
+            Lesti_Blog_Model_Post::XML_PATH_BLOG_GENERAL_ROUTER)) .
+            'author/' . strtolower($authorName);
         return $url;
     }
 
-    public function getAuthor($userId)
-    {
-        if(!isset($this->_author[$userId])) {
-            $this->_author[$userId] = Mage::getModel('admin/user')->load($userId);
-        }
-        return $this->_author[$userId];
-    }
 }

@@ -6,33 +6,39 @@
  * Time: 17:34
  * To change this template use File | Settings | File Templates.
  */
-class Lesti_Blog_Model_Author extends Varien_Object
+class Lesti_Blog_Model_Author extends Mage_Core_Model_Abstract
 {
 
-    public function exists($authorName, $storeId)
+    const CACHE_TAG              = 'blog_author';
+    protected $_cacheTag         = 'blog_author';
+
+    /**
+     * Prefix of model events names
+     *
+     * @var string
+     */
+    protected $_eventPrefix = 'blog_author';
+
+    /**
+     * Initialize resource model
+     *
+     */
+    protected function _construct()
     {
-        $connection = Mage::getSingleton('core/resource')->getConnection('read');
-        $stores = array(Mage_Core_Model_App::ADMIN_STORE_ID, $storeId);
-        $user = Mage::getResourceModel('admin/user');
-        $select = $connection->select()
-            ->from(array('ba' => $user->getMainTable()))
-            ->join(
-                array('bp' => $user->getTable('blog/post')),
-                'ba.user_id = bp.author_id',
-                array())
-            ->join(
-                array('bps' => $user->getTable('blog/post_store')),
-                'bp.post_id = bps.post_id',
-                array())
-            ->where('ba.firstname = ?', $authorName)
-            ->where('bps.store_id IN (?)', $stores);
+        $this->_init('blog/author');
+    }
 
-        $select->reset(Zend_Db_Select::COLUMNS)
-            ->columns('ba.firstname')
-            ->order('bps.store_id DESC')
-            ->limit(1);
-
-        return $connection->fetchOne($select);
+    /**
+     * Check if author name exist for specific store
+     * return author name if author exists
+     *
+     * @param string $identifier
+     * @param int $storeId
+     * @return int
+     */
+    public function checkAuthorName($authorname, $storeId)
+    {
+        return $this->_getResource()->checkAuthorName($authorname, $storeId);
     }
 
 }

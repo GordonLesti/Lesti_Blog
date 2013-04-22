@@ -227,9 +227,9 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
     protected function _joinAuthor()
     {
         $this->getSelect()->join(
-            array('admin_user' => $this->getTable('admin/user')),
-            'main_table.author_id = admin_user.user_id',
-            array('admin_user.firstname')
+            array('blog_author' => $this->getTable('blog/author')),
+            'main_table.author_id = blog_author.author_id',
+            array('blog_author.author_name')
         )->group('main_table.post_id');
         return $this;
     }

@@ -64,18 +64,21 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
         return $url;
     }
 
-    public function getFirstname()
+    public function getAuthorName()
     {
+        if($this->getData('author_name')) {
+            return $this->getData('author_name');
+        }
         $author = $this->getAuthor();
         if($author->getId()) {
-            return $author->getFirstname();
+            return $author->getAuthorName();
         }
     }
 
     public function getAuthor()
     {
         if(is_null($this->_author)) {
-            $this->_author = Mage::getModel('admin/user')->load($this->getAuthorId());
+            $this->_author = Mage::getModel('blog/author')->load($this->getAuthorId());
         }
         return $this->_author;
     }

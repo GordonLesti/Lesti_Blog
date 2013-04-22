@@ -7,6 +7,25 @@
  * To change this template use File | Settings | File Templates.
  */
 
+// give all admin users a blog author name
+$usernames = array();
+foreach(Mage::getModel('admin/user')->getCollection() as $user) {
+    $author = Mage::getModel('blog/author');
+    $firstname = strtolower($user->getFirstname());
+    if(!$firstname) {
+        $firstname = 'author';
+    }
+    if(array_key_exists($firstname, $usernames)) {
+        $usernames[$firstname] = $usernames[$firstname] + 1;
+        $firstname .= '-' . $usernames[$firstname];
+    } else {
+        $usernames[$firstname] = 0;
+    }
+    $author->setAuthorName($firstname)
+        ->setAdminUserId($user->getId());
+    $author->save();
+}
+
 // create example category
 $categoryData = array(
     'title'         => 'Lesti::Blog',
@@ -25,7 +44,7 @@ $tagData = array(
 $tag = Mage::getModel('blog/tag')->setData($tagData)->save();
 
 // create example post
-$author = Mage::getModel('admin/user')->getCollection()->getFirstItem();
+$author = Mage::getModel('blog/author')->getCollection()->getFirstItem();
 
 $postData = array(
     'author_id'         => $author->getId(),

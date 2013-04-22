@@ -11,6 +11,32 @@ $installer = $this;
 $installer->startSetup();
 
 /**
+ * Create table 'blog/author'
+ */
+$table = $installer->getConnection()
+    ->newTable($installer->getTable('blog/author'))
+    ->addColumn('author_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+        'identity'  => true,
+        'nullable'  => false,
+        'primary'   => true,
+    ), 'Author ID')
+    ->addColumn('admin_user_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+        'unsigned'  => true,
+        'nullable'  => false,
+        'primary'   => true,
+        'default'   => '0',
+    ), 'Admin User ID')
+    ->addColumn('author_name', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
+        'nullable'  => true,
+        'primary'   => true,
+    ), 'Blog User Name')
+    ->addForeignKey($installer->getFkName('blog/author', 'admin_user_id', 'admin/user', 'user_id'),
+        'admin_user_id', $installer->getTable('admin/user'), 'user_id',
+        Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
+    ->setComment('Blog Author Table');
+$installer->getConnection()->createTable($table);
+
+/**
  * Create table 'blog/post'
  */
 $table = $installer->getConnection()
