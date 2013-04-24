@@ -28,6 +28,11 @@
                     <action>adminhtml/blog_post_comment/</action>
                     <sort_order>3</sort_order>
                 </post_comment>
+                <tag translate="title" module="blog">
+                    <title>Manage Tags</title>
+                    <action>adminhtml/blog_tag/</action>
+                    <sort_order>4</sort_order>
+                </tag>
             </children>
         </blog>
     </menu>
@@ -62,6 +67,9 @@
                             <post_comment translate="title">
                                 <title>Manage Comments</title>
                             </post_comment>
+                            <tag translate="title">
+                                <title>Manage Tags</title>
+                            </tag>
                         </children>
                     </blog>
                 </children>

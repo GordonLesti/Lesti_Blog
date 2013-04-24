@@ -148,7 +148,7 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                             // check if a date is called
                             if($identifierExplode[1] == (int) $identifierExplode[1]) {
                                 $year = (int) $identifierExplode[1];
-                                
+
                             }
                         }
                     }

@@ -82,4 +82,26 @@
             </block>
         </reference>
     </adminhtml_blog_post_comment_edit>
+
+    <adminhtml_blog_tag_index>
+        <reference name="content">
+            <block type="blog/adminhtml_tag" name="blog_tag"/>
+        </reference>
+    </adminhtml_blog_tag_index>
+
+    <adminhtml_blog_tag_new>
+        <update handle="adminhtml_blog_tag_edit"/>
+    </adminhtml_blog_tag_new>
+
+    <adminhtml_blog_tag_edit>
+        <reference name="content">
+            <block type="blog/adminhtml_tag_edit" name="blog_tag_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="blog/adminhtml_tag_edit_tabs" name="blog_tag_edit_tabs">
+                <block type="blog/adminhtml_tag_edit_tab_main" name="blog_tag_edit_tab_main" />
+                <action method="addTab"><name>main_section</name><block>blog_tag_edit_tab_main</block></action>
+            </block>
+        </reference>
+    </adminhtml_blog_tag_edit>
 </layout>
