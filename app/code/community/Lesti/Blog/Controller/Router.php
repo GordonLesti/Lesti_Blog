@@ -125,8 +125,6 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                                 $identifier
                             );
                             return true;
-                        } else {
-                            return false;
                         }
                     } else {
                         // check if author is called
@@ -148,7 +146,26 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
                             // check if a date is called
                             if($identifierExplode[1] == (int) $identifierExplode[1]) {
                                 $year = (int) $identifierExplode[1];
-
+                                $archive = Mage::getModel('blog/archive');
+                                if($month = (int) $identifierExplode[2]) {
+                                    $exists = $archive->exists($year, $month);
+                                } else {
+                                    $exists = $archive->exists($year);
+                                }
+                                if($exists) {
+                                    $request->setModuleName('blog')
+                                        ->setControllerName('archive')
+                                        ->setActionName('view')
+                                        ->setParam('year', $year);
+                                    if($month) {
+                                        $request->setParam($month);
+                                    }
+                                    $request->setAlias(
+                                        Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS,
+                                        $identifier
+                                    );
+                                    return true;
+                                }
                             }
                         }
                     }

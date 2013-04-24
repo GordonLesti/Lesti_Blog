@@ -16,7 +16,7 @@ class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
     const OBJECT_TYPE_CATEGORY = 'category';
     const OBJECT_TYPE_DEFAULT = 'default';
     const OBJECT_TYPE_AUTHOR = 'author';
-    const OBJECT_TYPE_ARCHIV = 'archiv';
+    const OBJECT_TYPE_ARCHIVE = 'archive';
     const OBJECT_TYPE_TAG = 'tag';
 
     protected function _construct()

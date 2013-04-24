@@ -59,11 +59,7 @@ class Lesti_Blog_Block_Sidebar extends Mage_Core_Block_Template
         foreach($postCollection as $post) {
             $archiv = array();
             $archiv['creation_time'] = $post->getCreationTime();
-            $url = Mage::app()->getStore()->getUrl(Mage::getStoreConfig(
-                Lesti_Blog_Model_Post::XML_PATH_BLOG_GENERAL_ROUTER)) .
-                date("Y", strtotime($post->getCreationTime())) . '/' .
-                date("m", strtotime($post->getCreationTime()));
-            $archiv['url'] = $url;
+            $archiv['url'] = Mage::helper('blog/archive')->getArchiveUrl($post->getCreationTime());
             $archives[] = $archiv;
         }
         return $archives;
