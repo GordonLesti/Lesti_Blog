@@ -18,11 +18,7 @@ class Lesti_Blog_Block_Adminhtml_Post_Comment_Grid extends Mage_Adminhtml_Block_
 
     protected function _prepareCollection()
     {
-        $model = Mage::registry('blog_post');
         $collection = Mage::getModel('blog/post_comment')->getCollection();
-        if(isset($model) && $model->getId()) {
-            $collection->addFieldToFilter('post_id', $model->getId());
-        }
         $this->setCollection($collection);
 
         return parent::_prepareCollection();
@@ -48,6 +44,13 @@ class Lesti_Blog_Block_Adminhtml_Post_Comment_Grid extends Mage_Adminhtml_Block_
             'header'    => Mage::helper('blog')->__('Date Created'),
             'index'     => 'creation_time',
             'type'      => 'datetime',
+        ));
+
+        $this->addColumn('post', array(
+            'header'    => Mage::helper('blog')->__('Post'),
+            'index'     => 'post_id',
+            'type'      => 'options',
+            'options'   => Mage::getModel('blog/post')->getCollection()->toGridOptionArray()
         ));
 
         return parent::_prepareColumns();

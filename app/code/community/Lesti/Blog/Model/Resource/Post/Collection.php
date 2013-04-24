@@ -57,6 +57,16 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
         return $res;
     }
 
+    public function toGridOptionArray()
+    {
+        $res = array();
+        foreach ($this as $item) {
+            $res[$item->getData('post_id')] = $item->getData('identifier');
+        }
+
+        return $res;
+    }
+
     /**
      * Set first store flag
      *

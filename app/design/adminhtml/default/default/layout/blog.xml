@@ -32,12 +32,10 @@
                 <block type="blog/adminhtml_post_edit_tab_main" name="blog_post_edit_tab_main" />
                 <block type="blog/adminhtml_post_edit_tab_content" name="blog_post_edit_tab_content" />
                 <block type="blog/adminhtml_post_edit_tab_category" name="blog_post_edit_tab_category"/>
-                <block type="blog/adminhtml_post_edit_tab_comment" name="blog_post_edit_tab_comment"/>
                 <block type="blog/adminhtml_post_edit_tab_tag" name="blog_post_edit_tab_tag"/>
                 <action method="addTab"><name>main_section</name><block>blog_post_edit_tab_main</block></action>
                 <action method="addTab"><name>content_section</name><block>blog_post_edit_tab_content</block></action>
                 <action method="addTab"><name>category_section</name><block>blog_post_edit_tab_category</block></action>
-                <action method="addTab"><name>comment_section</name><block>blog_post_edit_tab_comment</block></action>
                 <action method="addTab"><name>tag_section</name><block>blog_post_edit_tab_tag</block></action>
             </block>
         </reference>
