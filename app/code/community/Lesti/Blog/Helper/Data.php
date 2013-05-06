@@ -6,7 +6,7 @@
  * Time: 13:29
  * To change this template use File | Settings | File Templates.
  */
-class Lesti_Blog_Helper_data extends Mage_Core_Helper_Abstract
+class Lesti_Blog_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
     const MYSQL_DATE_FORMAT = 'yyyy-MM-dd HH:mm:ss';

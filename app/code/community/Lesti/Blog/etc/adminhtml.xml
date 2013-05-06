@@ -60,15 +60,47 @@
                             </author>
                             <post translate="title">
                                 <title>Manage Posts</title>
+                                <children>
+                                    <save translate="title">
+                                        <title>Save Post</title>
+                                    </save>
+                                    <delete translate="title">
+                                        <title>Delete Post</title>
+                                    </delete>
+                                </children>
                             </post>
                             <category translate="title">
                                 <title>Manage Categories</title>
+                                <children>
+                                    <save translate="title">
+                                        <title>Save Category</title>
+                                    </save>
+                                    <delete translate="title">
+                                        <title>Delete Category</title>
+                                    </delete>
+                                </children>
                             </category>
                             <post_comment translate="title">
                                 <title>Manage Comments</title>
+                                <children>
+                                    <save translate="title">
+                                        <title>Save Comment</title>
+                                    </save>
+                                    <delete translate="title">
+                                        <title>Delete Comment</title>
+                                    </delete>
+                                </children>
                             </post_comment>
                             <tag translate="title">
                                 <title>Manage Tags</title>
+                                <children>
+                                    <save translate="title">
+                                        <title>Save Tags</title>
+                                    </save>
+                                    <delete translate="title">
+                                        <title>Delete Tags</title>
+                                    </delete>
+                                </children>
                             </tag>
                         </children>
                     </blog>

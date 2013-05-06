@@ -31,7 +31,7 @@ class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
     {
         if(is_null($this->_postCollection)) {
             $object = $this->getObject();
-            if($object->getId()) {
+            if($object->getPostCollection()) {
                 $this->_postCollection = $object->getPostCollection();
             } else {
                 $this->_postCollection = Mage::getModel('blog/post')->getCollection();

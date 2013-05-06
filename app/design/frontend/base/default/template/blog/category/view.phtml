@@ -22,6 +22,8 @@ $_commentHelper = Mage::helper('blog/post_comment');
             <?php echo $_helper->__('Tag Archives:'); ?>
         <?php elseif($this->getType() == Lesti_Blog_Block_Category_View::OBJECT_TYPE_AUTHOR): ?>
             <?php echo $_helper->__('Author Archives:'); ?>
+        <?php elseif($this->getType() == Lesti_Blog_Block_Category_View::OBJECT_TYPE_ARCHIVE): ?>
+            <?php echo $_helper->__('Archives:'); ?>
         <?php endif; ?>
         <?php echo $_object->getTitle() ?>
     </h1>
@@ -58,16 +60,18 @@ $_commentHelper = Mage::helper('blog/post_comment');
             <?php if(count($_categoryIds)): ?>
                 <?php echo $_helper->__(' in ') ?>
                 <?php foreach($_categoryIds as $_postCategoryId): ?>
-                    <?php $_postCategory = $this->getCategory($_postCategoryId) ?>
-                    <a rel="category" title="<?php echo $_helper->__('View all posts in') . ' ' . $_postCategory->getTitle() ?>" href="<?php echo $_postCategory->getCategoryUrl() ?>"><?php echo $_postCategory->getTitle() ?></a>
+                    <?php if($_postCategory = $this->getCategory($_postCategoryId)): ?>
+                        <a rel="category" title="<?php echo $_helper->__('View all posts in') . ' ' . $_postCategory->getTitle() ?>" href="<?php echo $_postCategory->getCategoryUrl() ?>"><?php echo $_postCategory->getTitle() ?></a>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
             <?php $_tagIds = $_post->getTagIds() ?>
             <?php if(count($_tagIds)): ?>
                 <?php echo $_helper->__(' tagged ') ?>
                 <?php foreach($_tagIds as $_postTagId): ?>
-                    <?php $_postTag = $this->getTag($_postTagId) ?>
-                    <a rel="tag" href="<?php echo $_postTag->getTagUrl() ?>"><?php echo $_postTag->getTitle() ?></a>
+                    <?php if($_postTag = $this->getTag($_postTagId)): ?>
+                        <a rel="tag" href="<?php echo $_postTag->getTagUrl() ?>"><?php echo $_postTag->getTitle() ?></a>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
             <?php echo $_helper->__('on') ?>

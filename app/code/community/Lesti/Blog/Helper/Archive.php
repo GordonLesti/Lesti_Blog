@@ -38,6 +38,19 @@ class Lesti_Blog_Helper_Archive extends Mage_Core_Helper_Abstract
             Mage::logException($e);
             return false;
         }
+        $date = explode('-', $date);
+        $year = (int) $date[0];
+        $month = (int) $date[1];
+        $date = new Zend_Date();
+        $date->setYear($year);
+        if($month) {
+            $format = 'MMMM yyyy';
+            $date->setMonth($month);
+        } else {
+            $format = 'yyyy';
+        }
+        $title = '';
+        $archive->setTitle($date->toString($format));
         return $archive;
     }
 
