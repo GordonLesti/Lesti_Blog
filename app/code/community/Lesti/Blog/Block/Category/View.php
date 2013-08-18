@@ -40,6 +40,7 @@ class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
                 ->addAuthorToResult()
                 ->addCategoryIdToResult()
                 ->addTagIdToResult();
+            $this->_postCollection->addOrder('creation_time', Varien_Data_Collection_Db::SORT_ORDER_DESC);
             $categoryIds = array();
             $tagIds = array();
             foreach($this->_postCollection as $post) {
