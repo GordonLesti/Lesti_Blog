@@ -204,7 +204,7 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
 
     protected function _joinCategoryId()
     {
-        $this->getSelect()->join(
+        $this->getSelect()->joinLeft(
             array('blog_category_post' => $this->getTable('blog/category_post')),
             'main_table.post_id = blog_category_post.post_id',
             array('category_ids' => 'GROUP_CONCAT(blog_category_post.category_id)')
@@ -220,7 +220,7 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
 
     protected function _joinTagId()
     {
-        $this->getSelect()->join(
+        $this->getSelect()->joinLeft(
             array('blog_tag_post' => $this->getTable('blog/tag_post')),
             'main_table.post_id = blog_tag_post.post_id',
             array('tag_ids' => 'GROUP_CONCAT(blog_tag_post.tag_id)')
