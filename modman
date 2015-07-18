@@ -1,0 +1,11 @@
+app/code/community/Lesti/Blog app/code/community/Lesti/Blog
+app/design/adminhtml/default/default/layout/blog.xml app/design/adminhtml/default/default/layout/blog.xml
+app/design/frontend/base/default/layout/blog.xml app/design/frontend/base/default/layout/blog.xml
+app/design/frontend/base/default/template/blog app/design/frontend/base/default/template/blog
+app/etc/modules/Lesti_Blog.xml app/etc/modules/Lesti_Blog.xml
+js/blog js/blog
+lib/HTMLPurifier lib/HTMLPurifier
+lib/HTMLPurifier.includes.php lib/HTMLPurifier.includes.php
+lib/HTMLPurifier.php lib/HTMLPurifier.php
+skin/frontend/base/default/css/blog.css skin/frontend/base/default/css/blog.css
+skin/frontend/base/default/images/blog skin/frontend/base/default/images/blog
