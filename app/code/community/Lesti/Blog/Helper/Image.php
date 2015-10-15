@@ -59,6 +59,14 @@ class Lesti_Blog_Helper_Image extends Mage_Core_Helper_Abstract
         return $imgData;
     }
 
+    /**
+     * Get HTML for a resized post image
+     * @param $post
+     * @param $width
+     * @param null $height
+     * @param array $attributes
+     * @return string
+     */
     public function getPostImage($post, $width, $height = null, $attributes = array()) {
 
         $imgData = $this->resize($post, $width, $height);
