@@ -16,25 +16,25 @@ class Lesti_Blog_Helper_Image extends Mage_Core_Helper_Abstract
 
     /**
      * Resize image and return associative array of data
-     * 
+     *
      * @param $post
      * @param $width
      * @param $height
-     * @return array|void 
+     * @return array|void
      */
     public function resize($post, $width, $height = null) {
 
         $imgData = array();
 
         if (!$post->getMainImage()) {
-            return ;
+            return;
         }
         // filesystem path of image
         $originalImgPath = $post->getMainImageFilePath();
 
-        $imgFile =  $width . '-' . $height . '-' . str_replace(self::IMAGE_DIR . DS, '', $post->getMainImage());
+        $imgFile = $width . '-' . $height . '-' . str_replace(self::IMAGE_DIR . DS, '', $post->getMainImage());
 
-        $resizedFile = Mage::getBaseDir('media') . DS . self::IMAGE_DIR . DS . "resized" . DS  . $imgFile;
+        $resizedFile = Mage::getBaseDir('media') . DS . self::IMAGE_DIR . DS . "resized" . DS . $imgFile;
 
         if (!file_exists($resizedFile) && file_exists($originalImgPath)) {
             try {
@@ -71,17 +71,19 @@ class Lesti_Blog_Helper_Image extends Mage_Core_Helper_Abstract
     public function getPostImage($post, $width, $height = null, $attributes = array()) {
 
         $imgData = $this->resize($post, $width, $height);
-        $attributes['src'] = $imgData['url'];
-        $attributes['width'] = $imgData['width'];
-        $attributes['height'] = $imgData['height'];
-        $attributes['alt'] = Mage::helper('core')->quoteEscape($post->getTitle());
-        
-        $atts = '';
-        foreach($attributes as $key => $value){
-            $atts .= $key .'="' .$value .'" ';
+        if ($imgData) {
+            $attributes['src'] = $imgData['url'];
+            $attributes['width'] = $imgData['width'];
+            $attributes['height'] = $imgData['height'];
+            $attributes['alt'] = Mage::helper('core')->quoteEscape($post->getTitle());
+
+            $atts = '';
+            foreach ($attributes as $key => $value) {
+                $atts .= $key . '="' . $value . '" ';
+            }
+            $html = '<img  ' . $atts . ' />';
+
+            return $html;
         }
-        $html = '<img  '.$atts.' />';
-        
-        return $html;
     }
 }
