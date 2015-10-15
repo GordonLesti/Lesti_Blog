@@ -10,6 +10,7 @@
 class Lesti_Blog_Helper_Image extends Mage_Core_Helper_Abstract
 {
 
+    //location in media folder to store images
     const IMAGE_DIR = 'blog';
 
 

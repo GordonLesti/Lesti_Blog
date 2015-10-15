@@ -97,15 +97,17 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
             $imageKey = 'main_image';
             if (!empty($_FILES[$imageKey]['name'])) {
                 try {
+                    $helper = Mage::helper('image');
+                    $dir = $helper::IMAGE_DIR;
                     $uploader = new Varien_File_Uploader($imageKey);
                     $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'gif', 'png')); // or pdf or anything
                     $uploader->setAllowRenameFiles(true);
                     $uploader->setFilesDispersion(false);
-                    $path = Mage::getBaseDir('media') . DS . 'blog' . DS;
+                    $path = Mage::getBaseDir('media') . DS . $dir . DS;
                     $destFile = $path . $_FILES[$imageKey]['name'];
                     $filename = $uploader->getNewFileName($destFile);
                     $uploader->save($path, $filename);
-                    $data[$imageKey] = 'blog/'.$filename;
+                    $data[$imageKey] = $dir.'/'.$filename;
                 } catch (Exception $e) {
                     $this->_getSession()->addError($e->getMessage());
                 }
