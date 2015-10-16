@@ -15,6 +15,22 @@ class Lesti_Blog_Helper_Image extends Mage_Core_Helper_Abstract
 
 
     /**
+     * Return filesystem path to save images
+     * @return string
+     */
+    public function getImageStoragePath(){
+        return Mage::getBaseDir('media') . DS . self::IMAGE_DIR . DS;
+    }
+
+    /**
+     * Get folder with /media
+     * @return string
+     */
+    public function getImageFolder(){
+        return self::IMAGE_DIR;
+    }
+
+    /**
      * Resize image and return associative array of data
      *
      * @param $post
@@ -32,7 +48,7 @@ class Lesti_Blog_Helper_Image extends Mage_Core_Helper_Abstract
         // filesystem path of image
         $originalImgPath = $post->getMainImageFilePath();
 
-        $imgFile = $width . '-' . $height . '-' . str_replace(self::IMAGE_DIR . DS, '', $post->getMainImage());
+        $imgFile = $width . '-' . $height . '-' . $this->_getBaseFilename($post->getMainImage());
 
         $resizedFile = Mage::getBaseDir('media') . DS . self::IMAGE_DIR . DS . "resized" . DS . $imgFile;
 
@@ -85,5 +101,22 @@ class Lesti_Blog_Helper_Image extends Mage_Core_Helper_Abstract
 
             return $html;
         }
+    }
+
+    /**
+     * delete image from filesystem
+     * @param $image
+     */
+    public function deleteImage($image){
+        unlink($this->getImageStoragePath(). DS . $this->_getBaseFilename($image));
+    }
+
+    /**
+     * get filename (strips out IMAGE_DIR)
+     * @param $image
+     * @return mixed
+     */
+    private function _getBaseFilename($image){
+        return str_replace(self::IMAGE_DIR . DS, '', $image);
     }
 }

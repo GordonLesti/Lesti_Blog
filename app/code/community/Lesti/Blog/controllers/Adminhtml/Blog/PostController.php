@@ -93,39 +93,41 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
         // check if data sent
         if ($data = $this->getRequest()->getPost()) {
 
-            // image saving
-            $imageKey = 'main_image';
-            if (!empty($_FILES[$imageKey]['name'])) {
-                try {
-                    $helper = Mage::helper('image');
-                    $dir = $helper::IMAGE_DIR;
-                    $uploader = new Varien_File_Uploader($imageKey);
-                    $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'gif', 'png')); // or pdf or anything
-                    $uploader->setAllowRenameFiles(true);
-                    $uploader->setFilesDispersion(false);
-                    $path = Mage::getBaseDir('media') . DS . $dir . DS;
-                    $destFile = $path . $_FILES[$imageKey]['name'];
-                    $filename = $uploader->getNewFileName($destFile);
-                    $uploader->save($path, $filename);
-                    $data[$imageKey] = $dir.'/'.$filename;
-                } catch (Exception $e) {
-                    $this->_getSession()->addError($e->getMessage());
-                }
-            }else {
-                // deleting image
-                if(isset($data[$imageKey]['delete']) && $data[$imageKey]['delete'] == 1){
-                    $data[$imageKey] = '';
-                }else{
-                    unset($data[$imageKey]);
-                }
-            }
-
+            $imgHelper = Mage::helper('blog/image');
             //init model and set data
             $model = Mage::getModel('blog/post');
 
             if ($id = $this->getRequest()->getParam('post_id')) {
                 $model->load($id);
             }
+
+            // image saving
+            $imageKey = 'main_image';
+            if (!empty($_FILES[$imageKey]['name'])) {
+                try {
+                    $uploader = new Varien_File_Uploader($imageKey);
+                    $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'gif', 'png')); // or pdf or anything
+                    $uploader->setAllowRenameFiles(true);
+                    $uploader->setFilesDispersion(false);
+                    $path = $imgHelper->getImageStoragePath();
+                    $destFile = $path . $_FILES[$imageKey]['name'];
+                    $filename = $uploader->getNewFileName($destFile);
+                    $uploader->save($path, $filename);
+                    $data[$imageKey] = $imgHelper->getImageFolder() . '/' . $uploader->getUploadedFileName();
+                } catch (Exception $e) {
+                    $this->_getSession()->addError($e->getMessage());
+                }
+            } else {
+                // deleting image
+                if (isset($data[$imageKey]['delete']) && $data[$imageKey]['delete'] == 1) {
+                    $data[$imageKey] = '';
+                    $imgHelper->deleteImage($model->getMainImage());
+                } else {
+                    unset($data[$imageKey]);
+                }
+            }
+
+
 
             if (!isset($data['author_id'])) {
                 $author = Mage::getModel('blog/author')->load(
@@ -189,6 +191,9 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
                 $model->load($id);
                 $title = $model->getTitle();
                 $model->delete();
+                if($model->getMainImage()){
+                    Mage::helper('blog/image')->deleteImage($model->getMainImage());
+                }
                 // display success message
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('cms')->__('The post has been deleted.'));
