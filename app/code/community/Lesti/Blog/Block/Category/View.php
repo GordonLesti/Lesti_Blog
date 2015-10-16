@@ -41,6 +41,9 @@ class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
                 ->addCategoryIdToResult()
                 ->addTagIdToResult();
             $this->_postCollection->addOrder('creation_time', Varien_Data_Collection_Db::SORT_ORDER_DESC);
+            
+            $this->getChild('blog.pager')->setCollection($this->_postCollection);
+            
             $categoryIds = array();
             $tagIds = array();
             foreach($this->_postCollection as $post) {
@@ -57,6 +60,7 @@ class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
                 ->addFieldToFilter('tag_id', array('in' => $tagIds));
         }
         return $this->_postCollection;
+         
     }
 
     /**
