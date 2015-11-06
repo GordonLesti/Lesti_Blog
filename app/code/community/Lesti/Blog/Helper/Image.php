@@ -40,7 +40,7 @@ class Lesti_Blog_Helper_Image extends Mage_Core_Helper_Abstract
      */
     public function resize($post, $width, $height = null) {
 
-        $imgData = array();
+        $imgData = array('width'=>'', 'height'=>'', 'url'=>'');
 
         if (!$post->getMainImage()) {
             return;
@@ -67,9 +67,13 @@ class Lesti_Blog_Helper_Image extends Mage_Core_Helper_Abstract
                 $imgData['url'] = $post->getMainImageUrl();
             }
         } else {
-            $imageObj = new Varien_Image($resizedFile);
-            $imgData['width'] = $imageObj->getOriginalWidth();
-            $imgData['height'] = $imageObj->getOriginalHeight();
+            try{
+                $imageObj = new Varien_Image($resizedFile);
+                $imgData['width'] = $imageObj->getOriginalWidth();
+                $imgData['height'] = $imageObj->getOriginalHeight();
+            }catch (Exception $e){
+                Mage::logException($e);
+            }
         }
 
         $imgData['url'] = Mage::getUrl('media') . self::IMAGE_DIR . DS . "resized" . DS . $imgFile;
