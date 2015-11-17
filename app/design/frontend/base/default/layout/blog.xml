@@ -19,7 +19,12 @@
             <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
         </reference>
         <reference name="content">
-            <block type="blog/category_view" name="blog.category.view" template="blog/category/view.phtml"/>
+            <block type="blog/category_view" name="blog.category.view" template="blog/category/view.phtml">
+                <block type="page/html_pager" name="blog.pager">
+                    <action method="setAvailableLimit"><array><key1>12</key1></array></action>
+                    <action method="setLimit"><array>12</array></action>
+                </block>
+            </block>
         </reference>
     </blog_index_index>
 

@@ -192,4 +192,15 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
         return $html;
     }
 
+    public function getMainImageFilePath() {
+        if($this->getData('main_image')) {
+            return  Mage::getBaseDir('media') .DS .  $this->getData('main_image');
+        }
+    }
+
+    public function getMainImageUrl() {
+        if($this->getData('main_image')) {
+            return  Mage::getUrl('media') .  $this->getData('main_image');
+        }
+    }
 }

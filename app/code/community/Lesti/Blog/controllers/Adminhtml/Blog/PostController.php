@@ -8,19 +8,16 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
      *
      * @return Lesti_Blog_Adminhtml_Blog_PostController
      */
-    protected function _initAction()
-    {
+    protected function _initAction() {
         // load layout, set active menu and breadcrumbs
         $this->loadLayout()
             ->_setActiveMenu('blog/post')
             ->_addBreadcrumb(Mage::helper('blog')->__('Blog'), Mage::helper('blog')->__('Post'))
-            ->_addBreadcrumb(Mage::helper('blog')->__('Manage Posts'), Mage::helper('blog')->__('Manage Posts'))
-        ;
+            ->_addBreadcrumb(Mage::helper('blog')->__('Manage Posts'), Mage::helper('blog')->__('Manage Posts'));
         return $this;
     }
 
-    public function indexAction()
-    {
+    public function indexAction() {
         $this->_title($this->__('Blog'))
             ->_title($this->__('Posts'))
             ->_title($this->__('Manage Posts'));
@@ -32,8 +29,7 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
     /**
      * Create new post
      */
-    public function newAction()
-    {
+    public function newAction() {
         // the same form is used to create and edit
         $this->_forward('edit');
     }
@@ -41,8 +37,7 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
     /**
      * Edit post
      */
-    public function editAction()
-    {
+    public function editAction() {
         $this->_title($this->__('Blog'))
             ->_title($this->__('Post'))
             ->_title($this->__('Manage Posts'));
@@ -54,7 +49,7 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
         // 2. Initial checking
         if ($id) {
             $model->load($id);
-            if (! $model->getId()) {
+            if (!$model->getId()) {
                 Mage::getSingleton('adminhtml/session')->addError(
                     Mage::helper('blog')->__('This post no longer exists.'));
                 $this->_redirect('*/*/');
@@ -66,7 +61,7 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
 
         // 3. Set entered data if was error when we do save
         $data = Mage::getSingleton('adminhtml/session')->getFormData(true);
-        if (! empty($data)) {
+        if (!empty($data)) {
             $model->setData($data);
         }
 
@@ -76,10 +71,10 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
         // 5. Build edit form
         $this->_initAction()
             ->_addBreadcrumb(
-            $id ? Mage::helper('blog')->__('Edit Post')
-                : Mage::helper('blog')->__('New Post'),
-            $id ? Mage::helper('blog')->__('Edit Post')
-                : Mage::helper('blog')->__('New Post'));
+                $id ? Mage::helper('blog')->__('Edit Post')
+                    : Mage::helper('blog')->__('New Post'),
+                $id ? Mage::helper('blog')->__('Edit Post')
+                    : Mage::helper('blog')->__('New Post'));
 
         $this->renderLayout();
     }
@@ -87,10 +82,11 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
     /**
      * Save action
      */
-    public function saveAction()
-    {
+    public function saveAction() {
         // check if data sent
         if ($data = $this->getRequest()->getPost()) {
+
+            $imgHelper = Mage::helper('blog/image');
             //init model and set data
             $model = Mage::getModel('blog/post');
 
@@ -98,9 +94,37 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
                 $model->load($id);
             }
 
-            if(!isset($data['author_id'])) {
+            // image saving
+            $imageKey = 'main_image';
+            if (!empty($_FILES[$imageKey]['name'])) {
+                try {
+                    $uploader = new Varien_File_Uploader($imageKey);
+                    $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'gif', 'png')); // or pdf or anything
+                    $uploader->setAllowRenameFiles(true);
+                    $uploader->setFilesDispersion(false);
+                    $path = $imgHelper->getImageStoragePath();
+                    $destFile = $path . $_FILES[$imageKey]['name'];
+                    $filename = $uploader->getNewFileName($destFile);
+                    $uploader->save($path, $filename);
+                    $data[$imageKey] = $imgHelper->getImageFolder() . '/' . $uploader->getUploadedFileName();
+                } catch (Exception $e) {
+                    $this->_getSession()->addError($e->getMessage());
+                }
+            } else {
+                // deleting image
+                if (isset($data[$imageKey]['delete']) && $data[$imageKey]['delete'] == 1) {
+                    $data[$imageKey] = '';
+                    $imgHelper->deleteImage($model->getMainImage());
+                } else {
+                    unset($data[$imageKey]);
+                }
+            }
+
+
+
+            if (!isset($data['author_id'])) {
                 $author = Mage::getModel('blog/author')->load(
-                    (int) Mage::getSingleton('admin/session')->getUser()->getUserId(),
+                    (int)Mage::getSingleton('admin/session')->getUser()->getUserId(),
                     'admin_user_id');
                 $data['author_id'] = $author->getId();
             }
@@ -126,7 +150,7 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
                 Mage::getSingleton('adminhtml/session')->setFormData(false);
                 // check if 'Save and Continue'
                 if ($this->getRequest()->getParam('back')) {
-                    $this->_redirect('*/*/edit', array('post_id' => $model->getId(), '_current'=>true));
+                    $this->_redirect('*/*/edit', array('post_id' => $model->getId(), '_current' => true));
                     return;
                 }
                 // go to grid
@@ -135,8 +159,7 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
 
             } catch (Mage_Core_Exception $e) {
                 $this->_getSession()->addError($e->getMessage());
-            }
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 $this->_getSession()->addException($e,
                     Mage::helper('blog')->__('An error occurred while saving the post.'));
             }
@@ -151,8 +174,7 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
     /**
      * Delete action
      */
-    public function deleteAction()
-    {
+    public function deleteAction() {
         // check if we know what should be deleted
         if ($id = $this->getRequest()->getParam('post_id')) {
             $title = "";
@@ -162,6 +184,9 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
                 $model->load($id);
                 $title = $model->getTitle();
                 $model->delete();
+                if($model->getMainImage()){
+                    Mage::helper('blog/image')->deleteImage($model->getMainImage());
+                }
                 // display success message
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('cms')->__('The post has been deleted.'));
@@ -190,8 +215,7 @@ class Lesti_Blog_Adminhtml_Blog_PostController extends Mage_Adminhtml_Controller
      *
      * @return boolean
      */
-    protected function _isAllowed()
-    {
+    protected function _isAllowed() {
         switch ($this->getRequest()->getActionName()) {
             case 'new':
             case 'save':
