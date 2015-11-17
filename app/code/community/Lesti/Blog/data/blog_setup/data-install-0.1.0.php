@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 27.03.13
- * Time: 14:10
- * To change this template use File | Settings | File Templates.
- */
 
 // give all admin users a blog author name
 $usernames = array();

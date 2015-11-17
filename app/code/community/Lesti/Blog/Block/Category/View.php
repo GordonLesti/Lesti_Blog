@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 27.03.13
- * Time: 14:41
- * To change this template use File | Settings | File Templates.
- */
+
 class Lesti_Blog_Block_Category_View extends Mage_Core_Block_Template
 {
     protected $_postCollection;

@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 28.03.13
- * Time: 12:47
- * To change this template use File | Settings | File Templates.
- */
+
 class Lesti_Blog_Helper_Post extends Mage_Core_Helper_Abstract
 {
 

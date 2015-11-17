@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 26.03.13
- * Time: 23:04
- * To change this template use File | Settings | File Templates.
- */
+
 class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Abstract
 {
     /**

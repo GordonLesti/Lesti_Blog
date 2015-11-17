@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 30.03.13
- * Time: 21:57
- * To change this template use File | Settings | File Templates.
- */
+
 class Lesti_Blog_Block_Adminhtml_Category_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
 
