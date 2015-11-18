@@ -1,6 +1,6 @@
 <?php
 
-class Lesti_Blog_Block_Adminhtml_Author_Form extends Mage_Adminhtml_Block_Widget_Form
+class Lesti_Blog_Block_Adminhtml_Profile_Form extends Mage_Adminhtml_Block_Widget_Form
 {
     protected function _prepareForm()
     {

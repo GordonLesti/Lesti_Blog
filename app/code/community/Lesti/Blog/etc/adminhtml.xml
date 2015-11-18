@@ -8,11 +8,11 @@
                 <module>Lesti_Blog</module>
             </depends>
             <children>
-                <author translate="title" module="blog">
-                    <title>Author</title>
-                    <action>adminhtml/blog_author/</action>
+                <profile translate="title" module="blog">
+                    <title>Author Profile</title>
+                    <action>adminhtml/blog_profile/</action>
                     <sort_order>0</sort_order>
-                </author>
+                </profile>
                 <post translate="title" module="blog">
                     <title>Manage Posts</title>
                     <action>adminhtml/blog_post/</action>

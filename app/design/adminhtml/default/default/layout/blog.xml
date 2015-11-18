@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <layout>
-    <adminhtml_blog_author_index>
+    <adminhtml_blog_profile_index>
         <reference name="content">
-            <block type="blog/adminhtml_author" name="blog_author"/>
+            <block type="blog/adminhtml_profile" name="blog_profile"/>
         </reference>
         <reference name="left">
-            <block type="blog/adminhtml_author_tabs" name="blog_author_tabs">
-                <block type="blog/adminhtml_author_tab_main" name="blog_author_tab_main"/>
-                <action method="addTab"><name>main_section</name><block>blog_author_tab_main</block></action>
+            <block type="blog/adminhtml_profile_tabs" name="blog_profile_tabs">
+                <block type="blog/adminhtml_profile_tab_main" name="blog_profile_tab_main"/>
+                <action method="addTab"><name>main_section</name><block>blog_profile_tab_main</block></action>
             </block>
         </reference>
-    </adminhtml_blog_author_index>
+    </adminhtml_blog_profile_index>
 
     <adminhtml_blog_post_index>
         <reference name="content">

@@ -1,6 +1,6 @@
 <?php
 
-class Lesti_Blog_Block_Adminhtml_Author extends Mage_Adminhtml_Block_Widget_Form_Container
+class Lesti_Blog_Block_Adminhtml_Profile extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     /**
      * Initialize blog author
@@ -11,11 +11,11 @@ class Lesti_Blog_Block_Adminhtml_Author extends Mage_Adminhtml_Block_Widget_Form
     {
         $this->_controller = 'adminhtml';
         $this->_blockGroup = 'blog';
-        $this->_mode = 'author';
+        $this->_mode = 'profile';
 
         parent::__construct();
 
-        $this->setData('form_action_url', $this->getUrl('*/blog_author/save'));
+        $this->setData('form_action_url', $this->getUrl('*/blog_profile/save'));
 
         if ($this->_isAllowedAction('save')) {
             $this->_updateButton('save', 'label', Mage::helper('blog')->__('Save Data'));
@@ -53,7 +53,7 @@ class Lesti_Blog_Block_Adminhtml_Author extends Mage_Adminhtml_Block_Widget_Form
      */
     protected function _isAllowedAction($action)
     {
-        return Mage::getSingleton('admin/session')->isAllowed('blog/author/' . $action);
+        return Mage::getSingleton('admin/session')->isAllowed('blog/profile/' . $action);
     }
 
     /**
@@ -78,13 +78,13 @@ class Lesti_Blog_Block_Adminhtml_Author extends Mage_Adminhtml_Block_Widget_Form
      */
     protected function _prepareLayout()
     {
-        $tabsBlock = $this->getLayout()->getBlock('blog_author_tabs');
+        $tabsBlock = $this->getLayout()->getBlock('blog_profile_tabs');
         if ($tabsBlock) {
             $tabsBlockJsObject = $tabsBlock->getJsObjectName();
             $tabsBlockPrefix   = $tabsBlock->getId() . '_';
         } else {
-            $tabsBlockJsObject = 'author_tabsJsTabs';
-            $tabsBlockPrefix   = 'author_tabs_';
+            $tabsBlockJsObject = 'profile_tabsJsTabs';
+            $tabsBlockPrefix   = 'profile_tabs_';
         }
 
         $this->_formScripts[] = "

@@ -1,11 +1,11 @@
 <?php
 
-class Lesti_Blog_Adminhtml_Blog_AuthorController extends Mage_Adminhtml_Controller_Action
+class Lesti_Blog_Adminhtml_Blog_ProfileController extends Mage_Adminhtml_Controller_Action
 {
     /**
      * Init actions
      *
-     * @return Lesti_Blog_Adminhtml_Blog_AuthorController
+     * @return Lesti_Blog_Adminhtml_Blog_ProfileController
      */
     protected function _initAction()
     {
