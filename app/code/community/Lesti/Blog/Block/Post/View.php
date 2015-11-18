@@ -1,6 +1,6 @@
 <?php
 
-class Lesti_Blog_Block_Post_view extends Mage_Core_Block_Template
+class Lesti_Blog_Block_Post_View extends Mage_Core_Block_Template
 {
 
     protected function _construct()
