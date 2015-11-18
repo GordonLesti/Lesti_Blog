@@ -91,6 +91,14 @@
                     </blog>
                 </observers>
             </controller_front_init_routers>
+            <admin_user_save_after>
+                <observers>
+                    <blog>
+                        <class>Lesti_Blog_Model_Observer</class>
+                        <method>addNewAuthor</method>
+                    </blog>
+                </observers>
+            </admin_user_save_after>
         </events>
     </global>
     <adminhtml>
