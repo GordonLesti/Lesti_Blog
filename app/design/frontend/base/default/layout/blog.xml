@@ -48,8 +48,8 @@
             <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
         </reference>
         <reference name="content">
-            <block type="blog/author_view" name="blog.author.view" as="blog.posts.view" template="blog/author/view.phtml">
-                <block type="blog/post_list" name="blog.post_list" template="blog/post/list.phtml">
+            <block type="blog/author_view" name="blog.author.view" as="blog.posts.view" template="blog/view.phtml">
+                <block type="blog/author_post_list" name="blog.post_list" template="blog/post/list.phtml">
                     <block type="page/html_pager" name="blog.view.pager" as="pager" />
                 </block>
             </block>
