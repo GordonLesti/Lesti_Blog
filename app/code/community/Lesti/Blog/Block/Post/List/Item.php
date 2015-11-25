@@ -25,4 +25,28 @@ class Lesti_Blog_Block_Post_List_Item extends Mage_Core_Block_Template
         }
         return null;
     }
+    
+    /**
+     * @return array
+     * @see Lesti_Blog_Block_Post_List->getCategoriesCache()
+     */
+    public function getCategoriesCache() {
+        $listBlock = $this->getParentBlock();
+        if ($listBlock) {
+            return $listBlock->getCategoriesCache();
+        }
+        return array();
+    }
+    
+    /**
+     * @return array
+     * @see Lesti_Blog_Block_Post_List->getTagsCache()
+     */
+    public function getTagsCache() {
+        $listBlock = $this->getParentBlock();
+        if ($listBlock) {
+            return $listBlock->getTagsCache();
+        }
+        return array();
+    }
 }
