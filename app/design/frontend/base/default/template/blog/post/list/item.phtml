@@ -6,9 +6,9 @@
 ?>
 <article id="post-<?php echo $_post->getId(); ?>" class="blog-post-excerpt">
     <header class="blog-entry-header">
-        <h1 class="blog-entry-title">
+        <h2 class="blog-entry-title">
             <a rel="bookmark" title="<?php echo $_helper->__('Permalink to %s', $_post->getTitle()); ?>" href="<?php echo $_post->getPostUrl(); ?>"><?php echo $_post->getTitle(); ?></a>
-        </h1>
+        </h2>
         <?php if ($_post->getCommentCount()): ?>
             <div class="comments-link">
                 <a title="<?php echo $this->__('Comment on %s', $_post->getTitle()); ?>" href="<?php echo $_post->getPostUrl(array('comment')); ?>">
