@@ -56,6 +56,20 @@
         </reference>
     </blog_author_view>
     
+    <blog_tag_view translate="label">
+        <label>Blog Tag</label>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="blog/tag_view" name="blog.tag.view" as="blog.posts.view" template="blog/view.phtml">
+                <block type="blog/tag_post_list" name="blog.post_list" template="blog/post/list.phtml">
+                    <block type="page/html_pager" name="blog.view.pager" as="pager" />
+                </block>
+            </block>
+        </reference>
+    </blog_tag_view>
+    
     <!-- <blog_category_view translate="label">
         <label>Blog Category</label>
         <reference name="root">
@@ -65,16 +79,6 @@
             <block type="blog/category_view" name="blog.category.view" template="blog/category/view.phtml"/>
         </reference>
     </blog_category_view>
-
-    <blog_tag_view translate="label">
-        <label>Blog Tag</label>
-        <reference name="root">
-            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
-        </reference>
-        <reference name="content">
-            <block type="blog/category_view" name="blog.category.view" template="blog/category/view.phtml"/>
-        </reference>
-    </blog_tag_view>
 
     <blog_archive_view translate="label">
         <label>Blog Archive</label>
