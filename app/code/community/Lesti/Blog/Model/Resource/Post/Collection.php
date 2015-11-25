@@ -302,10 +302,11 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
      */
     public function getSelectCountSql()
     {
-        $countSelect = parent::getSelectCountSql();
-
-        $countSelect->reset(Zend_Db_Select::GROUP);
-
+        $subquery = parent::getSelectCountSql();
+        $countSelect = clone parent::getSelectCountSql();
+        $countSelect->reset();
+        
+        $countSelect->from(new Zend_Db_Expr("($subquery)"), 'count(*)');
         return $countSelect;
     }
 }
