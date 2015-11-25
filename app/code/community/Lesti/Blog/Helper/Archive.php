@@ -4,19 +4,20 @@ class Lesti_Blog_Helper_Archive extends Mage_Core_Helper_Abstract
 {
     protected $_archive = array();
 
-    public function initArchive($date, $controller)
+    public function initArchive($year, $month, $controller)
     {
         // Init and load archive
         Mage::dispatchEvent('blog_controller_archive_init_before', array(
             'controller_action' => $controller
         ));
 
-        if (!$date) {
+        if (! $year) {
             return false;
         }
 
-        $archive = Mage::getModel('blog/archive')
-            ->load($date);
+        $archive = Mage::getModel('blog/archive');
+        $archive->setYear($year);
+        $archive->setMonth($month);
 
         // Register current data and dispatch final events
         Mage::register('blog_archive', $archive);
@@ -32,19 +33,7 @@ class Lesti_Blog_Helper_Archive extends Mage_Core_Helper_Abstract
             Mage::logException($e);
             return false;
         }
-        $date = explode('-', $date);
-        $year = (int) $date[0];
-        $month = (int) $date[1];
-        $date = new Zend_Date();
-        $date->setYear($year);
-        if($month) {
-            $format = 'MMMM yyyy';
-            $date->setMonth($month);
-        } else {
-            $format = 'yyyy';
-        }
-        $title = '';
-        $archive->setTitle($date->toString($format));
+        
         return $archive;
     }
 
