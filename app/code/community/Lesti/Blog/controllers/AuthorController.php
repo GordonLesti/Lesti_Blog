@@ -27,7 +27,7 @@ class Lesti_Blog_AuthorController extends Mage_Core_Controller_Front_Action
         $title = Mage::getStoreConfig(Lesti_Blog_Block_View::XML_PATH_BLOG_TITLE) . ' - ' . $author->getTitle();
         $this->getLayout()->getBlock('head')
             ->setTitle($title);
-        $this->getLayout()->getBlock('blog.author.view')->setAuthor($author);
+        $this->getLayout()->getBlock('content')->getChild('blog.posts.view')->setAuthor($author);
         $this->renderLayout();
     }
 }
