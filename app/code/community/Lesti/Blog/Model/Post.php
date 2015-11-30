@@ -172,8 +172,10 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
 
     public function getExcerpt()
     {
-        $excerpt = explode('<!--more-->', $this->getContent());
-        if(count($excerpt) > 1) {
+        $processor = Mage::helper('cms')->getPageTemplateProcessor();
+        $content = $processor->filter($this->getContent());
+        $excerpt = explode('<!--more-->', $content);
+        if (count($excerpt) > 1) {
             $this->_needReadMore = true;
         }
         return $excerpt[0];
@@ -182,14 +184,6 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
     public function needReadMore()
     {
         return $this->_needReadMore;
-    }
-
-    public function excerptHtml()
-    {
-        $helper = Mage::helper('cms');
-        $processor = $helper->getPageTemplateProcessor();
-        $html = $processor->filter($this->getExcerpt());
-        return $html;
     }
 
     public function getMainImageFilePath() {
