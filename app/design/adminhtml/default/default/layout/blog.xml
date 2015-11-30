@@ -11,7 +11,26 @@
             </block>
         </reference>
     </adminhtml_blog_profile_index>
-
+    
+    <adminhtml_blog_author_index>
+        <reference name="content">
+            <block type="blog/adminhtml_author" name="blog_author"/>
+        </reference>
+    </adminhtml_blog_author_index>
+    
+    <adminhtml_blog_author_edit>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="blog/adminhtml_author_edit" name="blog_post_edit" />
+        </reference>
+        <reference name="left">
+            <block type="blog/adminhtml_author_edit_tabs" name="blog_author_edit_tabs">
+                <block type="blog/adminhtml_author_edit_tab_main" name="blog_author_edit_tab_main" />
+                <action method="addTab"><name>main_section</name><block>blog_author_edit_tab_main</block></action>
+            </block>
+        </reference>
+    </adminhtml_blog_author_edit>
+    
     <adminhtml_blog_post_index>
         <reference name="content">
             <block type="blog/adminhtml_post" name="blog_post"/>
