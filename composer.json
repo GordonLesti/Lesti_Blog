@@ -1,0 +1,19 @@
+{
+  "name": "gordonlesti/blog",
+  "license": "OSL-3.0",
+  "type": "magento-module",
+  "description": "Simple blog for Magento",
+  "homepage": "https://github.com/GordonLesti/Lesti_Blog",
+  "require": {
+    "php": ">=5.4",
+    "magento-hackathon/magento-composer-installer": "*"
+  },
+  "authors": [
+    {
+      "name": "Gordon Lesti",
+      "email": "info@gordonlesti.com",
+      "homepage": "http://gordonlesti.com/",
+      "role": "developer"
+    }
+  ]
+}
