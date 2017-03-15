@@ -44,7 +44,7 @@ class Lesti_Blog_Block_Adminhtml_Post_Grid extends Mage_Adminhtml_Block_Widget_G
         $this->addColumn('author', array(
             'header'    => Mage::helper('blog')->__('Author'),
             'align'     => 'left',
-            'index'     => 'firstname'
+            'index'     => 'author_name'
         ));
 
         /**
