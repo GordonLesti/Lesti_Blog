@@ -78,8 +78,8 @@ $table = $installer->getConnection()
     ), 'Post Comment Count')
     ->addIndex($installer->getIdxName('blog/post', array('identifier')),
         array('identifier'))
-    ->addForeignKey($installer->getFkName('blog/post', 'author_id', 'admin/user', 'user_id'),
-        'author_id', $installer->getTable('admin/user'), 'user_id',
+    ->addForeignKey($installer->getFkName('blog/post', 'author_id', 'blog/author', 'author_id'),
+        'author_id', $installer->getTable('blog/author'), 'author_id',
         Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
     ->setComment('Blog Post Table');
 $installer->getConnection()->createTable($table);
