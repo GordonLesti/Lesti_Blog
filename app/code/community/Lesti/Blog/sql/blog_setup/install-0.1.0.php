@@ -27,7 +27,7 @@ $table = $installer->getConnection()
         'default'   => '0',
     ), 'Admin User ID')
     ->addColumn('author_name', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
-        'nullable'  => true,
+        'nullable'  => false,
         'primary'   => true,
     ), 'Blog User Name')
     ->addForeignKey($installer->getFkName('blog/author', 'admin_user_id', 'admin/user', 'user_id'),
