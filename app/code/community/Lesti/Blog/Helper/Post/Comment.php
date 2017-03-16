@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 12.04.13
- * Time: 12:01
- * To change this template use File | Settings | File Templates.
- */
+
 class Lesti_Blog_Helper_Post_Comment extends Mage_Core_Helper_Abstract
 {
     const XML_PATH_COMMENT_GUEST_ALLOW = 'blog/general/allow_guest';

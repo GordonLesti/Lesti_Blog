@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 22.04.13
- * Time: 19:24
- * To change this template use File | Settings | File Templates.
- */
+
 class Lesti_Blog_Model_Resource_Author_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
 
@@ -49,5 +43,25 @@ class Lesti_Blog_Model_Resource_Author_Collection extends Mage_Core_Model_Resour
     protected function _toOptionArray($valueField='author_id', $labelField='authorname', $additional=array())
     {
         return parent::_toOptionArray($valueField, $labelField, $additional);
+    }
+    
+    /**
+     * Add admin user info to the authors
+     * 
+     * @return Lesti_Blog_Model_Resource_Author_Collection
+     */
+    public function addAdminUserToResult() {
+        $this->getSelect()->join(
+            array('admin_user' => $this->getTable('admin/user')),
+            'main_table.admin_user_id = admin_user.user_id',
+            array(
+                'admin_user_username'  => 'admin_user.username',
+                'admin_user_email'     => 'admin_user.email',
+                'admin_user_firstname' => 'admin_user.firstname',
+                'admin_user_lastname'  => 'admin_user.lastname'
+            )
+        );
+        
+        return $this;
     }
 }

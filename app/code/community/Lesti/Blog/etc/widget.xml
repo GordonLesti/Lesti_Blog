@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<widgets>
+    <blog_excerpt type="blog/widget_excerpt" translate="name description" module="blog">
+        <name>Excerpt Break</name>
+        <description></description>
+        <parameters>
+        </parameters>
+    </blog_excerpt>
+</widgets>

@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 27.03.13
- * Time: 11:45
- * To change this template use File | Settings | File Templates.
- */
+
 class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
 {
 
@@ -178,8 +172,10 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
 
     public function getExcerpt()
     {
-        $excerpt = explode('<!--more-->', $this->getContent());
-        if(count($excerpt) > 1) {
+        $processor = Mage::helper('cms')->getPageTemplateProcessor();
+        $content = $processor->filter($this->getContent());
+        $excerpt = explode('<!--more-->', $content);
+        if (count($excerpt) > 1) {
             $this->_needReadMore = true;
         }
         return $excerpt[0];
@@ -190,12 +186,15 @@ class Lesti_Blog_Model_Post extends Mage_Core_Model_Abstract
         return $this->_needReadMore;
     }
 
-    public function excerptHtml()
-    {
-        $helper = Mage::helper('cms');
-        $processor = $helper->getPageTemplateProcessor();
-        $html = $processor->filter($this->getExcerpt());
-        return $html;
+    public function getMainImageFilePath() {
+        if($this->getData('main_image')) {
+            return  Mage::getBaseDir('media') .DS .  $this->getData('main_image');
+        }
     }
 
+    public function getMainImageUrl() {
+        if($this->getData('main_image')) {
+            return  Mage::getUrl('media') .  $this->getData('main_image');
+        }
+    }
 }
