@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 26.03.13
- * Time: 23:04
- * To change this template use File | Settings | File Templates.
- */
+
 class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Abstract
 {
     /**
@@ -86,13 +80,12 @@ class Lesti_Blog_Controller_Router extends Mage_Core_Controller_Varien_Router_Ab
             if($identifierExplode[1] == (int) $identifierExplode[1]) {
                 $year = (int) $identifierExplode[1];
                 $archive = Mage::getModel('blog/archive');
+                $archive->setYear($year);
                 if(isset($identifierExplode[2]) && $identifierExplode[2]) {
                     $month = (int) $identifierExplode[2];
-                    $exists = $archive->exists($year, $month);
-                } else {
-                    $exists = $archive->exists($year);
+                    $archive->setMonth($month);
                 }
-                if($exists) {
+                if($archive->exists()) {
                     $request->setModuleName('blog')
                         ->setControllerName('archive')
                         ->setActionName('view')
