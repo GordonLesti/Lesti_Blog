@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 27.03.13
- * Time: 15:14
- * To change this template use File | Settings | File Templates.
- */
+
 class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
     /**
@@ -196,6 +190,28 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
         return $this;
     }
 
+    /**
+     * Add filter by author
+     *
+     * @param int|Lesti_Blog_Model_Author $tag
+     * @return Lesti_Blog_Model_Resource_Post_Collection
+     */
+    public function addAuthorFilter($author)
+    {
+        if (! $this->getFlag('author_filter_added')) {
+            if ($author instanceof Lesti_Blog_Model_Author) {
+                $author = array($author->getId());
+            }
+
+            if (! is_array($author)) {
+                $author = array($author);
+            }
+
+            $this->addFilter('main_table.author_id', array('in' => $author), 'public');
+        }
+        return $this;
+    }
+
     public function addCategoryIdToResult()
     {
         $this->_joinCategoryId();
@@ -308,10 +324,11 @@ class Lesti_Blog_Model_Resource_Post_Collection extends Mage_Core_Model_Resource
      */
     public function getSelectCountSql()
     {
-        $countSelect = parent::getSelectCountSql();
-
-        $countSelect->reset(Zend_Db_Select::GROUP);
-
+        $subquery = parent::getSelectCountSql();
+        $countSelect = clone parent::getSelectCountSql();
+        $countSelect->reset();
+        
+        $countSelect->from(new Zend_Db_Expr("($subquery)"), 'count(*)');
         return $countSelect;
     }
 }

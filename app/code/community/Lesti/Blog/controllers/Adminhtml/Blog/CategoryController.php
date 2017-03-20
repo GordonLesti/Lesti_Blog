@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 30.03.13
- * Time: 21:53
- * To change this template use File | Settings | File Templates.
- */
+
 class Lesti_Blog_Adminhtml_Blog_CategoryController extends Mage_Adminhtml_Controller_Action
 {
     /**

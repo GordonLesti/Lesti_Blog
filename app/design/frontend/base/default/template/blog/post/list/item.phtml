@@ -1,0 +1,75 @@
+<?php
+    $_post = $this->getPost();
+    $_helper = Mage::helper('blog');
+    $_authorHelper = Mage::helper('blog/author');
+    $_commentHelper = Mage::helper('blog/post_comment');
+?>
+<article id="post-<?php echo $_post->getId(); ?>" class="blog-post-excerpt">
+    <header class="blog-entry-header">
+        <h2 class="blog-entry-title">
+            <a rel="bookmark" title="<?php echo $_helper->__('Permalink to %s', $_post->getTitle()); ?>" href="<?php echo $_post->getPostUrl(); ?>"><?php echo $_post->getTitle(); ?></a>
+        </h2>
+        <?php if ($_post->getCommentCount()): ?>
+            <div class="comments-link">
+                <a title="<?php echo $this->__('Comment on %s', $_post->getTitle()); ?>" href="<?php echo $_post->getPostUrl(array('comment')); ?>">
+                    <?php echo $_post->getCommentCount(); ?> <?php echo $_post->getCommentCount() == 1 ? $_helper->__('Reply') : $_helper->__('Replies'); ?>
+                </a>
+            </div>
+        <?php elseif ($_commentHelper->getIsCustomerAllowedToWrite($_post)): ?>
+            <div class="blog-comments-link">
+                <a title="<?php echo $this->__('Comment on %s', $_post->getTitle()); ?>" href="<?php echo $_post->getPostUrl(array('response')); ?>">
+                    <?php echo $_helper->__('Leave a reply'); ?>
+                </a>
+            </div>
+        <?php endif; ?>
+    </header>
+    <div class="blog-entry-content">
+        <?php echo $_post->getExcerpt(); ?>
+        <?php if ($_post->needReadMore()): ?>
+            <a class="blog-more-link" href="<?php echo $_post->getPostUrl(array('more')); ?>"><?php echo $_helper->__('Continue reading'); ?> <span class="blog-meta-nav">&rarr;</span></a>
+        <?php endif; ?>
+    </div>
+    <footer class="blog-entry-meta">
+        <a rel="bookmark" href="<?php echo $_post->getPostUrl() ?>"><?php echo $_helper->formatDate($_post->getCreationTime(), Zend_Date::DATE_LONG) ?></a>
+        <span class="by-author">
+            <?php echo $_helper->__('by') ?>
+            <span class="author">
+                <a rel="author" title="<?php echo $_helper->__('View all posts by') . ' ' . $_post->getAuthorName() ?>" href="<?php echo $_authorHelper->getAuthorUrl($_post->getAuthorName()) ?>"><?php echo $_post->getAuthorName() ?></a>
+            </span>
+        </span>
+        <?php if ($_post->getCategoryIds()): ?>
+            <div class="related-list category-list">
+                <span><?php echo $_helper->__('Posted in:'); ?></span>
+                <ul>
+                    <?php foreach ($_post->getCategoryIds() as $_categoryId): ?>
+                        <?php $_category = $this->getCategory($_categoryId); ?>
+                        <?php if ($_category): ?>
+                            <li>
+                                <a rel="category" title="<?php echo $_helper->__('View all posts in %s', $_category->getTitle()); ?>" href="<?php echo $_category->getCategoryUrl(); ?>">
+                                    <?php echo $_category->getTitle(); ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+        <?php if ($_post->getTagIds()): ?>
+            <div class="related-list tag-list">
+                <span><?php echo $_helper->__('Tagged with:'); ?></span>
+                <ul>
+                    <?php foreach ($_post->getTagIds() as $_tagId): ?>
+                        <?php $_tag = $this->getTag($_tagId); ?>
+                        <?php if ($_tag): ?>
+                            <li>
+                                <a rel="tag" title="<?php echo $_helper->__('View all posts tagged with %s', $_tag->getTitle()); ?>" href="<?php echo $_tag->getTagUrl(); ?>">
+                                    <?php echo $_tag->getTitle(); ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+    </footer>
+</article>

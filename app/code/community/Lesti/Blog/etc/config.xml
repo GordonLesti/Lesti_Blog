@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Lesti_Blog>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </Lesti_Blog>
     </modules>
     <frontend>
@@ -91,6 +91,14 @@
                     </blog>
                 </observers>
             </controller_front_init_routers>
+            <admin_user_save_after>
+                <observers>
+                    <blog>
+                        <class>Lesti_Blog_Model_Observer</class>
+                        <method>addNewAuthor</method>
+                    </blog>
+                </observers>
+            </admin_user_save_after>
         </events>
     </global>
     <adminhtml>

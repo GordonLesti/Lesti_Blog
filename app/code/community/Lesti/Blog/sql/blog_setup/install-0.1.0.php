@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: gordon
- * Date: 27.03.13
- * Time: 00:16
- * To change this template use File | Settings | File Templates.
- */
+
 $installer = $this;
 
 $installer->startSetup();
@@ -17,6 +11,7 @@ $table = $installer->getConnection()
     ->newTable($installer->getTable('blog/author'))
     ->addColumn('author_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         'identity'  => true,
+        'unsigned'  => true,
         'nullable'  => false,
         'primary'   => true,
     ), 'Author ID')
@@ -27,7 +22,7 @@ $table = $installer->getConnection()
         'default'   => '0',
     ), 'Admin User ID')
     ->addColumn('author_name', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
-        'nullable'  => true,
+        'nullable'  => false,
         'primary'   => true,
     ), 'Blog User Name')
     ->addForeignKey($installer->getFkName('blog/author', 'admin_user_id', 'admin/user', 'user_id'),
@@ -78,8 +73,8 @@ $table = $installer->getConnection()
     ), 'Post Comment Count')
     ->addIndex($installer->getIdxName('blog/post', array('identifier')),
         array('identifier'))
-    ->addForeignKey($installer->getFkName('blog/post', 'author_id', 'admin/user', 'user_id'),
-        'author_id', $installer->getTable('admin/user'), 'user_id',
+    ->addForeignKey($installer->getFkName('blog/post', 'author_id', 'blog/author', 'author_id'),
+        'author_id', $installer->getTable('blog/author'), 'author_id',
         Varien_Db_Ddl_Table::ACTION_CASCADE, Varien_Db_Ddl_Table::ACTION_CASCADE)
     ->setComment('Blog Post Table');
 $installer->getConnection()->createTable($table);
