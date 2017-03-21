@@ -77,4 +77,34 @@ class Lesti_Blog_Block_Adminhtml_Tag_Edit extends Mage_Adminhtml_Block_Widget_Fo
         ));
     }
 
+    /**
+     * Allows to use the saveAndContinueEdit Button
+     * @return mixed
+     */
+    protected function _prepareLayout()
+    {
+        $tabsBlock = $this->getLayout()->getBlock('blog_tag_edit_tabs');
+        if ($tabsBlock) {
+            $tabsBlockJsObject = $tabsBlock->getJsObjectName();
+            $tabsBlockPrefix   = $tabsBlock->getId() . '_';
+        } else {
+            $tabsBlockJsObject = 'tag_tabsJsTabs';
+            $tabsBlockPrefix   = 'tag_tabs_';
+        }
+
+        $this->_formScripts[] = "
+            function saveAndContinueEdit(urlTemplate) {
+                var tabsIdValue = " . $tabsBlockJsObject . ".activeTab.id;
+                var tabsBlockPrefix = '" . $tabsBlockPrefix . "';
+                if (tabsIdValue.startsWith(tabsBlockPrefix)) {
+                    tabsIdValue = tabsIdValue.substr(tabsBlockPrefix.length)
+                }
+                var template = new Template(urlTemplate, /(^|.|\\r|\\n)({{(\w+)}})/);
+                var url = template.evaluate({tab_id:tabsIdValue});
+                editForm.submit(url);
+            }
+        ";
+        return parent::_prepareLayout();
+    }
+
 }
